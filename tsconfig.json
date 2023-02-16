@@ -6,14 +6,20 @@
     "skipLibCheck": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
     "esModuleInterop": true,
-    "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve"
+    //////// 변경 내용 ////////
+    "noEmit": false,
+    "module": "CommonJS",
+    "jsx": "react-jsx",
+    "declaration": true,
+    "outDir": "./dist",
+    "rootDir": "src",
+    ////////////////////////
+    "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["node_modules"]
 }

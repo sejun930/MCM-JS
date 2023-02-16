@@ -1,0 +1,11 @@
+pages
+public
+src
+styles
+.babelrc
+.eslintrc.json
+next-end.d.ts
+next.config.js
+package-lock.json
+yarn.lock
+tsconfig.json
