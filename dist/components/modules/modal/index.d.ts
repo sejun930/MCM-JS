@@ -1,10 +1,3 @@
-import { ReactElement } from "react";
-export interface IProps {
-    children?: ReactElement<any, any> | string;
-    styles?: {
-        width: string;
-        height: string;
-    };
-    show: boolean;
-}
-export default function _Modal({ children, show, styles }: IProps): JSX.Element;
+/// <reference types="react" />
+import { ModalPropsType } from "./modal.types";
+export default function _Modal({ children, show, onCloseModal, styles, hideCloseButton, closeButtonStyles, offAutoClose, offAnimation, }: ModalPropsType): JSX.Element;

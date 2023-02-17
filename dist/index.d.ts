@@ -1,2 +1,2 @@
-import { default as _Modal } from "./components/modules/modal/modal.container";
+import { default as _Modal } from "./components/modules/modal";
 export { _Modal };
