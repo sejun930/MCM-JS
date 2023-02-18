@@ -14,8 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var jsx_dev_runtime_1 = require("react/jsx-dev-runtime");
-var _jsxFileName = "/Users/sejuns/Desktop/myProject/my_modules/cmm-js/src/components/modules/modal/index.tsx";
+var jsx_runtime_1 = require("react/jsx-runtime");
 var modal_contents_1 = __importDefault(require("./contents/modal.contents"));
 var react_1 = require("react");
 var modal_styles_1 = require("./contents/modal.styles");
@@ -26,6 +25,6 @@ function _Modal(_a) {
     (0, react_1.useEffect)(function () {
         setShow(show);
     }, [show]);
-    return ((0, jsx_dev_runtime_1.jsxDEV)(modal_styles_1.Wrapper, __assign({ className: "cmm-modal-wrapper", isOpen: show, offAnimation: offAnimation || false }, { children: (_show && ((0, jsx_dev_runtime_1.jsxDEV)(modal_contents_1.default, { show: _show, styles: styles, children: children, hideCloseButton: hideCloseButton, onCloseModal: onCloseModal, closeButtonStyles: closeButtonStyles, offAutoClose: offAutoClose || false }, void 0, false, { fileName: _jsxFileName, lineNumber: 30, columnNumber: 19 }, this))) || (0, jsx_dev_runtime_1.jsxDEV)(jsx_dev_runtime_1.Fragment, {}, void 0, false, { fileName: _jsxFileName, lineNumber: 40, columnNumber: 12 }, this) }), void 0, false, { fileName: _jsxFileName, lineNumber: 24, columnNumber: 11 }, this));
+    return ((0, jsx_runtime_1.jsx)(modal_styles_1.Wrapper, __assign({ className: "cmm-modal-wrapper", isOpen: show, offAnimation: offAnimation || false }, { children: (_show && ((0, jsx_runtime_1.jsx)(modal_contents_1.default, { show: _show, styles: styles, children: children, hideCloseButton: hideCloseButton, onCloseModal: onCloseModal, closeButtonStyles: closeButtonStyles, offAutoClose: offAutoClose || false }))) || (0, jsx_runtime_1.jsx)(jsx_runtime_1.Fragment, {}) })));
 }
 exports.default = _Modal;

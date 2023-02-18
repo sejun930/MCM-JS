@@ -14,8 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var jsx_dev_runtime_1 = require("react/jsx-dev-runtime");
-var _jsxFileName = "/Users/sejuns/Desktop/myProject/my_modules/cmm-js/src/components/modules/modal/contents/modal.contents.tsx";
+var jsx_runtime_1 = require("react/jsx-runtime");
 var modal_styles_1 = require("./modal.styles");
 var images_1 = __importDefault(require("../../../../commons/images"));
 var image_1 = __importDefault(require("../../../../commons/units/image"));
@@ -39,6 +38,6 @@ function ModalPage(_a) {
             document.removeEventListener("click", handleClickEvent, true);
         }
     };
-    return ((0, jsx_dev_runtime_1.jsxDEV)(modal_styles_1.Item, __assign({ className: "cmm-modal-item", style: styles, ref: _ref }, { children: [!hideCloseButton && ((0, jsx_dev_runtime_1.jsxDEV)(modal_styles_1.CloseButtonWrapper, __assign({ className: "cmm-modal-close-wrapper" }, { children: (0, jsx_dev_runtime_1.jsxDEV)(modal_styles_1.CloseButton, __assign({ className: "cmm-modal-close-button", onClick: onCloseModal }, { children: (0, jsx_dev_runtime_1.jsxDEV)(image_1.default, { src: (closeButtonStyles === null || closeButtonStyles === void 0 ? void 0 : closeButtonStyles.src) || images_1.default["close-button"], className: "cmm-modal-close-img" }, void 0, false, { fileName: _jsxFileName, lineNumber: 50, columnNumber: 13 }, this) }), void 0, false, { fileName: _jsxFileName, lineNumber: 46, columnNumber: 11 }, this) }), void 0, false, { fileName: _jsxFileName, lineNumber: 44, columnNumber: 29 }, this)), (0, jsx_dev_runtime_1.jsxDEV)(modal_styles_1.ContentWrapper, __assign({ className: "cmm-modal-content-wrapper" }, { children: children }), void 0, false, { fileName: _jsxFileName, lineNumber: 57, columnNumber: 7 }, this)] }), void 0, true, { fileName: _jsxFileName, lineNumber: 42, columnNumber: 11 }, this));
+    return ((0, jsx_runtime_1.jsxs)(modal_styles_1.Item, __assign({ className: "cmm-modal-item", style: styles, ref: _ref }, { children: [!hideCloseButton && ((0, jsx_runtime_1.jsx)(modal_styles_1.CloseButtonWrapper, __assign({ className: "cmm-modal-close-wrapper" }, { children: (0, jsx_runtime_1.jsx)(modal_styles_1.CloseButton, __assign({ className: "cmm-modal-close-button", onClick: onCloseModal }, { children: (0, jsx_runtime_1.jsx)(image_1.default, { src: (closeButtonStyles === null || closeButtonStyles === void 0 ? void 0 : closeButtonStyles.src) || images_1.default["close-button"], className: "cmm-modal-close-img" }) })) }))), (0, jsx_runtime_1.jsx)(modal_styles_1.ContentWrapper, __assign({ className: "cmm-modal-content-wrapper" }, { children: children }))] })));
 }
 exports.default = ModalPage;

@@ -31,8 +31,8 @@ export const Wrapper = styled.div`
 export const Item = styled.div`
   display: flex;
   flex-direction: column;
-  width: 560px;
-  height: 560px;
+  width: 500px;
+  height: 500px;
   position: relative;
   /* transition: all 0.3s ease-out;
   position: absolute;
@@ -52,19 +52,22 @@ export const ContentWrapper = styled.div`
   border-radius: 10px;
   padding: 1rem;
   position: relative;
+  overflow: auto;
 `;
 
 export const CloseButtonWrapper = styled.div`
   position: absolute;
   display: flex;
-  top: -30px;
+  top: -35px;
   right: 0px;
   justify-content: flex-end;
 `;
 
 export const CloseButton = styled.button`
-  width: 25px;
-  height: 25px;
+  width: 30px;
+  height: 30px;
+  background-color: unset;
+  border: unset;
 
   .cmm-unit-image {
     object-fit: cover;

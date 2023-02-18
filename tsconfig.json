@@ -13,7 +13,7 @@
     //////// 변경 내용 ////////
     "noEmit": false,
     "module": "CommonJS",
-    "jsx": "react-jsxdev",
+    "jsx": "react-jsx",
     "declaration": true,
     "outDir": "./dist",
     "rootDir": "src",

@@ -1,6 +1,6 @@
-import { ReactElement } from "react";
+/// <reference types="react" />
 export interface ModalPropsType {
-    children?: ReactElement<any, any> | string;
+    children?: React.ReactNode;
     styles?: {
         width: string;
         height: string;

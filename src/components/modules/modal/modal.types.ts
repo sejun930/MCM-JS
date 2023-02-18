@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 
 export interface ModalPropsType {
-  children?: JSX.Element | string;
+  children?: React.ReactNode;
   // 렌더될 하위 컴포넌트, 디폴트 값으로 설정되며 Component가 있으면 Component를 렌더한다.
   styles?: {
     width: string;

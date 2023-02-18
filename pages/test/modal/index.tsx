@@ -18,14 +18,8 @@ export default function ModalTestPage() {
   return (
     <>
       <button onClick={() => setModal(true)}>모달 실행하기</button>
-      <_Modal
-        show={modal}
-        onCloseModal={closeModal}
-        // offAutoClose
-        // offAnimation
-        // hideCloseButton
-      >
-        모달 실행완료
+      <_Modal show={modal} onCloseModal={closeModal}>
+        123
       </_Modal>
       <hr />
       <button onClick={() => setModal2(true)}>모달 실행하기2</button>
