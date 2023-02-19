@@ -1,9 +1,10 @@
 import styled from "@emotion/styled";
-import { breakPoints } from "../../../../commons/breakPoints/responsiveBreakPoints";
+import { breakPoints } from "../../../commons/breakPoints/responsiveBreakPoints";
 
 interface StyleTypes {
   isOpen?: boolean;
-  offAnimation?: boolean;
+  onBGAnimation?: boolean;
+  onModalOpenAnimation?: boolean;
 }
 
 export const Wrapper = styled.div`
@@ -19,7 +20,7 @@ export const Wrapper = styled.div`
   z-index: -1;
 
   transition: ${(props) =>
-    props.offAnimation ? "unset" : "all 0.3s ease-out"};
+    !props.onBGAnimation ? "unset" : "all 0.2s ease-out"};
 
   ${(props: StyleTypes) =>
     props.isOpen && {
@@ -29,37 +30,50 @@ export const Wrapper = styled.div`
 `;
 
 export const Item = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 500px;
-  height: 500px;
   position: relative;
-  /* transition: all 0.3s ease-out;
-  position: absolute;
-  width: 1%;
-  height: 1%; */
 
-  @media ${breakPoints.mobile} {
+  .oepn-modal-animation {
+    width: 100%;
+    height: 100%;
+    left: 0%;
+    top: 0%;
+  }
+
+  /* @media ${breakPoints.mobile} {
     width: 80%;
     height: 300px;
-  }
+  } */
 `;
 
-export const ContentWrapper = styled.div`
+export const ContentsWrapper = styled.div`
+  width: 500px;
+  height: 500px;
+`;
+
+export const Content = styled.div`
   background-color: white;
-  width: 100%;
-  height: 100%;
   border-radius: 10px;
-  padding: 1rem;
   position: relative;
   overflow: auto;
+  transition: all 0.2s ease-out;
+  width: 0px;
+  height: 0px;
+  left: 50%;
+  top: 50%;
+  padding: 1rem;
+
+  ${(props: StyleTypes) =>
+    !props.onModalOpenAnimation && {
+      width: "100%",
+      height: "100%",
+      left: "auto",
+      top: "auto",
+    }}
 `;
 
 export const CloseButtonWrapper = styled.div`
-  position: absolute;
+  /* position: absolute; */
   display: flex;
-  top: -35px;
-  right: 0px;
   justify-content: flex-end;
 `;
 

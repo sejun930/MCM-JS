@@ -1,18 +1,20 @@
-/// <reference types="react" />
+import { MutableRefObject } from "react";
 export interface ModalPropsType {
     children?: React.ReactNode;
     styles?: {
-        width: string;
-        height: string;
+        width?: string;
+        height?: string;
     };
     show: boolean;
     onCloseModal: () => void;
     hideCloseButton?: boolean;
-    closeButtonStyles?: {
-        width?: string;
-        height?: string;
-        src?: string;
-    };
+    closeButtonSize?: string;
+    closeButtonSrc?: string;
     offAutoClose?: boolean;
-    offAnimation?: boolean;
+    onBGAnimation?: boolean;
+    onModalOpenAnimation?: boolean;
+}
+export interface ModalPropsUITypes {
+    _ref?: MutableRefObject<HTMLDivElement>;
+    _contentsRef?: MutableRefObject<HTMLDivElement>;
 }
