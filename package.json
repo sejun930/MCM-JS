@@ -1,11 +1,11 @@
 {
   "name": "cmm-js-dev",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "private": false,
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev & jest --watch",
     "build": "rm -rf dist && mkdir dist && tsc",
     "start": "next start",
     "lint": "next lint",
