@@ -40,9 +40,9 @@ function _Modal(props) {
     (0, react_1.useEffect)(function () {
         if (!offAutoClose) {
             // 외부 클릭시 실행되는 이벤트
-            document.addEventListener("click", handleClickEvent, true);
+            document.addEventListener("mousedown", handleClickEvent, true);
             return function () {
-                document.removeEventListener("click", handleClickEvent, true);
+                document.removeEventListener("mousedown", handleClickEvent, true);
             };
         }
     }, [show, offAutoClose]);
@@ -50,7 +50,7 @@ function _Modal(props) {
         if (_ref.current && !_ref.current.contains(event.target)) {
             if (onCloseModal)
                 onCloseModal();
-            document.removeEventListener("click", handleClickEvent, true);
+            document.removeEventListener("mousedown", handleClickEvent, true);
         }
     };
     var _props = __assign({}, props);

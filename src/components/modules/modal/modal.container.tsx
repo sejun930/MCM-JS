@@ -29,9 +29,9 @@ export default function _Modal(props: ModalPropsType) {
   useEffect(() => {
     if (!offAutoClose) {
       // 외부 클릭시 실행되는 이벤트
-      document.addEventListener("click", handleClickEvent, true);
+      document.addEventListener("mousedown", handleClickEvent, true);
       return () => {
-        document.removeEventListener("click", handleClickEvent, true);
+        document.removeEventListener("mousedown", handleClickEvent, true);
       };
     }
   }, [show, offAutoClose]);
@@ -39,7 +39,7 @@ export default function _Modal(props: ModalPropsType) {
   const handleClickEvent = (event: any) => {
     if (_ref.current && !_ref.current.contains(event.target)) {
       if (onCloseModal) onCloseModal();
-      document.removeEventListener("click", handleClickEvent, true);
+      document.removeEventListener("mousedown", handleClickEvent, true);
     }
   };
 
