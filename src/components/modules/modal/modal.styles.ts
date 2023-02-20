@@ -39,15 +39,18 @@ export const Item = styled.div`
     top: 0%;
   }
 
-  /* @media ${breakPoints.mobile} {
-    width: 80%;
-    height: 300px;
-  } */
+  @media ${breakPoints.mobile} {
+    width: 90%;
+  }
 `;
 
 export const ContentsWrapper = styled.div`
   width: 500px;
   height: 500px;
+
+  @media ${breakPoints.mobile} {
+    width: 100%;
+  }
 `;
 
 export const Content = styled.div`
