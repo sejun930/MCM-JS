@@ -9,3 +9,10 @@ next.config.js
 package-lock.json
 yarn.lock
 tsconfig.json
+.next
+Users
+__spec__
+tsconfig.tsbuildinfo
+.eslintrc.js
+jest.config.js
+next-env.d.ts

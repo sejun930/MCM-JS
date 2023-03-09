@@ -14,15 +14,13 @@ export interface ModalPropsType {
   // ** 모달을 종료시키는 함수
   hideCloseButton?: boolean;
   // 모달 닫기 아이콘 감추기, true일 경우 제거 (default : false)
-  closeButtonSize?: string;
+  closeButtonSize?: string | number;
   // 모달 닫기 아이콘에 대한 width, height 값 지정
-  closeButtonSrc?: string;
-  // 닫기 아이콘 변경
   offAutoClose?: boolean;
   // 모달 외의 영역을 클릭했을 때 모달이 종료되지 않게 설정 (default : false)
-  onBGAnimation?: boolean;
+  showBGAnimation?: boolean;
   // 모달 실행시 배경화면 애니메이션 작동 (default : false)
-  onModalOpenAnimation?: boolean;
+  showModalOpenAnimation?: boolean;
   // 모달 실행시 모달창 오픈 애니메이션 작동 (default : false)
 }
 

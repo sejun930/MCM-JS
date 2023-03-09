@@ -4,7 +4,7 @@ import _ModalUIPage from "./modal.presenter";
 import { ModalPropsType, ModalPropsUITypes } from "./modal.types";
 
 export default function _Modal(props: ModalPropsType) {
-  const { show, onModalOpenAnimation, offAutoClose, onCloseModal } = props;
+  const { show, showModalOpenAnimation, offAutoClose, onCloseModal } = props;
   const [isOpen, setIsOpen] = useState(show || false);
 
   const _ref = useRef() as MutableRefObject<HTMLDivElement>;
@@ -15,7 +15,7 @@ export default function _Modal(props: ModalPropsType) {
     setIsOpen(show);
 
     // 모달 오픈시 실행 애니메이션 작동하기
-    if (show && onModalOpenAnimation) {
+    if (show && showModalOpenAnimation) {
       if (_contentsRef.current) {
         _contentsRef?.current?.classList.add("oepn-modal-animation");
 

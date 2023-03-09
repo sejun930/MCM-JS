@@ -1,15 +1,14 @@
-import React from "react";
-import imageList from "../../../commons/images";
+// import imageList from "../../../commons/images";
 
 import {
   Wrapper,
-  Item,
-  ContentsWrapper,
+  Items,
+  Layout,
   Content,
   CloseButtonWrapper,
   CloseButton,
 } from "./modal.styles";
-import Image from "../../../commons/units/image";
+// import Image from "../../../commons/units/image";
 import { ModalPropsType, ModalPropsUITypes } from "./modal.types";
 
 const _ModalUIPage = (props: {
@@ -17,61 +16,60 @@ const _ModalUIPage = (props: {
 }) => {
   const {
     show,
-    onBGAnimation,
+    showBGAnimation,
     _ref,
     styles,
     children,
     _contentsRef,
-    onModalOpenAnimation,
+    showModalOpenAnimation,
     hideCloseButton,
     onCloseModal,
     closeButtonSize,
-    closeButtonSrc,
   } = props.props;
 
+  const closeBtnWrapper: { [key: string]: string } = {};
   const closeModalStyles: { [key: string]: string } = {};
   if (closeButtonSize) {
-    let _closeButtonSize = closeButtonSize;
-    if (!closeButtonSize.includes("px"))
-      _closeButtonSize = closeButtonSize + "px";
+    let _closeButtonSize = String(closeButtonSize).split("px")[0] + "px";
 
     closeModalStyles.width = _closeButtonSize;
     closeModalStyles.height = _closeButtonSize;
+    closeBtnWrapper.top = `-${Number(_closeButtonSize.split("px")[0]) + 10}px`;
   }
 
   return (
     <Wrapper
       className="cmm-modal-wrapper"
       isOpen={show}
-      onBGAnimation={onBGAnimation || false}
+      showBGAnimation={showBGAnimation || false}
+      showModalOpenAnimation={showModalOpenAnimation || false}
     >
-      <Item className="cmm-modal-item" ref={_ref}>
-        {show && (
-          <CloseButtonWrapper className="cmm-modal-close-wrapper">
-            {!hideCloseButton && (
-              <CloseButton
-                className="cmm-modal-close-button"
-                onClick={onCloseModal}
-                style={closeModalStyles || {}}
-              >
-                <Image
-                  src={closeButtonSrc || imageList["close-button"]}
-                  className="cmm-modal-close-img"
-                />
-              </CloseButton>
-            )}
-          </CloseButtonWrapper>
-        )}
-        <ContentsWrapper className="cmm-modal-contents-wrapper" style={styles}>
+      <Items className="cmm-modal-items">
+        <CloseButtonWrapper
+          className="cmm-modal-close-wrapper"
+          style={closeBtnWrapper}
+        >
+          {!hideCloseButton && (
+            <CloseButton
+              className="cmm-modal-close-button"
+              onClick={onCloseModal}
+              style={closeModalStyles}
+            ></CloseButton>
+          )}
+        </CloseButtonWrapper>
+        <Layout className="cmm-modal-layout" ref={_ref} style={styles}>
+          {/* <ContentsWrapper className="cmm-modal-contents-wrapper"> */}
           <Content
             className="cmm-modal-content"
             ref={_contentsRef}
-            onModalOpenAnimation={onModalOpenAnimation}
+            showModalOpenAnimation={showModalOpenAnimation}
+            isOpen={show}
           >
             {show ? children : null}
           </Content>
-        </ContentsWrapper>
-      </Item>
+          {/* </ContentsWrapper> */}
+        </Layout>
+      </Items>
     </Wrapper>
   );
 };
