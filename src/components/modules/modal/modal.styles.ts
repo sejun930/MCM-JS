@@ -3,8 +3,8 @@ import { breakPoints } from "../../../commons/breakPoints/responsiveBreakPoints"
 
 interface StyleTypes {
   isOpen?: boolean;
-  onBGAnimation?: boolean;
-  onModalOpenAnimation?: boolean;
+  showBGAnimation?: boolean;
+  showModalOpenAnimation?: boolean;
 }
 
 export const Wrapper = styled.div`
@@ -18,19 +18,35 @@ export const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   z-index: -1;
+  transition: all 0.2s ease-out;
 
-  transition: ${(props) =>
-    !props.onBGAnimation ? "unset" : "all 0.2s ease-out"};
-
-  ${(props: StyleTypes) =>
+  ${(props) =>
     props.isOpen && {
-      backgroundColor: "rgba(0, 0, 0, .45)",
+      backgroundColor: "rgba(0, 0, 0, .6)",
       zIndex: 999,
     }}
+
+  // 배경 애니메이션 설정시 배경에 대한 transition 추가
+  transition: ${(props: StyleTypes) => !props.showBGAnimation && "unset"};
+
+  transition: ${(props: StyleTypes) =>
+    props.showModalOpenAnimation && "z-index 0.2s ease-out"};
 `;
 
-export const Item = styled.div`
+export const Items = styled.div`
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const Layout = styled.div`
+  position: relative;
+  overflow: hidden;
+  /* overflow-y: auto; */
+  width: 500px;
+  height: 500px;
 
   .oepn-modal-animation {
     width: 100%;
@@ -44,49 +60,72 @@ export const Item = styled.div`
   }
 `;
 
-export const ContentsWrapper = styled.div`
-  width: 500px;
-  height: 500px;
-
-  @media ${breakPoints.mobile} {
-    width: 100%;
-  }
-`;
-
 export const Content = styled.div`
-  background-color: white;
   border-radius: 10px;
-  position: relative;
-  overflow: auto;
-  transition: all 0.2s ease-out;
-  width: 0px;
-  height: 0px;
-  left: 50%;
+  position: absolute;
+  background-color: white;
+  width: 0%;
+  height: 0%;
   top: 50%;
+  left: 50%;
   padding: 1rem;
+  opacity: 0;
+  overflow: auto;
 
   ${(props: StyleTypes) =>
-    !props.onModalOpenAnimation && {
+    props.isOpen && {
+      position: "relative",
       width: "100%",
       height: "100%",
-      left: "auto",
-      top: "auto",
+      top: 0,
+      left: 0,
+      opacity: 1,
     }}
+
+  // 모달 오픈 이벤트를 설정했을 경우
+  ${(props) =>
+    props.showModalOpenAnimation && {
+      transition: "all 0.25s ease",
+    }};
 `;
 
 export const CloseButtonWrapper = styled.div`
-  /* position: absolute; */
   display: flex;
   justify-content: flex-end;
+  position: absolute;
+  top: -30px;
+  right: 0;
 `;
 
 export const CloseButton = styled.button`
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   background-color: unset;
   border: unset;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   .cmm-unit-image {
     object-fit: cover;
+  }
+
+  :after,
+  :before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 2px;
+    background-color: white;
+    cursor: pointer;
+  }
+
+  :after {
+    transform: rotate(45deg);
+  }
+
+  :before {
+    transform: rotate(-45deg);
   }
 `;

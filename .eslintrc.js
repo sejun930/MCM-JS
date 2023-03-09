@@ -3,7 +3,7 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  extends: ["plugin:react/recommended", "standard"],
+  extends: ["plugin:react/recommended", "standard", "prettier"],
   parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaFeatures: {
@@ -11,8 +11,9 @@ module.exports = {
     },
     ecmaVersion: "latest",
     sourceType: "module",
+    project: "***/tsconfig.json",
   },
-  plugins: ["react", "@typescript-eslint", "jest/globals"],
+  plugins: ["react", "@typescript-eslint"],
   rules: {
     semi: "off",
     quotes: "off",
