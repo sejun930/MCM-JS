@@ -17,19 +17,29 @@ export default function ModalTestPage() {
   return (
     <>
       <button onClick={() => setModal(true)}>모달 실행하기</button>
-      <_Modal show={modal} onCloseModal={closeModal} closeButtonSize="20">
+      <_Modal
+        show={modal}
+        onCloseModal={closeModal}
+        closeButtonSize="20px"
+        mobileDefaultStyles={{ width: "90%", height: "60%" }}
+        // showBGAnimation
+        // showModalOpenAnimation
+        closeMent="Close"
+        // hideCloseButton
+        // offAutoClose
+      >
         {new Array(100).fill(1).map((el) => (
           <p>{1}</p>
         ))}
       </_Modal>
       <hr />
 
-      <div style={{ height: "3000px" }}></div>
+      <div style={{ height: "3000px", backgroundColor: "#666666" }}></div>
       <button onClick={() => setModal2(true)}>모달 실행하기2</button>
       <_Modal
         show={modal2}
         onCloseModal={closeModal2}
-        showBGAnimation
+        // showBGAnimation
         // showModalOpenAnimation
         // hideCloseButton
         // closeButtonSize="100"
