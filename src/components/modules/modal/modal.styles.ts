@@ -47,15 +47,17 @@ export const Items = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 500px;
+  height: 500px;
 
   @media ${breakPoints.mobile} {
-    width: 80%;
-    height: 70%;
+    width: 80% !important;
+    height: 70% !important;
 
     ${(props: StyleTypes) =>
       props.mobileDefaultStyles && {
-        width: props.mobileDefaultStyles.width,
-        height: props.mobileDefaultStyles.height,
+        width: `${props.mobileDefaultStyles.width} !important`,
+        height: `${props.mobileDefaultStyles.height} !important`,
       }}
   }
 `;
@@ -63,9 +65,8 @@ export const Items = styled.div`
 export const Layout = styled.div`
   position: relative;
   overflow: hidden;
-  /* overflow-y: auto; */
-  width: 500px;
-  height: 500px;
+  width: 100%;
+  height: 100%;
 
   .oepn-modal-animation {
     width: 100%;
@@ -88,7 +89,7 @@ export const Content = styled.div`
   height: 0%;
   top: 50%;
   left: 50%;
-  padding: 1rem;
+  /* padding: 1rem; */
   opacity: 0;
   overflow: auto;
 
@@ -100,6 +101,7 @@ export const Content = styled.div`
       top: 0,
       left: 0,
       opacity: 1,
+      padding: "1rem",
     }}
 
   // 모달 오픈 이벤트를 설정했을 경우
