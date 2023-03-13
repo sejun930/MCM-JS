@@ -22,9 +22,9 @@ export default function ModalTestPage() {
         onCloseModal={closeModal}
         closeButtonSize="20px"
         styles={{ width: "767px" }}
-        mobileDefaultStyles={{ width: "90%", height: "60%" }}
-        // showBGAnimation
-        // showModalOpenAnimation
+        mobileDefaultStyles={{ width: "80%", height: "60%" }}
+        showBGAnimation
+        showModalOpenAnimation
         closeMent="Close"
         // hideCloseButton
         // offAutoClose

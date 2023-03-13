@@ -48,12 +48,12 @@ const _ModalUIPage = (props: {
     >
       <Items
         className="cmm-modal-items"
+        style={styles}
         mobileDefaultStyles={mobileDefaultStyles || {}}
         onMouseEnter={focusContents}
       >
         <CloseButtonWrapper
           className="cmm-modal-close-button-wrapper"
-          style={closeBtnWrapper}
           hideCloseButton={hideCloseButton}
           onClick={onCloseModal}
           isOpen={show}
@@ -67,12 +67,7 @@ const _ModalUIPage = (props: {
             style={closeModalStyles}
           />
         </CloseButtonWrapper>
-        <Layout
-          className="cmm-modal-layout"
-          ref={_ref}
-          style={styles}
-          // onMouseEnter={focusContents}
-        >
+        <Layout className="cmm-modal-layout" ref={_ref}>
           <Content
             className="cmm-modal-content"
             ref={_contentsRef}
