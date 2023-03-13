@@ -1,4 +1,4 @@
-import { MutableRefObject } from "react";
+import { MouseEvent, MutableRefObject } from "react";
 
 export interface ModalPropsType {
   children?: React.ReactNode;
@@ -8,10 +8,17 @@ export interface ModalPropsType {
     height?: string;
   };
   // 내부 콘텐츠 내용 스타일 지정
+  mobileDefaultStyles?: {
+    width?: string;
+    height?: string;
+  };
+  // 모바일 환경에서 적용될 스타일 지정 (767px 이하부터 적용)
   show: boolean;
   // ** 모달 실행 스위스 변수, true일 경우 실행되며 false일 경우 종료된다. (default : false)
   onCloseModal: () => void;
   // ** 모달을 종료시키는 함수
+  closeMent?: string;
+  // 닫기 버튼 앞으로 출력될 문자열
   hideCloseButton?: boolean;
   // 모달 닫기 아이콘 감추기, true일 경우 제거 (default : false)
   closeButtonSize?: string | number;
@@ -27,4 +34,5 @@ export interface ModalPropsType {
 export interface ModalPropsUITypes {
   _ref?: MutableRefObject<HTMLDivElement>;
   _contentsRef?: MutableRefObject<HTMLDivElement>;
+  focusContents?: () => void;
 }

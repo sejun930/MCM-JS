@@ -1,4 +1,10 @@
-import { MutableRefObject, useEffect, useRef, useState } from "react";
+import {
+  MouseEvent,
+  MutableRefObject,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import _ModalUIPage from "./modal.presenter";
 
 import { ModalPropsType, ModalPropsUITypes } from "./modal.types";
@@ -30,6 +36,7 @@ export default function _Modal(props: ModalPropsType) {
     if (!offAutoClose) {
       // 외부 클릭시 실행되는 이벤트
       document.addEventListener("mousedown", handleClickEvent, true);
+
       return () => {
         document.removeEventListener("mousedown", handleClickEvent, true);
       };
@@ -43,10 +50,16 @@ export default function _Modal(props: ModalPropsType) {
     }
   };
 
+  // 마우스 올릴 경우 모달창을 우선 선택 : 스크롤 이벤트 우선 적용
+  const focusContents = () => {
+    _ref.current.click();
+  };
+
   const _props: ModalPropsType & ModalPropsUITypes = { ...props };
   _props.show = isOpen;
   _props._ref = _ref;
   _props._contentsRef = _contentsRef;
+  _props.focusContents = focusContents;
 
   return <_ModalUIPage props={{ ..._props }} />;
 }

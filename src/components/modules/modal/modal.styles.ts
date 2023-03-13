@@ -5,6 +5,9 @@ interface StyleTypes {
   isOpen?: boolean;
   showBGAnimation?: boolean;
   showModalOpenAnimation?: boolean;
+  mobileDefaultStyles?: { width?: string; height?: string };
+  onAnimation?: boolean;
+  hideCloseButton?: boolean;
 }
 
 export const Wrapper = styled.div`
@@ -18,7 +21,7 @@ export const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   z-index: -1;
-  transition: all 0.2s ease-out;
+  transition: all 0.3s ease-out;
 
   ${(props) =>
     props.isOpen && {
@@ -30,7 +33,12 @@ export const Wrapper = styled.div`
   transition: ${(props: StyleTypes) => !props.showBGAnimation && "unset"};
 
   transition: ${(props: StyleTypes) =>
-    props.showModalOpenAnimation && "z-index 0.2s ease-out"};
+    props.showModalOpenAnimation && "z-index .3s ease-out"};
+
+  transition: ${(props: StyleTypes) =>
+    props.showModalOpenAnimation &&
+    props.showBGAnimation &&
+    "all .3s ease-out"};
 `;
 
 export const Items = styled.div`
@@ -39,6 +47,17 @@ export const Items = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  @media ${breakPoints.mobile} {
+    width: 80%;
+    height: 70%;
+
+    ${(props: StyleTypes) =>
+      props.mobileDefaultStyles && {
+        width: props.mobileDefaultStyles.width,
+        height: props.mobileDefaultStyles.height,
+      }}
+  }
 `;
 
 export const Layout = styled.div`
@@ -56,7 +75,8 @@ export const Layout = styled.div`
   }
 
   @media ${breakPoints.mobile} {
-    width: 90%;
+    width: 100%;
+    height: 100%;
   }
 `;
 
@@ -85,31 +105,47 @@ export const Content = styled.div`
   // 모달 오픈 이벤트를 설정했을 경우
   ${(props) =>
     props.showModalOpenAnimation && {
-      transition: "all 0.25s ease",
+      transition: "all .3s ease-out",
     }};
 `;
 
-export const CloseButtonWrapper = styled.div`
+export const CloseButtonWrapper = styled.button`
   display: flex;
+  align-items: center;
   justify-content: flex-end;
   position: absolute;
   top: -30px;
   right: 0;
+  opacity: 0;
+
+  ${(props: StyleTypes) =>
+    props.isOpen && {
+      opacity: 1,
+    }};
+
+  ${(props) =>
+    props.onAnimation && {
+      transition: "all .3s ease-out",
+    }};
+
+  ${(props) =>
+    props.hideCloseButton && {
+      display: "none",
+    }};
+
+  .cmm-modal-close-ment {
+    color: white;
+    margin-right: 6px;
+  }
 `;
 
-export const CloseButton = styled.button`
+export const CloseButton = styled.div`
   width: 20px;
   height: 20px;
-  background-color: unset;
-  border: unset;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-
-  .cmm-unit-image {
-    object-fit: cover;
-  }
 
   :after,
   :before {

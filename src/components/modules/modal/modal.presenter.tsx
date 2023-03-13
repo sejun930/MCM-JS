@@ -1,5 +1,3 @@
-// import imageList from "../../../commons/images";
-
 import {
   Wrapper,
   Items,
@@ -8,8 +6,9 @@ import {
   CloseButtonWrapper,
   CloseButton,
 } from "./modal.styles";
-// import Image from "../../../commons/units/image";
+
 import { ModalPropsType, ModalPropsUITypes } from "./modal.types";
+import _SpanText from "../../../commons/units/text/span";
 
 const _ModalUIPage = (props: {
   [props: string]: ModalPropsType & ModalPropsUITypes;
@@ -19,12 +18,15 @@ const _ModalUIPage = (props: {
     showBGAnimation,
     _ref,
     styles,
+    mobileDefaultStyles,
     children,
     _contentsRef,
     showModalOpenAnimation,
     hideCloseButton,
     onCloseModal,
     closeButtonSize,
+    closeMent,
+    focusContents,
   } = props.props;
 
   const closeBtnWrapper: { [key: string]: string } = {};
@@ -44,21 +46,33 @@ const _ModalUIPage = (props: {
       showBGAnimation={showBGAnimation || false}
       showModalOpenAnimation={showModalOpenAnimation || false}
     >
-      <Items className="cmm-modal-items">
+      <Items
+        className="cmm-modal-items"
+        mobileDefaultStyles={mobileDefaultStyles || {}}
+        onMouseEnter={focusContents}
+      >
         <CloseButtonWrapper
-          className="cmm-modal-close-wrapper"
+          className="cmm-modal-close-button-wrapper"
           style={closeBtnWrapper}
+          hideCloseButton={hideCloseButton}
+          onClick={onCloseModal}
+          isOpen={show}
+          onAnimation={showModalOpenAnimation}
         >
-          {!hideCloseButton && (
-            <CloseButton
-              className="cmm-modal-close-button"
-              onClick={onCloseModal}
-              style={closeModalStyles}
-            ></CloseButton>
+          {closeMent && (
+            <_SpanText text={closeMent} className="cmm-modal-close-ment" />
           )}
+          <CloseButton
+            className="cmm-modal-close-button"
+            style={closeModalStyles}
+          />
         </CloseButtonWrapper>
-        <Layout className="cmm-modal-layout" ref={_ref} style={styles}>
-          {/* <ContentsWrapper className="cmm-modal-contents-wrapper"> */}
+        <Layout
+          className="cmm-modal-layout"
+          ref={_ref}
+          style={styles}
+          // onMouseEnter={focusContents}
+        >
           <Content
             className="cmm-modal-content"
             ref={_contentsRef}
@@ -67,7 +81,6 @@ const _ModalUIPage = (props: {
           >
             {show ? children : null}
           </Content>
-          {/* </ContentsWrapper> */}
         </Layout>
       </Items>
     </Wrapper>

@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "dev": "next dev & jest --watch",
+    "dev": "next dev",
+    "dev:watch": "next dev & jest --watch",
     "build": "rm -rf dist && mkdir dist && tsc",
     "start": "next start",
     "lint": "next lint",
