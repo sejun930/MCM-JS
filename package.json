@@ -1,13 +1,13 @@
 {
   "name": "mcm-js-dev",
-  "version": "0.0.7",
+  "version": "0.0.9",
   "private": false,
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "dev": "next dev",
     "dev:watch": "next dev & jest --watch",
-    "build": "rm -rf dist && mkdir dist && tsc",
+    "prepare": "rm -rf dist && mkdir dist && tsc",
     "start": "next start",
     "lint": "next lint",
     "test": "jest",
@@ -16,7 +16,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
-    "mcm-js-commons": "^0.0.6",
+    "mcm-js-commons": "*",
     "next": "13.1.6",
     "react": "18.2.0",
     "react-dom": "18.2.0"
