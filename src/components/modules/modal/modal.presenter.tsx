@@ -8,7 +8,7 @@ import {
 } from "./modal.styles";
 
 import { ModalPropsType, ModalPropsUITypes } from "./modal.types";
-import _SpanText from "../../../commons/units/text/span";
+import { _Text } from "mcm-js-commons";
 
 const _ModalUIPage = (props: {
   [props: string]: ModalPropsType & ModalPropsUITypes;
@@ -41,35 +41,35 @@ const _ModalUIPage = (props: {
 
   return (
     <Wrapper
-      className="cmm-modal-wrapper"
+      className="mcm-modal-wrapper"
       isOpen={show}
       showBGAnimation={showBGAnimation || false}
       showModalOpenAnimation={showModalOpenAnimation || false}
     >
       <Items
-        className="cmm-modal-items"
+        className="mcm-modal-items"
         style={styles}
         mobileDefaultStyles={mobileDefaultStyles || {}}
         onMouseEnter={focusContents}
       >
         <CloseButtonWrapper
-          className="cmm-modal-close-button-wrapper"
+          className="mcm-modal-close-button-wrapper"
           hideCloseButton={hideCloseButton}
           onClick={onCloseModal}
           isOpen={show}
           onAnimation={showModalOpenAnimation}
         >
           {closeMent && (
-            <_SpanText text={closeMent} className="cmm-modal-close-ment" />
+            <_Text className="mcm-modal-close-ment">{closeMent}</_Text>
           )}
           <CloseButton
-            className="cmm-modal-close-button"
+            className="mcm-modal-close-button"
             style={closeModalStyles}
           />
         </CloseButtonWrapper>
-        <Layout className="cmm-modal-layout" ref={_ref}>
+        <Layout className="mcm-modal-layout" ref={_ref}>
           <Content
-            className="cmm-modal-content"
+            className="mcm-modal-content"
             ref={_contentsRef}
             showModalOpenAnimation={showModalOpenAnimation}
             isOpen={show}

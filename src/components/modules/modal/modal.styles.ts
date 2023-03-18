@@ -135,7 +135,7 @@ export const CloseButtonWrapper = styled.button`
       display: "none",
     }};
 
-  .cmm-modal-close-ment {
+  .mcm-modal-close-ment {
     color: white;
     margin-right: 6px;
   }
