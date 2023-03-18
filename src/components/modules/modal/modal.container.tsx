@@ -1,15 +1,9 @@
-import {
-  MouseEvent,
-  MutableRefObject,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { MutableRefObject, useEffect, useRef, useState } from "react";
 import _ModalUIPage from "./modal.presenter";
 
 import { ModalPropsType, ModalPropsUITypes } from "./modal.types";
 
-export default function _Modal(props: ModalPropsType) {
+export default function Modal(props: ModalPropsType) {
   const { show, showModalOpenAnimation, offAutoClose, onCloseModal } = props;
   const [isOpen, setIsOpen] = useState(show || false);
 
