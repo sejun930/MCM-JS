@@ -1,4 +1,4 @@
-import { MouseEvent, MutableRefObject } from "react";
+import { MutableRefObject } from "react";
 
 export interface ModalPropsType {
   children?: React.ReactNode;

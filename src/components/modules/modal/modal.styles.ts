@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { breakPoints } from "../../../commons/breakPoints/responsiveBreakPoints";
+import { breakPoints } from "mcm-js-commons/dist/responsive";
 
 interface StyleTypes {
   isOpen?: boolean;
