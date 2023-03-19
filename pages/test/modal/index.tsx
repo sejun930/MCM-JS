@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import _Modal from "../../../src/components/modules/modal/modal.container";
+import Modal from "../../../src/components/modules/modal/modal.container";
 
 export default function ModalTestPage() {
   const [modal, setModal] = useState(true);
@@ -17,7 +17,7 @@ export default function ModalTestPage() {
   return (
     <>
       <button onClick={() => setModal(true)}>모달 실행하기</button>
-      <_Modal
+      <Modal
         show={modal}
         onCloseModal={closeModal}
         closeButtonSize="20px"
@@ -32,12 +32,12 @@ export default function ModalTestPage() {
         {new Array(100).fill(1).map((el) => (
           <p>{1}</p>
         ))}
-      </_Modal>
+      </Modal>
       <hr />
 
       <div style={{ height: "3000px", backgroundColor: "#666666" }}></div>
       <button onClick={() => setModal2(true)}>모달 실행하기2</button>
-      <_Modal
+      <Modal
         show={modal2}
         onCloseModal={closeModal2}
         // showBGAnimation
@@ -46,7 +46,7 @@ export default function ModalTestPage() {
         // closeButtonSize="100"
       >
         모달 실행완료 2
-      </_Modal>
+      </Modal>
     </>
   );
 }
