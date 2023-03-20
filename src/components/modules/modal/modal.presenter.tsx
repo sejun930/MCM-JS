@@ -10,7 +10,7 @@ import {
 import { ModalPropsType, ModalPropsUITypes } from "./modal.types";
 import { _Text } from "mcm-js-commons";
 
-const _ModalUIPage = (props: {
+const ModalUIPage = (props: {
   [props: string]: ModalPropsType & ModalPropsUITypes;
 }) => {
   const {
@@ -29,14 +29,14 @@ const _ModalUIPage = (props: {
     focusContents,
   } = props.props;
 
-  const closeBtnWrapper: { [key: string]: string } = {};
   const closeModalStyles: { [key: string]: string } = {};
+  let closeBtnTop = "-35px";
   if (closeButtonSize) {
     let _closeButtonSize = String(closeButtonSize).split("px")[0] + "px";
 
     closeModalStyles.width = _closeButtonSize;
     closeModalStyles.height = _closeButtonSize;
-    closeBtnWrapper.top = `-${Number(_closeButtonSize.split("px")[0]) + 10}px`;
+    closeBtnTop = `-${Number(_closeButtonSize.split("px")[0]) + 10}px`;
   }
 
   return (
@@ -58,6 +58,7 @@ const _ModalUIPage = (props: {
           onClick={onCloseModal}
           isOpen={show}
           onAnimation={showModalOpenAnimation}
+          style={{ top: closeBtnTop }}
         >
           {closeMent && (
             <_Text className="mcm-modal-close-ment">{closeMent}</_Text>
@@ -81,4 +82,4 @@ const _ModalUIPage = (props: {
     </Wrapper>
   );
 };
-export default _ModalUIPage;
+export default ModalUIPage;
