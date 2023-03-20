@@ -20,7 +20,6 @@ export default function ModalTestPage() {
       <Modal
         show={modal}
         onCloseModal={closeModal}
-        closeButtonSize="20px"
         styles={{ width: "767px" }}
         mobileDefaultStyles={{ width: "80%", height: "60%" }}
         showBGAnimation

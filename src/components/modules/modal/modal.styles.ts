@@ -67,6 +67,7 @@ export const Layout = styled.div`
   overflow: hidden;
   width: 100%;
   height: 100%;
+  border-radius: 10px;
 
   .oepn-modal-animation {
     width: 100%;
@@ -97,7 +98,7 @@ export const Content = styled.div`
     props.isOpen && {
       position: "relative",
       width: "100%",
-      height: "100%",
+      height: "inherit",
       top: 0,
       left: 0,
       opacity: 1,
@@ -116,9 +117,11 @@ export const CloseButtonWrapper = styled.button`
   align-items: center;
   justify-content: flex-end;
   position: absolute;
-  top: -30px;
   right: 0;
   opacity: 0;
+  background-color: unset;
+  border: unset;
+  cursor: pointer;
 
   ${(props: StyleTypes) =>
     props.isOpen && {
@@ -142,8 +145,8 @@ export const CloseButtonWrapper = styled.button`
 `;
 
 export const CloseButton = styled.div`
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 25px;
   position: relative;
   display: flex;
   justify-content: center;
