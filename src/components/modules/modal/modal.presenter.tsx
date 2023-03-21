@@ -57,7 +57,7 @@ const ModalUIPage = (props: {
           hideCloseButton={hideCloseButton}
           onClick={onCloseModal}
           isOpen={show}
-          onAnimation={showModalOpenAnimation}
+          isAnimation={showModalOpenAnimation}
           style={{ top: closeBtnTop }}
         >
           {closeMent && (

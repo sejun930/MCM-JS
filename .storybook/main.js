@@ -12,4 +12,16 @@ module.exports = {
   core: {
     builder: "@storybook/builder-webpack5",
   },
+  core: {
+    builder: "webpack5",
+  },
+  // ...
+  webpackFinal: (config) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      "graceful-fs": false,
+      fs: "graceful-fs",
+    };
+    return config;
+  },
 };
