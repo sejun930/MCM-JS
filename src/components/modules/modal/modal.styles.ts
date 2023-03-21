@@ -6,7 +6,7 @@ interface StyleTypes {
   showBGAnimation?: boolean;
   showModalOpenAnimation?: boolean;
   mobileDefaultStyles?: { width?: string; height?: string };
-  onAnimation?: boolean;
+  isAnimation?: boolean;
   hideCloseButton?: boolean;
 }
 
@@ -129,7 +129,7 @@ export const CloseButtonWrapper = styled.button`
     }};
 
   ${(props) =>
-    props.onAnimation && {
+    props.isAnimation && {
       transition: "all .3s ease-out",
     }};
 
