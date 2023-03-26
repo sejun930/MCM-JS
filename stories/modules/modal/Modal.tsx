@@ -16,7 +16,7 @@ export default function SB_Modal(props: ModalPropsType) {
     hideCloseButton,
     offAutoClose,
     closeMent,
-    closeButtonSize,
+    closeButtonInfo,
   } = props;
   const [_show, _setShow] = useState(show);
 
@@ -41,7 +41,7 @@ export default function SB_Modal(props: ModalPropsType) {
         hideCloseButton={hideCloseButton}
         offAutoClose={offAutoClose}
         closeMent={closeMent}
-        closeButtonSize={closeButtonSize}
+        closeButtonInfo={closeButtonInfo}
       >
         {children}
       </Modal>
@@ -60,7 +60,7 @@ SB_Modal.propTypes = {
   hideCloseButton: PropTypes.bool,
   offAutoClose: PropTypes.bool,
   closeMent: PropTypes.string,
-  closeButtonSize: PropTypes.number || PropTypes.string,
+  closeButtonInfo: PropTypes.shape({}),
 };
 
 SB_Modal.defaultProps = {
@@ -75,4 +75,6 @@ SB_Modal.defaultProps = {
   mobileDefaultStyles: {},
   hideCloseButton: false,
   offAutoClose: false,
+  closeMent: "",
+  closeButtonInfo: {},
 } as ModalPropsType;

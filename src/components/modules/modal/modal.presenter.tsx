@@ -8,7 +8,8 @@ import {
 } from "./modal.styles";
 
 import { ModalPropsType, ModalPropsUITypes } from "./modal.types";
-import { _Text } from "mcm-js-commons";
+import { _Button, _Text, _CloseButton } from "mcm-js-commons";
+import CommonsHooksComponents from "mcm-js-commons/dist/hooks";
 
 const ModalUIPage = (props: {
   [props: string]: ModalPropsType & ModalPropsUITypes;
@@ -24,20 +25,18 @@ const ModalUIPage = (props: {
     showModalOpenAnimation,
     hideCloseButton,
     onCloseModal,
-    closeButtonSize,
     closeMent,
     focusContents,
+    closeButtonInfo,
   } = props.props;
+  const { getPXForm } = CommonsHooksComponents();
 
-  const closeModalStyles: { [key: string]: string } = {};
-  let closeBtnTop = "-35px";
-  if (closeButtonSize) {
-    let _closeButtonSize = String(closeButtonSize).split("px")[0] + "px";
-
-    closeModalStyles.width = _closeButtonSize;
-    closeModalStyles.height = _closeButtonSize;
-    closeBtnTop = `-${Number(_closeButtonSize.split("px")[0]) + 10}px`;
-  }
+  const _closeButtonSize = getPXForm(
+    closeButtonInfo?.buttonSize || "20px",
+    "20px"
+  );
+  const closeBtnTop =
+    `-${Number(_closeButtonSize.split("px")[0]) + 10}px` || "-25px";
 
   return (
     <Wrapper
@@ -55,17 +54,26 @@ const ModalUIPage = (props: {
         <CloseButtonWrapper
           className="mcm-modal-close-button-wrapper"
           hideCloseButton={hideCloseButton}
-          onClick={onCloseModal}
           isOpen={show}
           isAnimation={showModalOpenAnimation}
           style={{ top: closeBtnTop }}
         >
           {closeMent && (
-            <_Text className="mcm-modal-close-ment">{closeMent}</_Text>
+            <_Button
+              onClickEvent={onCloseModal}
+              className="mcm-modal-close-ment-button"
+            >
+              <_Text className="mcm-modal-close-ment">{closeMent}</_Text>
+            </_Button>
           )}
-          <CloseButton
-            className="mcm-modal-close-button"
-            style={closeModalStyles}
+          <_CloseButton
+            buttonColor={closeButtonInfo?.buttonColor || "white"}
+            buttonSize={_closeButtonSize}
+            buttonWeight={getPXForm(
+              closeButtonInfo?.buttonWeight || "1px",
+              "1px"
+            )}
+            onClickEvent={onCloseModal}
           />
         </CloseButtonWrapper>
         <Layout className="mcm-modal-layout" ref={_ref}>

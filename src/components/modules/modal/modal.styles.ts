@@ -112,7 +112,7 @@ export const Content = styled.div`
     }};
 `;
 
-export const CloseButtonWrapper = styled.button`
+export const CloseButtonWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -121,7 +121,6 @@ export const CloseButtonWrapper = styled.button`
   opacity: 0;
   background-color: unset;
   border: unset;
-  cursor: pointer;
 
   ${(props: StyleTypes) =>
     props.isOpen && {
@@ -138,9 +137,16 @@ export const CloseButtonWrapper = styled.button`
       display: "none",
     }};
 
+  .mcm-modal-close-ment-button {
+    background-color: unset;
+    border: unset;
+    padding: 0;
+    margin: 0;
+    margin-right: 6px;
+  }
+
   .mcm-modal-close-ment {
     color: white;
-    margin-right: 6px;
   }
 `;
 

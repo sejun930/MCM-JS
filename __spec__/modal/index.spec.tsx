@@ -1,5 +1,7 @@
+import React from "react";
+
 import { render } from "@testing-library/react";
-import Modal from "../../../../../components/modules/modal/modal.container";
+import Modal from "../../src/components/modules/modal/modal.container";
 
 export default describe("Main Home Page", () => {
   // 스냅샷
