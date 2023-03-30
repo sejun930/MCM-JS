@@ -55,15 +55,14 @@ const ModalUIPage = (props: {
           isOpen={show}
           isAnimation={showModalOpenAnimation}
           style={{ top: closeBtnTop }}
+          closeMent={closeMent}
         >
-          {closeMent && (
-            <_Button
-              onClickEvent={onCloseModal}
-              className="mcm-modal-close-ment-button"
-            >
-              <_Text className="mcm-modal-close-ment">{closeMent}</_Text>
-            </_Button>
-          )}
+          <_Button
+            onClickEvent={onCloseModal}
+            className="mcm-modal-close-ment-button"
+          >
+            <_Text className="mcm-modal-close-ment">{closeMent}</_Text>
+          </_Button>
           <_CloseButton
             className="mcm-modal-close-button"
             buttonColor={closeButtonInfo?.buttonColor || "white"}

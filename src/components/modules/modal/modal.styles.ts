@@ -8,6 +8,7 @@ interface StyleTypes {
   mobileDefaultStyles?: { width?: string; height?: string };
   isAnimation?: boolean;
   hideCloseButton?: boolean;
+  closeMent?: string;
 }
 
 export const Wrapper = styled.div`
@@ -143,6 +144,13 @@ export const CloseButtonWrapper = styled.div`
     padding: 0;
     margin: 0;
     margin-right: 6px;
+    display: none;
+
+    // 클로징 멘트가 있을 경우 보이기
+    ${(props) =>
+      props.closeMent && {
+        display: "block",
+      }}
   }
 
   .mcm-modal-close-ment {

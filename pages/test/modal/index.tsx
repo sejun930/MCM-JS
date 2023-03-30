@@ -19,7 +19,7 @@ export default function ModalExamplePage() {
   return (
     <div>
       <button onClick={openModal}> 모달 실행하기 </button>
-      <Modal show={isOpen} onCloseModal={closeModal} closeMent="모달 닫기">
+      <Modal show={isOpen} onCloseModal={closeModal}>
         <span> 기본 모달 페이지입니다. </span>
       </Modal>
     </div>
