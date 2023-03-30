@@ -37,7 +37,6 @@ const ModalUIPage = (props: {
   const closeBtnTop =
     `-${Number(_closeButtonSize.split("px")[0]) + 10}px` || "-25px";
 
-  console.log(hideCloseButton);
   return (
     <Wrapper
       className="mcm-modal-wrapper"
