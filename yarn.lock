@@ -5592,6 +5592,11 @@ domhandler@^4.0.0, domhandler@^4.2.0, domhandler@^4.3.1:
   dependencies:
     domelementtype "^2.2.0"
 
+dompurify@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-3.0.1.tgz#a0933f38931b3238934dd632043b727e53004289"
+  integrity sha512-60tsgvPKwItxZZdfLmamp0MTcecCta3avOhsLgPZ0qcWt96OasFfhkeIRbJ6br5i0fQawT1/RBGB5L58/Jpwuw==
+
 domutils@^2.5.2, domutils@^2.8.0:
   version "2.8.0"
   resolved "https://registry.npmjs.org/domutils/-/domutils-2.8.0.tgz"
@@ -8751,13 +8756,14 @@ markdown-escapes@^1.0.0:
   resolved "https://registry.npmjs.org/markdown-escapes/-/markdown-escapes-1.0.4.tgz"
   integrity sha512-8z4efJYk43E0upd0NbVXwgSTQs6cT3T06etieCMEg7dRbzCbxUCK/GHlX8mhHRDcp+OLlHkPKsvqQTCvsRl2cg==
 
-mcm-js-commons@^0.0.15:
-  version "0.0.15"
-  resolved "https://registry.yarnpkg.com/mcm-js-commons/-/mcm-js-commons-0.0.15.tgz#f035809bfd2151b44cf746702977be72ea8072b6"
-  integrity sha512-2OJG2S1qKEVLTK3DtLJhDK+wO5Z/z83+AuNXZWk89i2VoUFUyxmJ9eKzNLjP5DCFaAjtTUUTIIR7gGL4trFwmQ==
+mcm-js-commons@^0.0.23:
+  version "0.0.23"
+  resolved "https://registry.yarnpkg.com/mcm-js-commons/-/mcm-js-commons-0.0.23.tgz#18249fd9b3ab6f5f87754c9b60a1a2d88b7ba3af"
+  integrity sha512-xQZfQtjD6l8cOLR0tG47QniQOH3mshdYccFRJU1SX95CqLMOEebZDnlCU+iSXgu7tp+fi5vApbm5zN3nINNG1g==
   dependencies:
     "@emotion/react" "^11.10.6"
     "@emotion/styled" "^11.10.6"
+    dompurify "^3.0.1"
     next "13.1.6"
     react "18.2.0"
     react-dom "18.2.0"

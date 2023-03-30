@@ -20,7 +20,7 @@
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@mdx-js/react": "^2.3.0",
-    "mcm-js-commons": "^0.0.15",
+    "mcm-js-commons": "^0.0.23",
     "next": "13.1.6",
     "react": "18.2.0",
     "react-dom": "18.2.0"

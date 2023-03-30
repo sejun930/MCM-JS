@@ -4,7 +4,6 @@ import {
   Layout,
   Content,
   CloseButtonWrapper,
-  CloseButton,
 } from "./modal.styles";
 
 import { ModalPropsType, ModalPropsUITypes } from "./modal.types";
@@ -38,6 +37,7 @@ const ModalUIPage = (props: {
   const closeBtnTop =
     `-${Number(_closeButtonSize.split("px")[0]) + 10}px` || "-25px";
 
+  console.log(hideCloseButton);
   return (
     <Wrapper
       className="mcm-modal-wrapper"
@@ -53,7 +53,6 @@ const ModalUIPage = (props: {
       >
         <CloseButtonWrapper
           className="mcm-modal-close-button-wrapper"
-          hideCloseButton={hideCloseButton}
           isOpen={show}
           isAnimation={showModalOpenAnimation}
           style={{ top: closeBtnTop }}
@@ -67,12 +66,14 @@ const ModalUIPage = (props: {
             </_Button>
           )}
           <_CloseButton
+            className="mcm-modal-close-button"
             buttonColor={closeButtonInfo?.buttonColor || "white"}
             buttonSize={_closeButtonSize}
             buttonWeight={getPXForm(
               closeButtonInfo?.buttonWeight || "1px",
               "1px"
             )}
+            styles={{ display: hideCloseButton ? "none" : "flex" }}
             onClickEvent={onCloseModal}
           />
         </CloseButtonWrapper>
