@@ -16,3 +16,6 @@ tsconfig.tsbuildinfo
 .eslintrc.js
 jest.config.js
 next-env.d.ts
+.storybook
+stories
+jest.setup.ts

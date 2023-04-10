@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Main Home Page Modal Page - Snapshot 1`] = `
+<div>
+  <div
+    class="mcm-modal-wrapper css-7lz8ut"
+  >
+    <div
+      class="mcm-modal-items css-1ys2wia"
+    >
+      <div
+        class="mcm-modal-close-button-wrapper css-10yiks4"
+        style="top: -30px;"
+      >
+        <button
+          class="cmm-button-unit mcm-modal-close-ment-button css-19ngahp"
+          role="button_click_event"
+        >
+          <span
+            class="mcm-span-unit mcm-modal-close-ment css-1oteowz"
+          >
+            모달 닫기
+          </span>
+        </button>
+        <button
+          class="mcm-close-button-unit mcm-modal-close-button css-141fzi4"
+          style="display: flex;"
+        />
+      </div>
+      <div
+        class="mcm-modal-layout css-1qmdus"
+      >
+        <div
+          class="mcm-modal-content css-qany1i"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

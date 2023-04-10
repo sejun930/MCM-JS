@@ -1,51 +1,27 @@
 import React from "react";
-import { useState } from "react";
 import Modal from "../../../src/components/modules/modal/modal.container";
+import { useState } from "react";
 
-export default function ModalTestPage() {
-  const [modal, setModal] = useState(true);
-  const [modal2, setModal2] = useState(false);
+export default function ModalExamplePage() {
+  // 모달을 실행하거나 종료 시킬 수 있는 state 값을 설정합니다.
+  const [isOpen, setIsOpen] = useState(false);
 
-  const closeModal = () => {
-    setModal(false);
+  // 모달을 실행하는 함수입니다.
+  const openModal = () => {
+    setIsOpen(true);
   };
 
-  const closeModal2 = () => {
-    setModal2(false);
+  // 모달을 종료하는 함수입니다.
+  const closeModal = () => {
+    setIsOpen(false);
   };
 
   return (
-    <>
-      <button onClick={() => setModal(true)}>모달 실행하기</button>
-      <Modal
-        show={modal}
-        onCloseModal={closeModal}
-        styles={{ width: "767px" }}
-        mobileDefaultStyles={{ width: "80%", height: "60%" }}
-        showBGAnimation
-        showModalOpenAnimation
-        closeMent="Close"
-        // hideCloseButton
-        // offAutoClose
-      >
-        {new Array(100).fill(1).map((el) => (
-          <p>{1}</p>
-        ))}
+    <div>
+      <button onClick={openModal}> 모달 실행하기 </button>
+      <Modal show={isOpen} onCloseModal={closeModal}>
+        <span> 기본 모달 페이지입니다. </span>
       </Modal>
-      <hr />
-
-      <div style={{ height: "3000px", backgroundColor: "#666666" }}></div>
-      <button onClick={() => setModal2(true)}>모달 실행하기2</button>
-      <Modal
-        show={modal2}
-        onCloseModal={closeModal2}
-        // showBGAnimation
-        // showModalOpenAnimation
-        // hideCloseButton
-        // closeButtonSize="100"
-      >
-        모달 실행완료 2
-      </Modal>
-    </>
+    </div>
   );
 }

@@ -8,6 +8,7 @@ interface StyleTypes {
   mobileDefaultStyles?: { width?: string; height?: string };
   isAnimation?: boolean;
   hideCloseButton?: boolean;
+  closeMent?: string;
 }
 
 export const Wrapper = styled.div`
@@ -112,7 +113,7 @@ export const Content = styled.div`
     }};
 `;
 
-export const CloseButtonWrapper = styled.button`
+export const CloseButtonWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -121,7 +122,6 @@ export const CloseButtonWrapper = styled.button`
   opacity: 0;
   background-color: unset;
   border: unset;
-  cursor: pointer;
 
   ${(props: StyleTypes) =>
     props.isOpen && {
@@ -138,9 +138,23 @@ export const CloseButtonWrapper = styled.button`
       display: "none",
     }};
 
+  .mcm-modal-close-ment-button {
+    background-color: unset;
+    border: unset;
+    padding: 0;
+    margin: 0;
+    margin-right: 6px;
+    display: none;
+
+    // 클로징 멘트가 있을 경우 보이기
+    ${(props) =>
+      props.closeMent && {
+        display: "block",
+      }}
+  }
+
   .mcm-modal-close-ment {
     color: white;
-    margin-right: 6px;
   }
 `;
 

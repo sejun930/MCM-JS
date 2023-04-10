@@ -59,7 +59,7 @@ export const resizeCloseButton = Template.bind({});
 resizeCloseButton.args = {
   children: <div>닫기 버튼의 사이즈를 조정합니다.</div>,
   styles: { height: "200px" },
-  closeButtonSize: 30,
+  closeButtonInfo: { buttonSize: "40px", buttonWeight: "3px" },
   showModalOpenAnimation: true,
   showBGAnimation: true,
   hideCloseButton: false,
