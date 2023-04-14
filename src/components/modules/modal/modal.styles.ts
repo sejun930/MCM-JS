@@ -104,13 +104,13 @@ export const Content = styled.div`
       left: 0,
       opacity: 1,
       padding: "1rem",
-    }}
+    }};
 
   // 모달 오픈 이벤트를 설정했을 경우
   ${(props) =>
     props.showModalOpenAnimation && {
       transition: "all .3s ease-out",
-    }};
+    }}
 `;
 
 export const CloseButtonWrapper = styled.div`
@@ -166,8 +166,8 @@ export const CloseButton = styled.div`
   justify-content: center;
   align-items: center;
 
-  :after,
-  :before {
+  ::after,
+  ::before {
     position: absolute;
     content: "";
     width: 100%;
@@ -176,11 +176,11 @@ export const CloseButton = styled.div`
     cursor: pointer;
   }
 
-  :after {
+  ::after {
     transform: rotate(45deg);
   }
 
-  :before {
+  ::before {
     transform: rotate(-45deg);
   }
 `;

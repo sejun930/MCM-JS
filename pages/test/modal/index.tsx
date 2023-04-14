@@ -18,10 +18,23 @@ export default function ModalExamplePage() {
 
   return (
     <div>
-      <button onClick={openModal}> 모달 실행하기 </button>
-      <Modal show={isOpen} onCloseModal={closeModal}>
-        <span> 기본 모달 페이지입니다. </span>
-      </Modal>
+      <form>
+        <button onClick={openModal} type="button">
+          {" "}
+          모달 실행하기{" "}
+        </button>
+        <Modal
+          show={isOpen}
+          onCloseModal={closeModal}
+          showBGAnimation
+          showModalOpenAnimation
+          // styles={{ width: "100px", height: "100px" }}
+        >
+          <h1 style={{ textAlign: "center" }}>
+            작성된 내용을 삭제하시겠습니까? asd sad sadsa dsadasdsad sadasdasdsa
+          </h1>
+        </Modal>
+      </form>
     </div>
   );
 }

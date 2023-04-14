@@ -65,6 +65,7 @@ const ModalUIPage = (props: {
             <_Button
               onClickEvent={onCloseModal}
               className="mcm-modal-close-ment-button"
+              buttonType="button"
             >
               <_Text className="mcm-modal-close-ment">{closeMent}</_Text>
             </_Button>
@@ -78,6 +79,7 @@ const ModalUIPage = (props: {
               )}
               styles={{ display: hideCloseButton ? "none" : "flex" }}
               onClickEvent={onCloseModal}
+              buttonType="button"
             />
           </CloseButtonWrapper>
           <Layout className="mcm-modal-layout" ref={_ref}>
