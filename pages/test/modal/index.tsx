@@ -27,7 +27,7 @@ export default function ModalExamplePage() {
           show={isOpen}
           onCloseModal={closeModal}
           showBGAnimation
-          // showModalOpenAnimation
+          showModalOpenAnimation
           closeMent="닫기"
           // styles={{ width: "100px", height: "100px" }}
         >

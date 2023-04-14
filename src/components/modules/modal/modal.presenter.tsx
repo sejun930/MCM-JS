@@ -88,7 +88,7 @@ const ModalUIPage = (props: {
             isOpen={show}
             showModalOpenAnimation={showModalOpenAnimation}
           >
-            {children}
+            {show ? children : undefined}
           </ContentsWrapper>
         </Items>
       </Wrapper>
