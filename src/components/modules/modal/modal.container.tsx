@@ -4,7 +4,7 @@ import _ModalUIPage from "./modal.presenter";
 import { ModalPropsType, ModalPropsUITypes } from "./modal.types";
 
 export default function Modal(props: ModalPropsType) {
-  const { show, showModalOpenAnimation, offAutoClose, onCloseModal } = props;
+  const { show, offAutoClose, onCloseModal } = props;
   const [isOpen, setIsOpen] = useState(show || false);
 
   const _ref = useRef() as MutableRefObject<HTMLDivElement>;
