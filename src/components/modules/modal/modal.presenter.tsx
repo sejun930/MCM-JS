@@ -1,8 +1,7 @@
 import {
   Wrapper,
   Items,
-  Layout,
-  Content,
+  ContentsWrapper,
   CloseButtonWrapper,
 } from "./modal.styles";
 
@@ -21,7 +20,6 @@ const ModalUIPage = (props: {
     styles,
     mobileDefaultStyles,
     children,
-    _contentsRef,
     showModalOpenAnimation,
     hideCloseButton,
     onCloseModal,
@@ -53,7 +51,10 @@ const ModalUIPage = (props: {
           className="mcm-modal-items"
           style={styles}
           mobileDefaultStyles={mobileDefaultStyles || {}}
+          showModalOpenAnimation={showModalOpenAnimation}
           onMouseEnter={focusContents}
+          isOpen={show}
+          ref={_ref}
         >
           <CloseButtonWrapper
             className="mcm-modal-close-button-wrapper"
@@ -65,6 +66,7 @@ const ModalUIPage = (props: {
             <_Button
               onClickEvent={onCloseModal}
               className="mcm-modal-close-ment-button"
+              buttonType="button"
             >
               <_Text className="mcm-modal-close-ment">{closeMent}</_Text>
             </_Button>
@@ -78,18 +80,16 @@ const ModalUIPage = (props: {
               )}
               styles={{ display: hideCloseButton ? "none" : "flex" }}
               onClickEvent={onCloseModal}
+              buttonType="button"
             />
           </CloseButtonWrapper>
-          <Layout className="mcm-modal-layout" ref={_ref}>
-            <Content
-              className="mcm-modal-content"
-              ref={_contentsRef}
-              showModalOpenAnimation={showModalOpenAnimation}
-              isOpen={show}
-            >
-              {show ? children : null}
-            </Content>
-          </Layout>
+          <ContentsWrapper
+            className="mcm-modal-contents-wrapper"
+            isOpen={show}
+            showModalOpenAnimation={showModalOpenAnimation}
+          >
+            {show ? children : undefined}
+          </ContentsWrapper>
         </Items>
       </Wrapper>
     </_Error>
