@@ -37,6 +37,5 @@ export interface ModalPropsType {
 
 export interface ModalPropsUITypes {
   _ref?: MutableRefObject<HTMLDivElement>;
-  _contentsRef?: MutableRefObject<HTMLDivElement>;
   focusContents?: () => void;
 }
