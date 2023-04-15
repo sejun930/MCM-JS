@@ -6,10 +6,12 @@ interface StyleTypes {
   isOpen?: boolean;
   showBGAnimation?: boolean;
   showModalOpenAnimation?: boolean;
-  mobileDefaultStyles?: { width?: string; height?: string };
+  mobileModalSize?: { width?: string; height?: string };
   isAnimation?: boolean;
   hideCloseButton?: boolean;
   closeMent?: string;
+  width?: string;
+  height?: string;
 }
 
 export const Wrapper = styled.div`
@@ -53,8 +55,8 @@ export const Items = styled.div`
 
   ${(props) =>
     props.isOpen && {
-      width: "500px",
-      height: "500px",
+      width: props.width || "500px",
+      height: props.height || "500px",
     }}
 
   @media ${breakPoints.mobile} {
@@ -62,9 +64,9 @@ export const Items = styled.div`
     height: 70% !important;
 
     ${(props) =>
-      props.mobileDefaultStyles && {
-        width: `${props.mobileDefaultStyles.width} !important`,
-        height: `${props.mobileDefaultStyles.height} !important`,
+      props.mobileModalSize && {
+        width: `${props.mobileModalSize.width} !important`,
+        height: `${props.mobileModalSize.height} !important`,
       }}
   }
 `;

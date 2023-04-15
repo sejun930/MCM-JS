@@ -17,8 +17,8 @@ const ModalUIPage = (props: {
     show,
     showBGAnimation,
     _ref,
-    styles,
-    mobileDefaultStyles,
+    modalSize,
+    mobileModalSize,
     children,
     showModalOpenAnimation,
     hideCloseButton,
@@ -49,12 +49,13 @@ const ModalUIPage = (props: {
       >
         <Items
           className="mcm-modal-items"
-          style={styles}
-          mobileDefaultStyles={mobileDefaultStyles || {}}
+          mobileModalSize={mobileModalSize || {}}
           showModalOpenAnimation={showModalOpenAnimation}
           onMouseEnter={focusContents}
           isOpen={show}
           ref={_ref}
+          width={modalSize?.width}
+          height={modalSize?.height}
         >
           <CloseButtonWrapper
             className="mcm-modal-close-button-wrapper"
