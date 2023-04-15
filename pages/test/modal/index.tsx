@@ -29,7 +29,7 @@ export default function ModalExamplePage() {
           showBGAnimation
           showModalOpenAnimation
           closeMent="닫기"
-          // styles={{ width: "100px", height: "100px" }}
+          // modalSize={{ height: "100px" }}
         >
           <h1 style={{ textAlign: "center" }}>
             작성된 내용을 삭제하시겠습니까? asd sad sadsa dsadasdsad sadasdasdsa

@@ -9,10 +9,10 @@ export default function SB_Modal(props: ModalPropsType) {
   const {
     show,
     children,
-    styles,
+    modalSize,
+    mobileModalSize,
     showBGAnimation,
     showModalOpenAnimation,
-    mobileDefaultStyles,
     hideCloseButton,
     offAutoClose,
     closeMent,
@@ -34,8 +34,8 @@ export default function SB_Modal(props: ModalPropsType) {
       <Modal
         show={_show}
         onCloseModal={_onCloseModal}
-        styles={styles}
-        mobileDefaultStyles={mobileDefaultStyles}
+        modalSize={modalSize}
+        mobileModalSize={mobileModalSize}
         showBGAnimation={showBGAnimation}
         showModalOpenAnimation={showModalOpenAnimation}
         hideCloseButton={hideCloseButton}
@@ -55,8 +55,8 @@ SB_Modal.propTypes = {
   onCloseModal: PropTypes.func.isRequired,
   showModalOpenAnimation: PropTypes.bool,
   showBGAnimation: PropTypes.bool,
-  styles: PropTypes.shape({}),
-  mobileDefaultStyles: PropTypes.shape({}),
+  modalSize: PropTypes.shape({}),
+  mobileModalSize: PropTypes.shape({}),
   hideCloseButton: PropTypes.bool,
   offAutoClose: PropTypes.bool,
   closeMent: PropTypes.string,
@@ -71,8 +71,8 @@ SB_Modal.defaultProps = {
   },
   showModalOpenAnimation: false,
   showBGAnimation: false,
-  styles: {},
-  mobileDefaultStyles: {},
+  modalSize: {},
+  mobileModalSize: {},
   hideCloseButton: false,
   offAutoClose: false,
   closeMent: "",

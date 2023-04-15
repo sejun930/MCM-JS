@@ -3,16 +3,16 @@ import { MutableRefObject } from "react";
 export interface ModalPropsType {
   children?: React.ReactNode;
   // 렌더될 하위 컴포넌트, 디폴트 값으로 설정되며 Component가 있으면 Component를 렌더한다.
-  styles?: {
+  modalSize?: {
     width?: string;
     height?: string;
   };
-  // 내부 콘텐츠 내용 스타일 지정
-  mobileDefaultStyles?: {
+  // 모달 사이즈 (width, height) 지정
+  mobileModalSize?: {
     width?: string;
     height?: string;
   };
-  // 모바일 환경에서 적용될 스타일 지정 (767px 이하부터 적용)
+  // 모바일 환경에서 적용될 사이즈 (width, height) 지정 (767px 이하부터 적용)
   show: boolean;
   // ** 모달 실행 스위스 변수, true일 경우 실행되며 false일 경우 종료된다. (default : false)
   onCloseModal: () => void;
