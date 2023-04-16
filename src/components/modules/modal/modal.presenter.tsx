@@ -85,7 +85,7 @@ const ModalUIPage = (props: {
             />
           </CloseButtonWrapper>
           <ContentsWrapper
-            className="mcm-modal-contents-wrapper"
+            className="mcm-modal-contents"
             isOpen={show}
             showModalOpenAnimation={showModalOpenAnimation}
           >

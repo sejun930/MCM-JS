@@ -1,6 +1,9 @@
 import React from "react";
-import Modal from "../../../src/components/modules/modal/modal.container";
+import { Modal } from "../../../src";
+// import Modal from "../../../src/components/modules/modal/modal.container";
 import { useState } from "react";
+
+import _Modal from "../../../src/components/modules/modal";
 
 export default function ModalExamplePage() {
   // 모달을 실행하거나 종료 시킬 수 있는 state 값을 설정합니다.
@@ -18,6 +21,7 @@ export default function ModalExamplePage() {
 
   return (
     <div>
+      <button onClick={Modal.open}>클릭</button>
       <form>
         <button onClick={openModal} type="button">
           {" "}
@@ -36,6 +40,8 @@ export default function ModalExamplePage() {
           </h1>
         </Modal>
       </form>
+      <div style={{ height: "2000px" }}></div>
+      <button onClick={() => alert(2)}>클릭</button>
     </div>
   );
 }

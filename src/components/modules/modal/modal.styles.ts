@@ -26,13 +26,13 @@ export const Wrapper = styled.div`
   justify-content: center;
   z-index: -1;
   opacity: 0;
-  /* transition: all 0.3s ease-out; */
 
   ${(props: StyleTypes) =>
     props.isOpen && {
       backgroundColor: "rgba(0, 0, 0, .6)",
       zIndex: 999,
       opacity: 1,
+      display: "flex",
     }}
 
   ${(props) =>

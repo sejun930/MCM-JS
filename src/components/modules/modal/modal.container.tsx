@@ -3,16 +3,16 @@ import _ModalUIPage from "./modal.presenter";
 
 import { ModalPropsType, ModalPropsUITypes } from "./modal.types";
 
-export default function Modal(props: ModalPropsType) {
+export default function _Modal(props: ModalPropsType) {
   const { show, offAutoClose, onCloseModal } = props;
-  const [isOpen, setIsOpen] = useState(show || false);
+  // const [isOpen, setIsOpen] = useState(show || false);
 
   const _ref = useRef() as MutableRefObject<HTMLDivElement>;
 
   // show의 값에 따라 모달 오픈 여부 결정
-  useEffect(() => {
-    setIsOpen(show);
-  }, [show]);
+  // useEffect(() => {
+  //   setIsOpen(show);
+  // }, [show]);
 
   useEffect(() => {
     if (!offAutoClose) {
@@ -37,10 +37,11 @@ export default function Modal(props: ModalPropsType) {
     if (_ref.current) _ref?.current?.click();
   };
 
-  const _props: ModalPropsType & ModalPropsUITypes = { ...props };
-  _props.show = isOpen;
-  _props._ref = _ref;
-  _props.focusContents = focusContents;
-
+  const _props: ModalPropsType & ModalPropsUITypes = {
+    ...props,
+    show,
+    _ref,
+    focusContents,
+  };
   return <_ModalUIPage props={{ ..._props }} />;
 }
