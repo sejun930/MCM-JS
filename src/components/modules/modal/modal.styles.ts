@@ -14,6 +14,44 @@ interface StyleTypes {
   height?: string;
 }
 
+export const ModalWrapper = styled.div`
+  @keyframes MODAL_BG_ANIMATION {
+    from {
+      background-color: rgba(0, 0, 0, 0);
+    }
+    to {
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+  }
+
+  .mcm-modal-open {
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 999;
+    opacity: 1;
+    display: flex;
+
+    .mcm-modal-items {
+      ${(props: StyleTypes) => {
+        const styles = {
+          width: props.width || "500px",
+          height: props.width || "500px",
+        };
+
+        return styles;
+      }}
+    }
+  }
+
+  .mcm-modal-animation {
+    transition: all 0.3s ease-out;
+  }
+
+  .mcm-modal-bg-close-animation {
+    transition: all 0.3s ease-out;
+    background-color: unset;
+  }
+`;
+
 export const Wrapper = styled.div`
   position: fixed;
   width: 100%;
@@ -26,19 +64,6 @@ export const Wrapper = styled.div`
   justify-content: center;
   z-index: -1;
   opacity: 0;
-
-  ${(props: StyleTypes) =>
-    props.isOpen && {
-      backgroundColor: "rgba(0, 0, 0, .6)",
-      zIndex: 999,
-      opacity: 1,
-      display: "flex",
-    }}
-
-  ${(props) =>
-    props.showBGAnimation && {
-      transition: "all 0.3s ease-out",
-    }}
 `;
 
 export const Items = styled.div`
@@ -48,7 +73,7 @@ export const Items = styled.div`
   width: 0px;
   height: 0px;
 
-  ${(props: StyleTypes) =>
+  /* ${(props: StyleTypes) =>
     props.showModalOpenAnimation && {
       transition: "all 0.3s ease",
     }}
@@ -57,7 +82,7 @@ export const Items = styled.div`
     props.isOpen && {
       width: props.width || "500px",
       height: props.height || "500px",
-    }}
+    }} */
 
   @media ${breakPoints.mobile} {
     width: 80% !important;

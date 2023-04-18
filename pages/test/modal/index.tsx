@@ -20,8 +20,18 @@ export default function ModalExamplePage() {
   };
 
   return (
-    <div>
-      <button onClick={Modal.open}>클릭</button>
+    <div id="test">
+      <button
+        onClick={() => {
+          Modal.open({
+            onCloseModal: () => {},
+            showBGAnimation: true,
+            // showModalOpenAnimation: true,
+          });
+        }}
+      >
+        클릭
+      </button>
       <form>
         <button onClick={openModal} type="button">
           {" "}
@@ -33,14 +43,14 @@ export default function ModalExamplePage() {
           showBGAnimation
           showModalOpenAnimation
           closeMent="닫기"
-          // modalSize={{ height: "100px" }}
+          // offAutoClose
         >
           <h1 style={{ textAlign: "center" }}>
             작성된 내용을 삭제하시겠습니까? asd sad sadsa dsadasdsad sadasdasdsa
           </h1>
         </Modal>
       </form>
-      <div style={{ height: "2000px" }}></div>
+      {/* <div style={{ height: "2000px" }}></div> */}
       <button onClick={() => alert(2)}>클릭</button>
     </div>
   );

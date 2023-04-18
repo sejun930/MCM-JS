@@ -1,47 +1,93 @@
-import { MutableRefObject, useEffect, useRef, useState } from "react";
+import { BaseSyntheticEvent, MutableRefObject, useEffect, useRef } from "react";
 import _ModalUIPage from "./modal.presenter";
 
 import { ModalPropsType, ModalPropsUITypes } from "./modal.types";
 
-export default function _Modal(props: ModalPropsType) {
-  const { show, offAutoClose, onCloseModal } = props;
-  // const [isOpen, setIsOpen] = useState(show || false);
+// 1. 1차 모달 렌더 컴포넌트
+export default function _Modal(
+  props: Omit<ModalPropsType, "openIdx" | "_wmo">
+) {
+  console.log(props);
+  return <_RenderModal {...props} />;
+}
 
-  const _ref = useRef() as MutableRefObject<HTMLDivElement>;
+// 2. 최종 모달 렌더 컴포넌트
+export function _RenderModal(props: ModalPropsType) {
+  const {
+    show,
+    offAutoClose,
+    onCloseModal,
+    openIdx,
+    _wmo,
+    showBGAnimation,
+    showModalOpenAnimation,
+  } = props;
 
-  // show의 값에 따라 모달 오픈 여부 결정
-  // useEffect(() => {
-  //   setIsOpen(show);
-  // }, [show]);
+  const _wrapperRef = useRef() as MutableRefObject<HTMLDivElement>;
+  const _itemRef = useRef() as MutableRefObject<HTMLDivElement>;
 
   useEffect(() => {
-    if (!offAutoClose) {
-      // 외부 클릭시 실행되는 이벤트
-      document.addEventListener("mousedown", handleClickEvent, true);
+    if (show) {
+      if (_wrapperRef) {
+        window.setTimeout(() => {
+          _wrapperRef.current?.classList.add("mcm-modal-open");
 
-      return () => {
-        document.removeEventListener("mousedown", handleClickEvent, true);
-      };
-    }
-  }, [show, offAutoClose]);
+          if (showBGAnimation) {
+            _wrapperRef.current?.classList.add("mcm-modal-animation");
+          }
+        }, 0);
+      }
 
-  const handleClickEvent = (event: any) => {
-    if (_ref.current && !_ref.current.contains(event.target)) {
-      if (onCloseModal) onCloseModal();
-      document.removeEventListener("mousedown", handleClickEvent, true);
+      // if (_itemRef) {
+      //   if (showModalOpenAnimation) {
+      //     _itemRef.current.classList.add("mcm-modal-item-animation");
+      //   }
+      // }
     }
+  }, [show]);
+
+  // 모달 닫기 이벤트 실행
+  const _onCloseModal = () => {
+    const hasAnimation = showBGAnimation || showModalOpenAnimation;
+    if (_wmo) {
+      if (openIdx) {
+        const el = document.getElementById(`mcm-modal-${openIdx}`);
+        if (el)
+          setTimeout(() => {
+            el.remove();
+          }, (hasAnimation && 200) || 0);
+      }
+    }
+
+    if (_wrapperRef) {
+      if (_wrapperRef.current.classList.contains("mcm-modal-bg-open-animation"))
+        _wrapperRef.current.classList.remove("mcm-modal-bg-open-animation");
+      _wrapperRef.current.classList.add("mcm-modal-bg-close-animation");
+    }
+
+    if (_itemRef) {
+    }
+
+    if (onCloseModal)
+      setTimeout(() => {
+        onCloseModal();
+      }, (hasAnimation && 200) || 0);
   };
 
-  // 마우스 올릴 경우 모달창을 우선 선택 : 스크롤 이벤트 우선 적용
-  const focusContents = () => {
-    if (_ref.current) _ref?.current?.click();
+  const handleClickEvent = (event: BaseSyntheticEvent) => {
+    if (_itemRef.current && !_itemRef.current.contains(event.target)) {
+      if (!offAutoClose) _onCloseModal();
+    }
   };
 
   const _props: ModalPropsType & ModalPropsUITypes = {
     ...props,
     show,
-    _ref,
-    focusContents,
+    handleClickEvent,
+    _onCloseModal,
+    _itemRef,
+    _wrapperRef,
   };
+
   return <_ModalUIPage props={{ ..._props }} />;
 }
