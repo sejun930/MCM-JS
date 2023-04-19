@@ -16,9 +16,9 @@ const ModalUIPage = (props: {
   const _props = { ...props.props };
   const {
     show,
-    showBGAnimation,
     _itemRef,
     _wrapperRef,
+    _contentsRef,
     modalSize,
     mobileModalSize,
     children,
@@ -44,7 +44,7 @@ const ModalUIPage = (props: {
       mouduleName="Modal"
     >
       {(show && (
-        <ModalWrapper width={modalSize?.width} height={modalSize?.height}>
+        <ModalWrapper>
           <Wrapper
             className="mcm-modal-wrapper"
             onMouseDown={handleClickEvent}
@@ -52,6 +52,7 @@ const ModalUIPage = (props: {
           >
             <Items
               className="mcm-modal-items"
+              modalSize={modalSize || {}}
               mobileModalSize={mobileModalSize || {}}
               showModalOpenAnimation={showModalOpenAnimation}
               isOpen={show}
@@ -60,7 +61,6 @@ const ModalUIPage = (props: {
               <CloseButtonWrapper
                 className="mcm-modal-close-button-wrapper"
                 isOpen={show}
-                isAnimation={showModalOpenAnimation}
                 style={{ top: closeBtnTop }}
                 closeMent={closeMent}
               >
@@ -86,8 +86,7 @@ const ModalUIPage = (props: {
               </CloseButtonWrapper>
               <ContentsWrapper
                 className="mcm-modal-contents"
-                isOpen={show}
-                showModalOpenAnimation={showModalOpenAnimation}
+                ref={_contentsRef}
               >
                 {show ? children : undefined}
               </ContentsWrapper>

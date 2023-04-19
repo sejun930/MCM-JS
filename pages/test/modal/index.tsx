@@ -26,7 +26,7 @@ export default function ModalExamplePage() {
           Modal.open({
             onCloseModal: () => {},
             showBGAnimation: true,
-            // showModalOpenAnimation: true,
+            showModalOpenAnimation: true,
           });
         }}
       >
@@ -43,6 +43,7 @@ export default function ModalExamplePage() {
           showBGAnimation
           showModalOpenAnimation
           closeMent="닫기"
+          // modalSize={{ width: "300px", height: "200px" }}
           // offAutoClose
         >
           <h1 style={{ textAlign: "center" }}>

@@ -42,6 +42,7 @@ export interface ModalPropsType {
 export interface ModalPropsUITypes {
   _itemRef?: MutableRefObject<HTMLDivElement>;
   _wrapperRef?: MutableRefObject<HTMLDivElement>;
+  _contentsRef?: MutableRefObject<HTMLDivElement>;
   handleClickEvent: (event: MouseEvent) => void;
   _onCloseModal: () => void;
 }

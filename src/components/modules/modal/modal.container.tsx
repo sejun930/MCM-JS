@@ -7,7 +7,6 @@ import { ModalPropsType, ModalPropsUITypes } from "./modal.types";
 export default function _Modal(
   props: Omit<ModalPropsType, "openIdx" | "_wmo">
 ) {
-  console.log(props);
   return <_RenderModal {...props} />;
 }
 
@@ -25,53 +24,72 @@ export function _RenderModal(props: ModalPropsType) {
 
   const _wrapperRef = useRef() as MutableRefObject<HTMLDivElement>;
   const _itemRef = useRef() as MutableRefObject<HTMLDivElement>;
+  const _contentsRef = useRef() as MutableRefObject<HTMLDivElement>;
+
+  const hasAnimation = showBGAnimation || showModalOpenAnimation;
 
   useEffect(() => {
+    if (_itemRef) {
+      if (showModalOpenAnimation) {
+        _itemRef.current?.classList.add("mcm-modal-item-minimum");
+      }
+
+      window.setTimeout(() => {
+        if (
+          _itemRef &&
+          _itemRef.current?.classList.contains("mcm-modal-item-minimum")
+        )
+          _itemRef.current?.classList.remove("mcm-modal-item-minimum");
+
+        if (_contentsRef)
+          window.setTimeout(() => {
+            _contentsRef.current?.classList.add("mcm-modal-item-show");
+            _contentsRef.current?.classList.add("mcm-modal-animation");
+          }, 200);
+      }, 0);
+    }
+
     if (show) {
-      if (_wrapperRef) {
-        window.setTimeout(() => {
+      window.setTimeout(() => {
+        if (_wrapperRef.current) {
           _wrapperRef.current?.classList.add("mcm-modal-open");
 
           if (showBGAnimation) {
             _wrapperRef.current?.classList.add("mcm-modal-animation");
           }
-        }, 0);
-      }
+        }
 
-      // if (_itemRef) {
-      //   if (showModalOpenAnimation) {
-      //     _itemRef.current.classList.add("mcm-modal-item-animation");
-      //   }
-      // }
+        if (_itemRef) {
+          if (showBGAnimation) {
+            _itemRef.current?.classList.add("mcm-modal-animation");
+          }
+          _itemRef.current?.classList.add("mcm-modal-item-show");
+        }
+      }, 0);
     }
   }, [show]);
 
   // 모달 닫기 이벤트 실행
   const _onCloseModal = () => {
-    const hasAnimation = showBGAnimation || showModalOpenAnimation;
-    if (_wmo) {
-      if (openIdx) {
-        const el = document.getElementById(`mcm-modal-${openIdx}`);
-        if (el)
-          setTimeout(() => {
-            el.remove();
-          }, (hasAnimation && 200) || 0);
-      }
-    }
-
-    if (_wrapperRef) {
-      if (_wrapperRef.current.classList.contains("mcm-modal-bg-open-animation"))
-        _wrapperRef.current.classList.remove("mcm-modal-bg-open-animation");
+    if (showBGAnimation && _wrapperRef.current)
       _wrapperRef.current.classList.add("mcm-modal-bg-close-animation");
-    }
 
-    if (_itemRef) {
-    }
+    if (showModalOpenAnimation && _itemRef.current)
+      _itemRef.current?.classList.add("mcm-modal-item-minimum");
 
-    if (onCloseModal)
-      setTimeout(() => {
-        onCloseModal();
-      }, (hasAnimation && 200) || 0);
+    if (showModalOpenAnimation && _contentsRef.current)
+      if (_contentsRef.current?.classList.contains("mcm-modal-item-show"))
+        _contentsRef.current?.classList.remove("mcm-modal-item-show");
+
+    setTimeout(() => {
+      // window로 오픈 했을 경우
+      if (_wmo && openIdx) {
+        const el = document.getElementById(`mcm-modal-${openIdx}`);
+        if (el) el.remove();
+      }
+
+      if (onCloseModal) onCloseModal();
+    }, (hasAnimation && 200) || 0);
   };
 
   const handleClickEvent = (event: BaseSyntheticEvent) => {
@@ -87,6 +105,7 @@ export function _RenderModal(props: ModalPropsType) {
     _onCloseModal,
     _itemRef,
     _wrapperRef,
+    _contentsRef,
   };
 
   return <_ModalUIPage props={{ ..._props }} />;
