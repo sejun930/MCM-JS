@@ -6,13 +6,47 @@ interface StyleTypes {
   isOpen?: boolean;
   showBGAnimation?: boolean;
   showModalOpenAnimation?: boolean;
+  modalSize?: { width?: string; height?: string };
   mobileModalSize?: { width?: string; height?: string };
   isAnimation?: boolean;
   hideCloseButton?: boolean;
   closeMent?: string;
-  width?: string;
-  height?: string;
 }
+
+export const ModalWrapper = styled.div`
+  @keyframes MODAL_BG_ANIMATION {
+    from {
+      background-color: rgba(0, 0, 0, 0);
+    }
+    to {
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+  }
+
+  .mcm-modal-open {
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 999;
+    opacity: 1;
+    display: flex;
+  }
+
+  .mcm-modal-animation {
+    transition: all 0.3s;
+  }
+
+  .mcm-modal-bg-close-animation {
+    background-color: unset;
+  }
+
+  .mcm-modal-item-show {
+    opacity: 1;
+  }
+
+  .mcm-modal-item-minimum {
+    width: 0px !important;
+    height: 0px !important;
+  }
+`;
 
 export const Wrapper = styled.div`
   position: fixed;
@@ -26,38 +60,20 @@ export const Wrapper = styled.div`
   justify-content: center;
   z-index: -1;
   opacity: 0;
-  /* transition: all 0.3s ease-out; */
-
-  ${(props: StyleTypes) =>
-    props.isOpen && {
-      backgroundColor: "rgba(0, 0, 0, .6)",
-      zIndex: 999,
-      opacity: 1,
-    }}
-
-  ${(props) =>
-    props.showBGAnimation && {
-      transition: "all 0.3s ease-out",
-    }}
 `;
 
 export const Items = styled.div`
   position: relative;
   background-color: white;
   border-radius: 10px;
-  width: 0px;
-  height: 0px;
+  opacity: 0;
 
-  ${(props: StyleTypes) =>
-    props.showModalOpenAnimation && {
-      transition: "all 0.3s ease",
-    }}
-
-  ${(props) =>
-    props.isOpen && {
-      width: props.width || "500px",
-      height: props.height || "500px",
-    }}
+  ${(props: StyleTypes) => {
+    return {
+      width: props.modalSize?.width ? props.modalSize.width : "500px",
+      height: props.modalSize?.height ? props.modalSize.height : "500px",
+    };
+  }}
 
   @media ${breakPoints.mobile} {
     width: 80% !important;
@@ -103,6 +119,7 @@ export const CloseButtonWrapper = styled.div`
     margin: 0;
     margin-right: 6px;
     display: none;
+    white-space: pre;
 
     // 클로징 멘트가 있을 경우 보이기
     ${(props) =>
@@ -113,6 +130,10 @@ export const CloseButtonWrapper = styled.div`
 
   .mcm-modal-close-ment {
     color: white;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
 `;
 
@@ -125,15 +146,4 @@ export const ContentsWrapper = styled.div`
   transition: unset;
   padding: 1rem;
   opacity: 0;
-
-  ${(props: StyleTypes) => {
-    const styles: { [key: string]: number | string } & CSSProperties = {};
-
-    if (props.isOpen) styles.opacity = 1;
-    if (props.showModalOpenAnimation) {
-      styles.transition = "all 1.6s";
-    }
-
-    return styles;
-  }}
 `;

@@ -1,46 +1,112 @@
-import { MutableRefObject, useEffect, useRef, useState } from "react";
+import { BaseSyntheticEvent, MutableRefObject, useEffect, useRef } from "react";
 import _ModalUIPage from "./modal.presenter";
 
 import { ModalPropsType, ModalPropsUITypes } from "./modal.types";
 
-export default function Modal(props: ModalPropsType) {
-  const { show, offAutoClose, onCloseModal } = props;
-  const [isOpen, setIsOpen] = useState(show || false);
+// 1. 1차 모달 렌더 컴포넌트
+export default function _Modal(
+  props: Omit<ModalPropsType, "openIdx" | "_wmo">
+) {
+  return <_RenderModal {...props} />;
+}
 
-  const _ref = useRef() as MutableRefObject<HTMLDivElement>;
+// 2. 최종 모달 렌더 컴포넌트
+export function _RenderModal(props: ModalPropsType) {
+  const {
+    show,
+    offAutoClose,
+    onCloseModal,
+    openIdx,
+    _wmo,
+    showBGAnimation,
+    showModalOpenAnimation,
+  } = props;
 
-  // show의 값에 따라 모달 오픈 여부 결정
+  const _wrapperRef = useRef() as MutableRefObject<HTMLDivElement>;
+  const _itemRef = useRef() as MutableRefObject<HTMLDivElement>;
+  const _contentsRef = useRef() as MutableRefObject<HTMLDivElement>;
+
+  const hasAnimation = showBGAnimation || showModalOpenAnimation;
+
   useEffect(() => {
-    setIsOpen(show);
+    if (_itemRef) {
+      if (showModalOpenAnimation) {
+        _itemRef.current?.classList.add("mcm-modal-item-minimum");
+      }
+
+      window.setTimeout(() => {
+        if (
+          _itemRef &&
+          _itemRef.current?.classList.contains("mcm-modal-item-minimum")
+        )
+          _itemRef.current?.classList.remove("mcm-modal-item-minimum");
+
+        if (_contentsRef)
+          window.setTimeout(() => {
+            _contentsRef.current?.classList.add("mcm-modal-item-show");
+            _contentsRef.current?.classList.add("mcm-modal-animation");
+          }, 200);
+      }, 0);
+    }
+
+    if (show) {
+      window.setTimeout(() => {
+        if (_wrapperRef.current) {
+          _wrapperRef.current?.classList.add("mcm-modal-open");
+
+          if (showBGAnimation) {
+            _wrapperRef.current?.classList.add("mcm-modal-animation");
+          }
+        }
+
+        if (_itemRef) {
+          if (showBGAnimation) {
+            _itemRef.current?.classList.add("mcm-modal-animation");
+          }
+          _itemRef.current?.classList.add("mcm-modal-item-show");
+        }
+      }, 0);
+    }
   }, [show]);
 
-  useEffect(() => {
-    if (!offAutoClose) {
-      // 외부 클릭시 실행되는 이벤트
-      document.addEventListener("mousedown", handleClickEvent, true);
+  // 모달 닫기 이벤트 실행
+  const _onCloseModal = () => {
+    if (showBGAnimation && _wrapperRef.current)
+      _wrapperRef.current.classList.add("mcm-modal-bg-close-animation");
 
-      return () => {
-        document.removeEventListener("mousedown", handleClickEvent, true);
-      };
-    }
-  }, [show, offAutoClose]);
+    if (showModalOpenAnimation && _itemRef.current)
+      _itemRef.current?.classList.add("mcm-modal-item-minimum");
 
-  const handleClickEvent = (event: any) => {
-    if (_ref.current && !_ref.current.contains(event.target)) {
+    if (showModalOpenAnimation && _contentsRef.current)
+      if (_contentsRef.current?.classList.contains("mcm-modal-item-show"))
+        _contentsRef.current?.classList.remove("mcm-modal-item-show");
+
+    setTimeout(() => {
+      // window로 오픈 했을 경우
+      if (_wmo && openIdx) {
+        const el = document.getElementById(`mcm-modal-${openIdx}`);
+        if (el) el.remove();
+      }
+
       if (onCloseModal) onCloseModal();
-      document.removeEventListener("mousedown", handleClickEvent, true);
+    }, (hasAnimation && 200) || 0);
+  };
+
+  const handleClickEvent = (event: BaseSyntheticEvent) => {
+    if (_itemRef.current && !_itemRef.current.contains(event.target)) {
+      if (!offAutoClose) _onCloseModal();
     }
   };
 
-  // 마우스 올릴 경우 모달창을 우선 선택 : 스크롤 이벤트 우선 적용
-  const focusContents = () => {
-    if (_ref.current) _ref?.current?.click();
+  const _props: ModalPropsType & ModalPropsUITypes = {
+    ...props,
+    show,
+    handleClickEvent,
+    _onCloseModal,
+    _itemRef,
+    _wrapperRef,
+    _contentsRef,
   };
-
-  const _props: ModalPropsType & ModalPropsUITypes = { ...props };
-  _props.show = isOpen;
-  _props._ref = _ref;
-  _props.focusContents = focusContents;
 
   return <_ModalUIPage props={{ ..._props }} />;
 }

@@ -1,4 +1,4 @@
-import { MutableRefObject } from "react";
+import { MouseEvent, MutableRefObject } from "react";
 
 export interface ModalPropsType {
   children?: React.ReactNode;
@@ -33,9 +33,16 @@ export interface ModalPropsType {
     buttonColor?: string;
   };
   // 닫기 버튼에 관한 사이즈, 굵기, 색상에 대한 설정
+  _wmo?: boolean;
+  // (window modal open) window 형식의 오픈 여부
+  openIdx?: number;
+  // state 렌더가 아닌 window 형식의 오픈시 제거할 id 값
 }
 
 export interface ModalPropsUITypes {
-  _ref?: MutableRefObject<HTMLDivElement>;
-  focusContents?: () => void;
+  _itemRef?: MutableRefObject<HTMLDivElement>;
+  _wrapperRef?: MutableRefObject<HTMLDivElement>;
+  _contentsRef?: MutableRefObject<HTMLDivElement>;
+  handleClickEvent: (event: MouseEvent) => void;
+  _onCloseModal: () => void;
 }

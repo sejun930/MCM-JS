@@ -1,4 +1,5 @@
 import {
+  ModalWrapper,
   Wrapper,
   Items,
   ContentsWrapper,
@@ -15,17 +16,18 @@ const ModalUIPage = (props: {
   const _props = { ...props.props };
   const {
     show,
-    showBGAnimation,
-    _ref,
+    _itemRef,
+    _wrapperRef,
+    _contentsRef,
     modalSize,
     mobileModalSize,
     children,
     showModalOpenAnimation,
     hideCloseButton,
-    onCloseModal,
+    _onCloseModal,
     closeMent,
-    focusContents,
     closeButtonInfo,
+    handleClickEvent,
   } = _props;
 
   const _closeButtonSize = getPXForm(
@@ -41,58 +43,57 @@ const ModalUIPage = (props: {
       requiredList={["show", "onCloseModal"]}
       mouduleName="Modal"
     >
-      <Wrapper
-        className="mcm-modal-wrapper"
-        isOpen={show}
-        showBGAnimation={showBGAnimation || false}
-        showModalOpenAnimation={showModalOpenAnimation || false}
-      >
-        <Items
-          className="mcm-modal-items"
-          mobileModalSize={mobileModalSize || {}}
-          showModalOpenAnimation={showModalOpenAnimation}
-          onMouseEnter={focusContents}
-          isOpen={show}
-          ref={_ref}
-          width={modalSize?.width}
-          height={modalSize?.height}
-        >
-          <CloseButtonWrapper
-            className="mcm-modal-close-button-wrapper"
-            isOpen={show}
-            isAnimation={showModalOpenAnimation}
-            style={{ top: closeBtnTop }}
-            closeMent={closeMent}
+      {(show && (
+        <ModalWrapper>
+          <Wrapper
+            className="mcm-modal-wrapper"
+            onMouseDown={handleClickEvent}
+            ref={_wrapperRef}
           >
-            <_Button
-              onClickEvent={onCloseModal}
-              className="mcm-modal-close-ment-button"
-              buttonType="button"
+            <Items
+              className="mcm-modal-items"
+              modalSize={modalSize || {}}
+              mobileModalSize={mobileModalSize || {}}
+              showModalOpenAnimation={showModalOpenAnimation}
+              isOpen={show}
+              ref={_itemRef}
             >
-              <_Text className="mcm-modal-close-ment">{closeMent}</_Text>
-            </_Button>
-            <_CloseButton
-              className="mcm-modal-close-button"
-              buttonColor={closeButtonInfo?.buttonColor || "white"}
-              buttonSize={_closeButtonSize}
-              buttonWeight={getPXForm(
-                closeButtonInfo?.buttonWeight || "1px",
-                "1px"
-              )}
-              styles={{ display: hideCloseButton ? "none" : "flex" }}
-              onClickEvent={onCloseModal}
-              buttonType="button"
-            />
-          </CloseButtonWrapper>
-          <ContentsWrapper
-            className="mcm-modal-contents-wrapper"
-            isOpen={show}
-            showModalOpenAnimation={showModalOpenAnimation}
-          >
-            {show ? children : undefined}
-          </ContentsWrapper>
-        </Items>
-      </Wrapper>
+              <CloseButtonWrapper
+                className="mcm-modal-close-button-wrapper"
+                isOpen={show}
+                style={{ top: closeBtnTop }}
+                closeMent={closeMent}
+              >
+                <_Button
+                  onClickEvent={_onCloseModal}
+                  className="mcm-modal-close-ment-button"
+                  buttonType="button"
+                >
+                  <_Text className="mcm-modal-close-ment">{closeMent}</_Text>
+                </_Button>
+                <_CloseButton
+                  className="mcm-modal-close-button"
+                  buttonColor={closeButtonInfo?.buttonColor || "white"}
+                  buttonSize={_closeButtonSize}
+                  buttonWeight={getPXForm(
+                    closeButtonInfo?.buttonWeight || "1px",
+                    "1px"
+                  )}
+                  styles={{ display: hideCloseButton ? "none" : "flex" }}
+                  onClickEvent={_onCloseModal}
+                  buttonType="button"
+                />
+              </CloseButtonWrapper>
+              <ContentsWrapper
+                className="mcm-modal-contents"
+                ref={_contentsRef}
+              >
+                {show ? children : undefined}
+              </ContentsWrapper>
+            </Items>
+          </Wrapper>
+        </ModalWrapper>
+      )) || <></>}
     </_Error>
   );
 };
