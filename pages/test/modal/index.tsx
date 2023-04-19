@@ -26,7 +26,7 @@ export default function ModalExamplePage() {
           Modal.open({
             onCloseModal: () => {},
             showBGAnimation: true,
-            showModalOpenAnimation: true,
+            // showModalOpenAnimation: true,
           });
         }}
       >
