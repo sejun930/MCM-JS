@@ -32,21 +32,21 @@ export function _RenderModal(props: ModalPropsType) {
     if (_itemRef) {
       if (showModalOpenAnimation) {
         _itemRef.current?.classList.add("mcm-modal-item-minimum");
+
+        window.setTimeout(() => {
+          if (_itemRef.current?.classList.contains("mcm-modal-item-minimum")) {
+            _itemRef.current?.classList.add("mcm-modal-animation");
+            _itemRef.current?.classList.remove("mcm-modal-item-minimum");
+          }
+        }, 0);
       }
 
-      window.setTimeout(() => {
-        if (
-          _itemRef &&
-          _itemRef.current?.classList.contains("mcm-modal-item-minimum")
-        )
-          _itemRef.current?.classList.remove("mcm-modal-item-minimum");
-
-        if (_contentsRef)
-          window.setTimeout(() => {
-            _contentsRef.current?.classList.add("mcm-modal-item-show");
+      if (_contentsRef)
+        window.setTimeout(() => {
+          _contentsRef.current?.classList.add("mcm-modal-item-show");
+          if (showModalOpenAnimation)
             _contentsRef.current?.classList.add("mcm-modal-animation");
-          }, 200);
-      }, 0);
+        }, (showModalOpenAnimation && 200) || 0);
     }
 
     if (show) {
@@ -74,8 +74,14 @@ export function _RenderModal(props: ModalPropsType) {
     if (showBGAnimation && _wrapperRef.current)
       _wrapperRef.current.classList.add("mcm-modal-bg-close-animation");
 
-    if (showModalOpenAnimation && _itemRef.current)
-      _itemRef.current?.classList.add("mcm-modal-item-minimum");
+    if (_itemRef.current) {
+      if (showModalOpenAnimation)
+        _itemRef.current?.classList.add("mcm-modal-item-minimum");
+
+      if (hasAnimation)
+        if (_itemRef.current?.classList.contains("mcm-modal-item-show"))
+          _itemRef.current?.classList.remove("mcm-modal-item-show");
+    }
 
     if (showModalOpenAnimation && _contentsRef.current)
       if (_contentsRef.current?.classList.contains("mcm-modal-item-show"))
