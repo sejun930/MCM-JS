@@ -22,6 +22,7 @@ export function _RenderModal(props: ModalPropsType) {
     showModalOpenAnimation,
   } = props;
 
+  const _modalWrapperRef = useRef() as MutableRefObject<HTMLDivElement>;
   const _wrapperRef = useRef() as MutableRefObject<HTMLDivElement>;
   const _itemRef = useRef() as MutableRefObject<HTMLDivElement>;
   const _contentsRef = useRef() as MutableRefObject<HTMLDivElement>;
@@ -93,7 +94,6 @@ export function _RenderModal(props: ModalPropsType) {
         const el = document.getElementById(`mcm-modal-${openIdx}`);
         if (el) el.remove();
       }
-
       if (onCloseModal) onCloseModal();
     }, (hasAnimation && 200) || 0);
   };
@@ -109,6 +109,7 @@ export function _RenderModal(props: ModalPropsType) {
     show,
     handleClickEvent,
     _onCloseModal,
+    _modalWrapperRef,
     _itemRef,
     _wrapperRef,
     _contentsRef,

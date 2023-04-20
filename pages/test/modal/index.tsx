@@ -16,7 +16,13 @@ export default function ModalExamplePage() {
 
   // 모달을 종료하는 함수입니다.
   const closeModal = () => {
-    setIsOpen(false);
+    console.log(123, setIsOpen(false));
+    // setIsOpen(false);
+  };
+
+  const openWindow = () => {
+    const a = Modal.close();
+    console.log(a);
   };
 
   return (
@@ -25,8 +31,14 @@ export default function ModalExamplePage() {
         onClick={() => {
           Modal.open({
             onCloseModal: () => {},
+
             showBGAnimation: true,
-            // showModalOpenAnimation: true,
+            showModalOpenAnimation: true,
+            children: (
+              <button type="button" onClick={openWindow}>
+                모달 종료
+              </button>
+            ),
           });
         }}
       >
@@ -49,6 +61,16 @@ export default function ModalExamplePage() {
           <h1 style={{ textAlign: "center" }}>
             작성된 내용을 삭제하시겠습니까? asd sad sadsa dsadasdsad sadasdasdsa
           </h1>
+          <button
+            type="button"
+            onClick={() =>
+              Modal.close({
+                onCloseModal: closeModal,
+              })
+            }
+          >
+            모달 종료
+          </button>
         </Modal>
       </form>
       {/* <div style={{ height: "2000px" }}></div> */}

@@ -1,8 +1,11 @@
 import { MouseEvent, MutableRefObject } from "react";
+import OriginModal from "./modal.container";
 
 export interface ModalPropsType {
   children?: React.ReactNode;
   // 렌더될 하위 컴포넌트, 디폴트 값으로 설정되며 Component가 있으면 Component를 렌더한다.
+  className?: string;
+  // wrapper에 삽입될 className
   modalSize?: {
     width?: string;
     height?: string;
@@ -40,9 +43,21 @@ export interface ModalPropsType {
 }
 
 export interface ModalPropsUITypes {
+  _modalWrapperRef?: MutableRefObject<HTMLDivElement>;
   _itemRef?: MutableRefObject<HTMLDivElement>;
   _wrapperRef?: MutableRefObject<HTMLDivElement>;
   _contentsRef?: MutableRefObject<HTMLDivElement>;
   handleClickEvent: (event: MouseEvent) => void;
   _onCloseModal: () => void;
+}
+
+export type ModalType = typeof OriginModal & {
+  open: (props?: Omit<ModalPropsType, "show" | "openIdx" | "_mwo">) => void;
+  close: (props?: ModalCloseFuncType) => boolean;
+};
+
+export interface ModalCloseFuncType {
+  id?: string;
+  className?: string;
+  onCloseModal?: () => void;
 }

@@ -16,6 +16,7 @@ const ModalUIPage = (props: {
   const _props = { ...props.props };
   const {
     show,
+    _modalWrapperRef,
     _itemRef,
     _wrapperRef,
     _contentsRef,
@@ -44,7 +45,7 @@ const ModalUIPage = (props: {
       mouduleName="Modal"
     >
       {(show && (
-        <ModalWrapper>
+        <ModalWrapper ref={_modalWrapperRef}>
           <Wrapper
             className="mcm-modal-wrapper"
             onMouseDown={handleClickEvent}
