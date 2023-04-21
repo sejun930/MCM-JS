@@ -16,13 +16,11 @@ export default function ModalExamplePage() {
 
   // 모달을 종료하는 함수입니다.
   const closeModal = () => {
-    console.log(123, setIsOpen(false));
-    // setIsOpen(false);
+    setIsOpen(false);
   };
 
   const openWindow = () => {
     const a = Modal.close();
-    console.log(a);
   };
 
   return (
@@ -51,6 +49,8 @@ export default function ModalExamplePage() {
         </button>
         <Modal
           show={isOpen}
+          className="test-state-modal"
+          id="test-state-modal-id"
           onCloseModal={closeModal}
           showBGAnimation
           showModalOpenAnimation
@@ -66,6 +66,7 @@ export default function ModalExamplePage() {
             onClick={() =>
               Modal.close({
                 onCloseModal: closeModal,
+                id: "test-state-modal-id",
               })
             }
           >

@@ -8,13 +8,18 @@ import {
 
 import { ModalPropsType, ModalPropsUITypes } from "./modal.types";
 import { _Button, _Text, _CloseButton, _Error } from "mcm-js-commons";
+import { getAllComponentsClassName } from "mcm-js-commons/dist/hooks";
+
 import { getPXForm } from "mcm-js-commons/dist/hooks";
+import { modalClassList } from "./modal.class";
 
 const ModalUIPage = (props: {
   [props: string]: ModalPropsType & ModalPropsUITypes;
 }) => {
   const _props = { ...props.props };
   const {
+    className,
+    id,
     show,
     _modalWrapperRef,
     _itemRef,
@@ -47,12 +52,15 @@ const ModalUIPage = (props: {
       {(show && (
         <ModalWrapper ref={_modalWrapperRef}>
           <Wrapper
-            className="mcm-modal-wrapper"
+            className={getAllComponentsClassName(
+              modalClassList.wrapper,
+              className
+            )}
             onMouseDown={handleClickEvent}
             ref={_wrapperRef}
           >
             <Items
-              className="mcm-modal-items"
+              className={modalClassList.items}
               modalSize={modalSize || {}}
               mobileModalSize={mobileModalSize || {}}
               showModalOpenAnimation={showModalOpenAnimation}
@@ -60,20 +68,22 @@ const ModalUIPage = (props: {
               ref={_itemRef}
             >
               <CloseButtonWrapper
-                className="mcm-modal-close-button-wrapper"
+                className={modalClassList.closeButtonWrapper}
                 isOpen={show}
                 style={{ top: closeBtnTop }}
                 closeMent={closeMent}
               >
                 <_Button
                   onClickEvent={_onCloseModal}
-                  className="mcm-modal-close-ment-button"
+                  className={modalClassList.closeButtonMentButton}
                   buttonType="button"
                 >
-                  <_Text className="mcm-modal-close-ment">{closeMent}</_Text>
+                  <_Text className={modalClassList.closeButtonMent}>
+                    {closeMent}
+                  </_Text>
                 </_Button>
                 <_CloseButton
-                  className="mcm-modal-close-button"
+                  className={modalClassList.closeButton}
                   buttonColor={closeButtonInfo?.buttonColor || "white"}
                   buttonSize={_closeButtonSize}
                   buttonWeight={getPXForm(
@@ -86,7 +96,7 @@ const ModalUIPage = (props: {
                 />
               </CloseButtonWrapper>
               <ContentsWrapper
-                className="mcm-modal-contents"
+                className={modalClassList.contents}
                 ref={_contentsRef}
               >
                 {show ? children : undefined}

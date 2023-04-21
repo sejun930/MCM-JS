@@ -1,3 +1,3 @@
-import { ModalPropsType } from "../../components/modules/modal/modal.types";
+import { ModalPropsType } from "../../components/modules/modal/component/modal.types";
 
 export type { ModalPropsType };
