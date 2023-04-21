@@ -51,6 +51,8 @@ export default function ModalExamplePage() {
         </button>
         <Modal
           show={isOpen}
+          className="test-state-modal"
+          id="test-state-modal-id"
           onCloseModal={closeModal}
           showBGAnimation
           showModalOpenAnimation
@@ -66,6 +68,7 @@ export default function ModalExamplePage() {
             onClick={() =>
               Modal.close({
                 onCloseModal: closeModal,
+                id: "test-state-modal-id",
               })
             }
           >

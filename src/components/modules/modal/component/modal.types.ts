@@ -6,6 +6,8 @@ export interface ModalPropsType {
   // 렌더될 하위 컴포넌트, 디폴트 값으로 설정되며 Component가 있으면 Component를 렌더한다.
   className?: string;
   // wrapper에 삽입될 className
+  id?: string;
+  // wrapper에 삽입될 id
   modalSize?: {
     width?: string;
     height?: string;

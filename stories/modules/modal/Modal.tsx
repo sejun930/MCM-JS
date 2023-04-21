@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-import Modal from "../../../src/components/modules/modal/modal.container";
-import { ModalPropsType } from "../../../src/components/modules/modal/modal.types";
+import Modal from "../../../src/components/modules/modal/component/modal.container";
+import { ModalPropsType } from "../../../src/components/modules/modal/component/modal.types";
 import { _Button } from "mcm-js-commons";
 
 export default function SB_Modal(props: ModalPropsType) {

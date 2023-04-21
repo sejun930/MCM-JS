@@ -14,15 +14,6 @@ interface StyleTypes {
 }
 
 export const ModalWrapper = styled.div`
-  @keyframes MODAL_BG_ANIMATION {
-    from {
-      background-color: rgba(0, 0, 0, 0);
-    }
-    to {
-      background-color: rgba(0, 0, 0, 0.6);
-    }
-  }
-
   .mcm-modal-open {
     background-color: rgba(0, 0, 0, 0.6);
     z-index: 999;
@@ -34,7 +25,7 @@ export const ModalWrapper = styled.div`
     transition: all 0.3s;
   }
 
-  .mcm-modal-bg-close-animation {
+  .mcm-modal-bg-close {
     background-color: unset;
   }
 
@@ -97,20 +88,18 @@ export const CloseButtonWrapper = styled.div`
   background-color: unset;
   border: unset;
 
-  ${(props: StyleTypes) =>
-    props.isOpen && {
-      opacity: 1,
-    }};
+  ${(props: StyleTypes) => {
+    const styles: { [key: string]: string | number } & CSSProperties = {};
 
-  ${(props) =>
-    props.isAnimation && {
-      transition: "all .3s ease-out",
-    }};
+    // 닫기 버튼 보이기
+    if (props.isOpen) styles.opacity = 1;
+    // 애니메이션 적용하기
+    if (props.isAnimation) styles.transition = "all .3s ease-out";
+    // 버튼 숨기기
+    if (props.hideCloseButton) styles.display = "none";
 
-  ${(props) =>
-    props.hideCloseButton && {
-      display: "none",
-    }};
+    return styles;
+  }}
 
   .mcm-modal-close-ment-button {
     background-color: unset;
