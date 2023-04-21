@@ -16,13 +16,11 @@ export default function ModalExamplePage() {
 
   // 모달을 종료하는 함수입니다.
   const closeModal = () => {
-    console.log(123, setIsOpen(false));
-    // setIsOpen(false);
+    setIsOpen(false);
   };
 
   const openWindow = () => {
     const a = Modal.close();
-    console.log(a);
   };
 
   return (

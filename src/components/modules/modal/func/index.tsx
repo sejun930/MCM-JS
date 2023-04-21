@@ -1,4 +1,4 @@
-import { render as reactRender } from "rc-util/lib/React/render";
+import { createRoot } from "react-dom/client";
 
 import OriginModal from "../component/modal.container";
 import Modal from "../";
@@ -16,7 +16,7 @@ const openModal = (props?: ModalCloseFuncType) => {
   _div.setAttribute("id", `mcm-modal-${++idx}`);
 
   document.body.appendChild(_div);
-  reactRender(
+  createRoot(_div).render(
     <OriginModal
       show={true}
       onCloseModal={() => props?.onCloseModal}
@@ -24,8 +24,7 @@ const openModal = (props?: ModalCloseFuncType) => {
       openIdx={idx}
       _wmo={true}
       {...props}
-    ></OriginModal>,
-    _div
+    ></OriginModal>
   );
 };
 
