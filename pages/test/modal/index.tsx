@@ -28,8 +28,6 @@ export default function ModalExamplePage() {
       <button
         onClick={() => {
           Modal.open({
-            onCloseModal: () => {},
-
             showBGAnimation: true,
             showModalOpenAnimation: true,
             children: (
