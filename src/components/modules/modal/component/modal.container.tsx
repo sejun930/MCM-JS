@@ -99,6 +99,11 @@ export function _RenderModal(props: ModalPropsType) {
         const el = document.getElementById(`mcm-modal-${openIdx}`);
         if (el) el.remove();
       }
+
+      if (_wrapperRef.current) {
+        const parents = _wrapperRef.current.parentElement;
+        if (parents) parents.remove();
+      }
       if (onCloseModal) onCloseModal();
     }, (hasAnimation && 200) || 0);
   };

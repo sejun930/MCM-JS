@@ -7,7 +7,7 @@ import _Modal from "../../../src/components/modules/modal";
 
 export default function ModalExamplePage() {
   // 모달을 실행하거나 종료 시킬 수 있는 state 값을 설정합니다.
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   // 모달을 실행하는 함수입니다.
   const openModal = () => {
@@ -16,12 +16,15 @@ export default function ModalExamplePage() {
 
   // 모달을 종료하는 함수입니다.
   const closeModal = () => {
+    console.log("click");
+    Modal.close({ id: "aaaa" });
     setIsOpen(false);
   };
 
   const openWindow = () => {
     const a = Modal.close();
   };
+  console.log(isOpen);
 
   return (
     <div id="test">
@@ -30,18 +33,26 @@ export default function ModalExamplePage() {
           Modal.open({
             showBGAnimation: true,
             showModalOpenAnimation: true,
+            id: "aaaa",
+            className: "bbb",
             children: (
-              <button type="button" onClick={openWindow}>
-                모달 종료
-              </button>
+              <Modal
+                show={true}
+                onCloseModal={closeModal}
+                modalSize={{ width: "100px", height: "100px" }}
+                showBGAnimation
+                showModalOpenAnimation
+              >
+                111
+              </Modal>
             ),
           });
         }}
       >
-        클릭
+        클릭2
       </button>
       <form>
-        <button onClick={openModal} type="button">
+        {/* <button onClick={openModal} type="button">
           {" "}
           모달 실행하기{" "}
         </button>
@@ -53,8 +64,6 @@ export default function ModalExamplePage() {
           showBGAnimation
           showModalOpenAnimation
           closeMent="닫기"
-          // modalSize={{ width: "300px", height: "200px" }}
-          // offAutoClose
         >
           <h1 style={{ textAlign: "center" }}>
             작성된 내용을 삭제하시겠습니까? asd sad sadsa dsadasdsad sadasdasdsa
@@ -70,7 +79,7 @@ export default function ModalExamplePage() {
           >
             모달 종료
           </button>
-        </Modal>
+        </Modal> */}
       </form>
       {/* <div style={{ height: "2000px" }}></div> */}
       <button onClick={() => alert(2)}>클릭</button>
