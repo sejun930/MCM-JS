@@ -7,82 +7,87 @@ import _Modal from "../../../src/components/modules/modal";
 
 export default function ModalExamplePage() {
   // 모달을 실행하거나 종료 시킬 수 있는 state 값을 설정합니다.
-  const [isOpen, setIsOpen] = useState(true);
+  const [outerOpen, setOutOpen] = useState(false);
+  const [innerOpen, setInnerOpen] = useState(false);
+  const [lastOpen, setLastOpen] = useState(false);
 
   // 모달을 실행하는 함수입니다.
-  const openModal = () => {
-    setIsOpen(true);
+  const openOuterModal = () => {
+    setOutOpen(true);
+    setInnerOpen(true);
+    setLastOpen(true);
   };
 
   // 모달을 종료하는 함수입니다.
   const closeModal = () => {
-    console.log("click");
-    Modal.close({ id: "aaaa" });
-    setIsOpen(false);
+    setOutOpen(false);
   };
 
-  const openWindow = () => {
-    const a = Modal.close();
+  const closeInnerOpen = () => {
+    Modal.close();
+    // setInnerOpen(false);
   };
-  console.log(isOpen);
 
   return (
     <div id="test">
-      <button
-        onClick={() => {
-          Modal.open({
-            showBGAnimation: true,
-            showModalOpenAnimation: true,
-            id: "aaaa",
-            className: "bbb",
-            children: (
+      <form>
+        <p>
+          <button onClick={openOuterModal} type="button">
+            {" "}
+            모달 실행하기 - Use With State
+          </button>
+          <Modal
+            show={outerOpen}
+            onCloseModal={() => setOutOpen(false)}
+            id="outer-modal"
+            showBGAnimation
+            showModalOpenAnimation
+          >
+            <Modal
+              show={innerOpen}
+              onCloseModal={() => setInnerOpen(false)}
+              modalSize={{ width: "250px", height: "250px" }}
+              id="inner-modal"
+              showBGAnimation
+              showModalOpenAnimation
+            >
               <Modal
-                show={true}
-                onCloseModal={closeModal}
+                show={lastOpen}
+                onCloseModal={() => setLastOpen(false)}
                 modalSize={{ width: "100px", height: "100px" }}
                 showBGAnimation
                 showModalOpenAnimation
-              >
-                111
-              </Modal>
-            ),
-          });
-        }}
-      >
-        클릭2
-      </button>
-      <form>
-        {/* <button onClick={openModal} type="button">
-          {" "}
-          모달 실행하기{" "}
-        </button>
-        <Modal
-          show={isOpen}
-          className="test-state-modal"
-          id="test-state-modal-id"
-          onCloseModal={closeModal}
-          showBGAnimation
-          showModalOpenAnimation
-          closeMent="닫기"
-        >
-          <h1 style={{ textAlign: "center" }}>
-            작성된 내용을 삭제하시겠습니까? asd sad sadsa dsadasdsad sadasdasdsa
-          </h1>
+              ></Modal>
+            </Modal>
+          </Modal>
+        </p>
+        <p>
           <button
-            type="button"
             onClick={() =>
-              Modal.close({
-                onCloseModal: closeModal,
-                id: "test-state-modal-id",
+              Modal.open({
+                onCloseModal: () => Modal.close(),
+                showBGAnimation: true,
+                showModalOpenAnimation: true,
+                id: "aaa",
+                children: (
+                  <Modal
+                    show={true}
+                    onCloseModal={() => Modal.close()}
+                    modalSize={{ width: "300px", height: "300px" }}
+                    showBGAnimation
+                    showModalOpenAnimation
+                  >
+                    333
+                  </Modal>
+                ),
               })
             }
+            type="button"
           >
-            모달 종료
+            모달 실행하기 - In Function
           </button>
-        </Modal> */}
+        </p>
       </form>
-      {/* <div style={{ height: "2000px" }}></div> */}
-      <button onClick={() => alert(2)}>클릭</button>
     </div>
   );
 }

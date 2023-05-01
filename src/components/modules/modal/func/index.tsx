@@ -5,6 +5,7 @@ import Modal from "../";
 
 import { ModalCloseFuncType } from "../component/modal.types";
 import { modalClassList, modalFuncClass } from "../component/modal.class";
+import { MutableRefObject, ReactNode } from "react";
 
 // window로 open할 경우 삭제할 수 있는 id값 설정
 let idx = 0;
@@ -28,49 +29,8 @@ const openModal = (props?: ModalCloseFuncType) => {
   );
 };
 
+// 모달 종료 (이벤트 적용)하기
 const closeModal = (props?: ModalCloseFuncType) => {
-  // 모달 종료 (이벤트 적용)하기
-  const closeModal = async (node: Element) => {
-    const origin = node;
-    const wrapper = findNode(modalClassList.wrapper, origin);
-    const items = findNode(modalClassList.items, wrapper || origin);
-    const contents = findNode(modalClassList.items, items || origin);
-
-    let hasAnimation = false;
-
-    // wrapper에 관한 종료 처리
-    if (wrapper) {
-      if (wrapper.classList.contains(modalFuncClass.open))
-        wrapper.classList.remove(modalFuncClass.open);
-
-      if (wrapper.classList.contains(modalFuncClass.animation))
-        hasAnimation = true;
-    }
-
-    if (items) {
-      // items에 관한 종료 처리
-      if (items.classList.contains(modalFuncClass.animation)) {
-        hasAnimation = true;
-        items.classList.add(modalFuncClass.minimum);
-      }
-    }
-
-    if (contents) {
-      // contents에 관한 종료 처리
-      if (contents.classList.contains(modalFuncClass.itemShow))
-        contents.classList.remove(modalFuncClass.itemShow);
-
-      if (contents.classList.contains(modalFuncClass.animation))
-        hasAnimation = true;
-    }
-
-    // 모달 최종 종료하기
-    window.setTimeout(() => {
-      if (props?.onCloseModal) props.onCloseModal();
-      origin.remove();
-    }, (hasAnimation && 200) || 0);
-  };
-
   // 해당 노드 데이터 찾기
   const findNode = (className: string, startNode: Element): Element | null => {
     let result = null;
@@ -94,8 +54,85 @@ const closeModal = (props?: ModalCloseFuncType) => {
     return result;
   };
 
-  if ((!props?.id && !props?.className) || props?.className) {
-    // 열려있는 모든 모달을 종료
+  const closeModal = async (node: Element) => {
+    const origin = node;
+    const wrapper = findNode(modalClassList.wrapper, origin);
+    const items = findNode(modalClassList.items, wrapper || origin);
+    const contents = findNode(modalClassList.contents, items || origin);
+
+    console.log(node, wrapper, items, contents);
+
+    let hasAnimation = false;
+
+    // wrapper에 관한 종료 처리
+    if (wrapper) {
+      if (wrapper?.classList.contains(modalFuncClass.open))
+        wrapper.classList.remove(modalFuncClass.open);
+
+      if (wrapper?.classList.contains(modalFuncClass.animation))
+        hasAnimation = true;
+    }
+
+    if (items) {
+      // items에 관한 종료 처리
+      if (items?.classList.contains(modalFuncClass.animation)) {
+        hasAnimation = true;
+        items.classList.add(modalFuncClass.minimum);
+      }
+    }
+
+    if (contents) {
+      // contents에 관한 종료 처리
+      if (contents?.classList.contains(modalFuncClass.itemShow))
+        contents.classList.remove(modalFuncClass.itemShow);
+
+      if (contents?.classList.contains(modalFuncClass.animation))
+        hasAnimation = true;
+    }
+
+    // 모달 최종 종료하기
+    window.setTimeout(() => {
+      // if (props?.onCloseModal) props.onCloseModal();
+      // console.log(origin);
+      if (origin) origin.remove();
+    }, (hasAnimation && 200) || 0);
+  };
+
+  const removeDefault = () => {
+    // props를 전달받지 않으면 해당 모달만 종료
+    const body = document.body;
+    const list = Array.from(body.getElementsByClassName("mcm-modal-wrapper"));
+    const current = list.at(-1);
+
+    // 제일 마지막 요소가 현재 오픈되어 있는 모달
+    if (current !== undefined) {
+      if (
+        current?.parentElement?.parentElement?.classList.contains(
+          modalFuncClass.windowOpen
+        )
+      ) {
+        // window로 오픈했을 경우
+        closeModal(current.parentElement?.parentElement);
+      } else if (current.parentElement) closeModal(current.parentElement);
+    }
+  };
+
+  const getIsWindow = (el: Element) => {
+    return el.parentElement?.parentElement?.classList.contains(
+      modalFuncClass.windowOpen
+    );
+  };
+
+  if (props?.id) {
+    // id가 있다면 우선 적용
+    const el = document.getElementById(props.id);
+    if (el) {
+      if (getIsWindow(el) && el?.parentElement?.parentElement) {
+        closeModal(el.parentElement.parentElement);
+      }
+    }
+  } else if (props?.className) {
+    // 모든 className 모달 종료
     const list = document.getElementsByClassName(
       props?.className || modalClassList.wrapper
     );
@@ -112,20 +149,7 @@ const closeModal = (props?: ModalCloseFuncType) => {
         else if (el.parentElement) closeModal(el.parentElement);
       });
   } else {
-    // props가 전달받은 경우
-    if (props.id) {
-      const el = document.getElementById(props.id);
-      if (el) closeModal(el);
-      else
-        Modal.open({
-          children: `입력된 "${props.id}" id 값을 찾을 수 없습니다.`,
-          onCloseModal: () => {},
-          modalSize: { width: "300px", height: "80px" },
-          mobileModalSize: { width: "60%", height: "30%" },
-          showModalOpenAnimation: true,
-          closeMent: "확인",
-        });
-    }
+    removeDefault();
   }
 
   return true;

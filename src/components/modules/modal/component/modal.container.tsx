@@ -4,6 +4,8 @@ import _ModalUIPage from "./modal.presenter";
 import { ModalPropsType, ModalPropsUITypes } from "./modal.types";
 import { modalFuncClass } from "./modal.class";
 
+import { closeModal } from "../func";
+
 // 1. 1차 모달 렌더 컴포넌트
 export default function _Modal(
   props: Omit<ModalPropsType, "openIdx" | "_wmo">
@@ -95,22 +97,25 @@ export function _RenderModal(props: ModalPropsType) {
 
     setTimeout(() => {
       // window로 오픈 했을 경우
-      if (_wmo && openIdx) {
-        const el = document.getElementById(`mcm-modal-${openIdx}`);
-        if (el) el.remove();
-      }
-
-      if (_wrapperRef.current) {
-        const parents = _wrapperRef.current.parentElement;
-        if (parents) parents.remove();
-      }
+      // if (_wmo && openIdx) {
+      //   const el = document.getElementById(`mcm-modal-${openIdx}`);
+      //   if (el) el.remove();
+      // }
+      // if (_wrapperRef.current) {
+      //   const parents = _wrapperRef.current.parentElement;
+      //   if (parents) parents.remove();
+      // }
       if (onCloseModal) onCloseModal();
     }, (hasAnimation && 200) || 0);
   };
 
   const handleClickEvent = (event: BaseSyntheticEvent) => {
     if (_itemRef.current && !_itemRef.current.contains(event.target)) {
-      if (!offAutoClose) _onCloseModal();
+      if (!offAutoClose) {
+        window.setTimeout(() => {
+          _onCloseModal();
+        }, 0);
+      }
     }
   };
 
