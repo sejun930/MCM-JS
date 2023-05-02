@@ -16,7 +16,14 @@ const openModal = (props?: ModalCloseFuncType) => {
   _div.setAttribute("class", modalFuncClass.windowOpen);
   _div.setAttribute("id", `mcm-modal-${++idx}`);
 
-  document.body.appendChild(_div);
+  const parents = Array.from(
+    document.getElementsByClassName("mcm-modal-contents")
+  );
+  // 최상위 모달이 하나도 없을 경우에는 body에 렌더
+  if (!parents.length) document.body.appendChild(_div);
+  // 상위 모달에 바로 렌더
+  else parents.at(-1)?.appendChild(_div);
+
   createRoot(_div).render(
     <OriginModal
       show={true}
@@ -60,23 +67,21 @@ const closeModal = (props?: ModalCloseFuncType) => {
     const items = findNode(modalClassList.items, wrapper || origin);
     const contents = findNode(modalClassList.contents, items || origin);
 
-    console.log(node, wrapper, items, contents);
-
-    let hasAnimation = false;
+    // let hasAnimation = false;
 
     // wrapper에 관한 종료 처리
     if (wrapper) {
       if (wrapper?.classList.contains(modalFuncClass.open))
         wrapper.classList.remove(modalFuncClass.open);
 
-      if (wrapper?.classList.contains(modalFuncClass.animation))
-        hasAnimation = true;
+      // if (wrapper?.classList.contains(modalFuncClass.animation))
+      //   hasAnimation = true;
     }
 
     if (items) {
       // items에 관한 종료 처리
       if (items?.classList.contains(modalFuncClass.animation)) {
-        hasAnimation = true;
+        // hasAnimation = true;
         items.classList.add(modalFuncClass.minimum);
       }
     }
@@ -86,22 +91,20 @@ const closeModal = (props?: ModalCloseFuncType) => {
       if (contents?.classList.contains(modalFuncClass.itemShow))
         contents.classList.remove(modalFuncClass.itemShow);
 
-      if (contents?.classList.contains(modalFuncClass.animation))
-        hasAnimation = true;
+      // if (contents?.classList.contains(modalFuncClass.animation))
+      //   hasAnimation = true;
     }
 
     // 모달 최종 종료하기
-    window.setTimeout(() => {
-      // if (props?.onCloseModal) props.onCloseModal();
-      // console.log(origin);
-      if (origin) origin.remove();
-    }, (hasAnimation && 200) || 0);
+    if (origin && origin.parentNode) origin.remove();
   };
 
   const removeDefault = () => {
     // props를 전달받지 않으면 해당 모달만 종료
     const body = document.body;
-    const list = Array.from(body.getElementsByClassName("mcm-modal-wrapper"));
+    const list = Array.from(
+      body.getElementsByClassName(modalClassList.wrapper)
+    );
     const current = list.at(-1);
 
     // 제일 마지막 요소가 현재 오픈되어 있는 모달
@@ -125,11 +128,25 @@ const closeModal = (props?: ModalCloseFuncType) => {
 
   if (props?.id) {
     // id가 있다면 우선 적용
-    const el = document.getElementById(props.id);
+    let el: HTMLElement | null = document.getElementById(props.id);
+
     if (el) {
-      if (getIsWindow(el) && el?.parentElement?.parentElement) {
-        closeModal(el.parentElement.parentElement);
+      // window로 오픈했을 경우
+      if (getIsWindow(el)) {
+        if (el?.parentElement?.parentElement)
+          closeModal(el?.parentElement.parentElement);
+      } else {
+        // state로 오픈했을 경우
+        if (el.parentElement) closeModal(el.parentElement);
       }
+    } else {
+      Modal.open({
+        children: `입력된 "${props.id}" id 선택자를 찾을 수 없습니다.`,
+        className: "wrong-modal-select",
+      });
+
+      // 입력한 id값이 잘못된 값이라면
+      removeDefault();
     }
   } else if (props?.className) {
     // 모든 className 모달 종료
@@ -149,6 +166,7 @@ const closeModal = (props?: ModalCloseFuncType) => {
         else if (el.parentElement) closeModal(el.parentElement);
       });
   } else {
+    // 선택자 지정이 없다면 자신만 종료
     removeDefault();
   }
 
