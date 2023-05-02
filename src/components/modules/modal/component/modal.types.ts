@@ -53,8 +53,11 @@ export interface ModalPropsUITypes {
   _onCloseModal: () => void;
 }
 
+type ModalOmitOpenWindowType = Omit<ModalPropsType, "openIdx" | "_mwo">;
+type ModalPartialWithToggleType = Partial<ModalOmitOpenWindowType>;
+
 export type ModalType = typeof OriginModal & {
-  open: (props?: Omit<ModalPropsType, "show" | "openIdx" | "_mwo">) => void;
+  open: (props?: ModalPartialWithToggleType) => void;
   close: (props?: ModalCloseFuncType) => boolean;
 };
 

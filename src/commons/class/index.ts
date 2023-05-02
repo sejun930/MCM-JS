@@ -1,3 +1,7 @@
 import { modalClassList } from "../../components/modules/modal/component/modal.class";
 
-export type { modalClassList };
+const classList = {
+  modal: modalClassList as typeof modalClassList,
+};
+
+export default classList;
