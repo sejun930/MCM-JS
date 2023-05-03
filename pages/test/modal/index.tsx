@@ -40,14 +40,20 @@ export default function ModalExamplePage() {
         </button>
         <Modal
           show={outerOpen}
-          onCloseModal={() => setOutOpen(false)}
+          onCloseModal={() => {
+            console.log("11");
+            setOutOpen(false);
+          }}
           id="outer-modal"
           showBGAnimation
           showModalOpenAnimation
         >
           <Modal
             show={innerOpen}
-            onCloseModal={() => setInnerOpen(false)}
+            onCloseModal={() => {
+              console.log(22);
+              setInnerOpen(false);
+            }}
             modalSize={{ width: "250px", height: "250px" }}
             id="inner-modal"
             showBGAnimation
@@ -102,7 +108,7 @@ export default function ModalExamplePage() {
           onCloseModal={() => setOuterOpen2(false)}
           showBGAnimation
           showModalOpenAnimation
-          className="aaa"
+          className="aaab"
         >
           <Modal
             show={true}
@@ -123,9 +129,9 @@ export default function ModalExamplePage() {
             >
               <Modal
                 show={true}
-                onCloseModal={() => Modal.close({ id: "bbbb" })}
-                showBGAnimation={false}
-                showModalOpenAnimation={false}
+                onCloseModal={() => Modal.close({ className: "aaa" })}
+                showBGAnimation
+                showModalOpenAnimation
                 modalSize={{ width: "200px", height: "200px" }}
                 className="bbb"
               ></Modal>

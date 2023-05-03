@@ -195,7 +195,7 @@ const closeModal = (props?: ModalCloseFuncType) => {
 };
 
 // 모달 닫기 최종 함수
-export const closeModalFn = ({
+export const closeModalFn = async ({
   wrapperRef, // wrapper 태그
   itemRef, // item 태그
   contentsRef, // contents 태그
@@ -229,16 +229,18 @@ export const closeModalFn = ({
     if (contentsRef?.classList.contains(modalFuncClass.itemShow))
       contentsRef?.classList.remove(modalFuncClass.itemShow);
 
-  window.setTimeout(() => {
-    if (target) {
-      target.remove();
-    } else if (_wmo && openIdx) {
-      const el = document.getElementById(`mcm-modal-${openIdx}`);
-      if (el) {
-        el.remove();
-      }
-    }
-  }, ((showBGAnimation || showModalOpenAnimation) && 200) || 0);
+  const wait = (time: number) => new Promise((res) => setTimeout(res, time));
+  await wait(((showBGAnimation || showModalOpenAnimation) && 100) || 0);
+  if (target) {
+    return target;
+  } else if (_wmo && openIdx) {
+    // window로 오픈했을 경우
+    const el = document.getElementById(`mcm-modal-${openIdx}`);
+    if (el) return el;
+  } else {
+    // 그외 state를 이용해서 오픈했을 경우
+    if (wrapperRef.parentElement) return wrapperRef.parentElement;
+  }
 };
 
 export { openModal, closeModal };

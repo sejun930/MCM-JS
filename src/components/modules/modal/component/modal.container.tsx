@@ -90,18 +90,16 @@ export function _RenderModal(props: ModalPropsType) {
     }
   }, [show]);
 
+  useEffect(() => {});
+
   // 모달 닫기 이벤트 실행
-  const _onCloseModal = () => {
-    console.log(123123);
-    // const wrapperList = Array.from(
-    //   document.getElementsByClassName(modalClassList.wrapper)
-    // );
+  const _onCloseModal = async () => {
+    console.log(333, ableClose);
     if (!ableClose) return;
     ableClose = false;
-    // // 가장 최상위 모달 종료하기
 
     // onCloseModal을 전달하지 않으면 해당 모달 닫기
-    closeModalFn({
+    await closeModalFn({
       wrapperRef: _wrapperRef.current,
       itemRef: _itemRef.current,
       contentsRef: _contentsRef.current,
@@ -109,18 +107,35 @@ export function _RenderModal(props: ModalPropsType) {
       showModalOpenAnimation: showModalOpenAnimation || false,
       openIdx,
       _wmo,
+    }).then((node) => {
+      if (onCloseModal !== undefined) onCloseModal();
+
+      window.setTimeout(() => {
+        let wrapperList = Array.from(
+          document.getElementsByClassName(modalClassList.wrapper)
+        ).map((node) =>
+          openIdx && _wmo
+            ? node.parentElement?.parentElement
+            : node.parentElement
+        );
+        if (wrapperList.length) ableClose = true;
+
+        wrapperList
+          .filter((nodeEl) => nodeEl === node)
+          .forEach((node) => node?.remove());
+      }, 0);
+
+      // wrapperList = wrapperList.filter((nodeFilter) => nodeFilter === node);
+      // if (wrapperList.length) {
+      //   wrapperList.forEach((node) => node?.remove());
+      // }
     });
-    // setTimeout(() => {
-    //   if (onCloseModal) onCloseModal();
-    //   if (wrapperList.length) ableClose = true;
-    // }, (hasAnimation && 200) || 0);
   };
 
   const handleClickEvent = (event: BaseSyntheticEvent) => {
     if (_itemRef.current && !_itemRef.current.contains(event.target)) {
       if (!offAutoClose && ableClose) {
-        if (onCloseModal) onCloseModal();
-        else _onCloseModal();
+        _onCloseModal();
       }
     }
   };
