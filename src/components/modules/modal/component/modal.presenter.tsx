@@ -19,7 +19,6 @@ const ModalUIPage = (props: {
   const _props = { ...props.props };
   const {
     className,
-    id,
     show,
     _modalWrapperRef,
     _itemRef,
@@ -34,6 +33,8 @@ const ModalUIPage = (props: {
     closeMent,
     closeButtonInfo,
     handleClickEvent,
+    onCloseModal,
+    _wmo,
   } = _props;
 
   const _closeButtonSize = getPXForm(
@@ -46,7 +47,7 @@ const ModalUIPage = (props: {
   return (
     <_Error
       propsList={_props}
-      requiredList={["show", "onCloseModal"]}
+      requiredList={["show", "onCloseModal"].slice(0, _wmo ? 1 : 2)}
       mouduleName="Modal"
     >
       {(show && (
@@ -74,7 +75,7 @@ const ModalUIPage = (props: {
                 closeMent={closeMent}
               >
                 <_Button
-                  onClickEvent={_onCloseModal}
+                  onClickEvent={!onCloseModal ? _onCloseModal : onCloseModal}
                   className={modalClassList.closeButtonMentButton}
                   buttonType="button"
                 >

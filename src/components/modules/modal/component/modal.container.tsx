@@ -3,6 +3,7 @@ import _ModalUIPage from "./modal.presenter";
 
 import { ModalPropsType, ModalPropsUITypes } from "./modal.types";
 import { modalClassList, modalFuncClass } from "./modal.class";
+import { closeModalFn } from "../func";
 
 // 모달을 닫을 수 있는 시점 계산
 let ableClose = false;
@@ -38,22 +39,25 @@ export function _RenderModal(props: ModalPropsType) {
       ableClose = false;
       window.setTimeout(() => {
         ableClose = true;
-      }, (hasAnimation && 300) || 0);
+      }, (hasAnimation && 200) || 0);
 
       window.setTimeout(() => {
         if (_wrapperRef.current) {
           _wrapperRef.current?.classList.add(modalFuncClass.open);
 
-          if (showBGAnimation)
+          if (showBGAnimation) {
             _wrapperRef.current?.classList.add(modalFuncClass.animation);
-
+            _wrapperRef.current?.classList.add(modalFuncClass.hasBGAnimtaion);
+          }
           // wrapper에 id 추가하기
           if (id) _wrapperRef.current.setAttribute("id", id);
         }
 
         if (_itemRef) {
-          if (showBGAnimation)
+          if (showBGAnimation) {
             _itemRef.current?.classList.add(modalFuncClass.animation);
+            _itemRef.current?.classList.add(modalFuncClass.hasBGAnimtaion);
+          }
 
           _itemRef.current?.classList.add(modalFuncClass.itemShow);
         }
@@ -63,6 +67,7 @@ export function _RenderModal(props: ModalPropsType) {
     if (_itemRef) {
       if (showModalOpenAnimation) {
         _itemRef.current?.classList.add(modalFuncClass.minimum);
+        _itemRef.current?.classList.add(modalFuncClass.hasOpenAnimation);
 
         window.setTimeout(() => {
           if (_itemRef.current?.classList.contains(modalFuncClass.minimum)) {
@@ -75,53 +80,48 @@ export function _RenderModal(props: ModalPropsType) {
       if (_contentsRef)
         window.setTimeout(() => {
           _contentsRef.current?.classList.add(modalFuncClass.itemShow);
-          if (showModalOpenAnimation)
+          if (showModalOpenAnimation) {
             _contentsRef.current?.classList.add(modalFuncClass.animation);
+            _contentsRef.current?.classList.add(
+              modalFuncClass.hasOpenAnimation
+            );
+          }
         }, (showModalOpenAnimation && 200) || 0);
     }
   }, [show]);
 
   // 모달 닫기 이벤트 실행
   const _onCloseModal = () => {
-    const wrapperList = Array.from(
-      document.getElementsByClassName(modalClassList.wrapper)
-    );
-    // console.log(wrapperList, wrapperList.length);
-
+    console.log(123123);
+    // const wrapperList = Array.from(
+    //   document.getElementsByClassName(modalClassList.wrapper)
+    // );
     if (!ableClose) return;
     ableClose = false;
+    // // 가장 최상위 모달 종료하기
 
-    if (showBGAnimation && _wrapperRef.current)
-      _wrapperRef.current.classList.add(modalFuncClass.bgClose);
-
-    if (_itemRef.current) {
-      if (showModalOpenAnimation)
-        _itemRef.current?.classList.add(modalFuncClass.minimum);
-
-      if (hasAnimation)
-        if (_itemRef.current?.classList.contains(modalFuncClass.itemShow))
-          _itemRef.current?.classList.remove(modalFuncClass.itemShow);
-    }
-
-    if (showModalOpenAnimation && _contentsRef.current)
-      if (_contentsRef.current?.classList.contains(modalFuncClass.itemShow))
-        _contentsRef.current?.classList.remove(modalFuncClass.itemShow);
-
-    setTimeout(() => {
-      // window로 오픈 했을 경우
-      // if (_wmo && openIdx) {
-      //   const el = document.getElementById(`mcm-modal-${openIdx}`);
-      //   if (el) el.remove();
-      // }
-
-      if (onCloseModal) onCloseModal();
-      if (wrapperList.length) ableClose = true;
-    }, (hasAnimation && 200) || 0);
+    // onCloseModal을 전달하지 않으면 해당 모달 닫기
+    closeModalFn({
+      wrapperRef: _wrapperRef.current,
+      itemRef: _itemRef.current,
+      contentsRef: _contentsRef.current,
+      showBGAnimation: showBGAnimation || false,
+      showModalOpenAnimation: showModalOpenAnimation || false,
+      openIdx,
+      _wmo,
+    });
+    // setTimeout(() => {
+    //   if (onCloseModal) onCloseModal();
+    //   if (wrapperList.length) ableClose = true;
+    // }, (hasAnimation && 200) || 0);
   };
 
   const handleClickEvent = (event: BaseSyntheticEvent) => {
     if (_itemRef.current && !_itemRef.current.contains(event.target)) {
-      if (!offAutoClose) _onCloseModal();
+      if (!offAutoClose && ableClose) {
+        if (onCloseModal) onCloseModal();
+        else _onCloseModal();
+      }
     }
   };
 
@@ -133,6 +133,7 @@ export function _RenderModal(props: ModalPropsType) {
     _itemRef,
     _wrapperRef,
     _contentsRef,
+    _wmo,
   };
 
   return <_ModalUIPage props={{ ..._props }} />;
