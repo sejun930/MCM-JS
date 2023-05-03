@@ -29,7 +29,6 @@ export default function ModalExamplePage() {
     Modal.close();
     // setInnerOpen(false);
   };
-  console.log(outerOpen2);
 
   return (
     <div id="test">
@@ -77,9 +76,8 @@ export default function ModalExamplePage() {
                 <button
                   onClick={() =>
                     Modal.open({
-                      // onCloseModal: Modal.close,
-                      // showBGAnimation: true,
-                      // showModalOpenAnimation: true,
+                      showBGAnimation: true,
+                      showModalOpenAnimation: true,
                       modalSize: { width: "250px", height: "250px" },
                       onCloseModal: () => Modal.close({ id: "aaa" }),
                     })
@@ -104,6 +102,7 @@ export default function ModalExamplePage() {
           onCloseModal={() => setOuterOpen2(false)}
           showBGAnimation
           showModalOpenAnimation
+          className="aaa"
         >
           <Modal
             show={true}
@@ -111,6 +110,7 @@ export default function ModalExamplePage() {
             showBGAnimation
             showModalOpenAnimation
             modalSize={{ width: "400px", height: "400px" }}
+            className="aaa"
           >
             <Modal
               show={true}
@@ -119,13 +119,15 @@ export default function ModalExamplePage() {
               showModalOpenAnimation
               modalSize={{ width: "300px", height: "300px" }}
               id="bbbb"
+              className="aaa"
             >
               <Modal
                 show={true}
-                onCloseModal={() => Modal.close({ id: "bbbb2" })}
-                showBGAnimation
-                showModalOpenAnimation
+                onCloseModal={() => Modal.close({ id: "bbbb" })}
+                showBGAnimation={false}
+                showModalOpenAnimation={false}
                 modalSize={{ width: "200px", height: "200px" }}
+                className="bbb"
               ></Modal>
             </Modal>
           </Modal>

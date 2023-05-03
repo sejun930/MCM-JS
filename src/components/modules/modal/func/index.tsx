@@ -1,11 +1,8 @@
 import { createRoot } from "react-dom/client";
-
 import OriginModal from "../component/modal.container";
-import Modal from "../";
 
 import { ModalCloseFuncType } from "../component/modal.types";
 import { modalClassList, modalFuncClass } from "../component/modal.class";
-import { MutableRefObject, ReactNode } from "react";
 
 // window로 open할 경우 삭제할 수 있는 id값 설정
 let idx = 0;
@@ -27,8 +24,8 @@ const openModal = (props?: ModalCloseFuncType) => {
   createRoot(_div).render(
     <OriginModal
       show={true}
-      onCloseModal={() => props?.onCloseModal}
       // @ts-ignore
+      onCloseModal={props?.onCloseModal}
       openIdx={idx}
       _wmo={true}
       {...props}
@@ -39,7 +36,10 @@ const openModal = (props?: ModalCloseFuncType) => {
 // 모달 종료 (이벤트 적용)하기
 const closeModal = (props?: ModalCloseFuncType) => {
   // 해당 노드 데이터 찾기
-  const findNode = (className: string, startNode: Element): Element | null => {
+  const findNode = (
+    className: string,
+    startNode: Element
+  ): HTMLDivElement | null => {
     let result = null;
 
     const getNode = (node: Element) => {
@@ -67,39 +67,58 @@ const closeModal = (props?: ModalCloseFuncType) => {
     const items = findNode(modalClassList.items, wrapper || origin);
     const contents = findNode(modalClassList.contents, items || origin);
 
-    // let hasAnimation = false;
+    let showBGAnimation = false; // 배경 애니메이션 사용 여부
+    let showModalOpenAnimation = false; // 모달 애니메이션 사용 여부
+
+    if (wrapper && items && contents) {
+      // 배경 애니메이션을 사용중이라면
+      showBGAnimation =
+        wrapper.classList.contains(modalFuncClass.hasBGAnimtaion) ||
+        items.classList.contains(modalFuncClass.hasBGAnimtaion);
+
+      // 오픈 애니메이션을 사용중이라면
+      showModalOpenAnimation =
+        items.classList.contains(modalFuncClass.hasOpenAnimation) ||
+        contents.classList.contains(modalFuncClass.hasOpenAnimation);
+
+      closeModalFn({
+        wrapperRef: wrapper,
+        itemRef: items,
+        contentsRef: contents,
+        showBGAnimation,
+        showModalOpenAnimation,
+        target: origin,
+      });
+    }
 
     // wrapper에 관한 종료 처리
-    if (wrapper) {
-      if (wrapper?.classList.contains(modalFuncClass.open))
-        wrapper.classList.remove(modalFuncClass.open);
+    // if (wrapper) {
+    //   if (wrapper?.classList.contains(modalFuncClass.open))
+    //     wrapper.classList.remove(modalFuncClass.open);
 
-      // if (wrapper?.classList.contains(modalFuncClass.animation))
-      //   hasAnimation = true;
-    }
+    //   // if (wrapper?.classList.contains(modalFuncClass.animation))
+    //   //   hasAnimation = true;
+    // }
 
-    if (items) {
-      // items에 관한 종료 처리
-      if (items?.classList.contains(modalFuncClass.animation)) {
-        // hasAnimation = true;
-        items.classList.add(modalFuncClass.minimum);
-      }
-    }
+    // if (items) {
+    //   // items에 관한 종료 처리
+    //   if (items?.classList.contains(modalFuncClass.animation)) {
+    //     // hasAnimation = true;
+    //     items.classList.add(modalFuncClass.minimum);
+    //   }
+    // }
 
-    if (contents) {
-      // contents에 관한 종료 처리
-      if (contents?.classList.contains(modalFuncClass.itemShow))
-        contents.classList.remove(modalFuncClass.itemShow);
+    // if (contents) {
+    //   // contents에 관한 종료 처리
+    //   if (contents?.classList.contains(modalFuncClass.itemShow))
+    //     contents.classList.remove(modalFuncClass.itemShow);
 
-      // if (contents?.classList.contains(modalFuncClass.animation))
-      //   hasAnimation = true;
-    }
-
-    // 모달 최종 종료하기
-    if (origin && origin.parentNode) origin.remove();
+    //   // if (contents?.classList.contains(modalFuncClass.animation))
+    //   //   hasAnimation = true;
+    // }
   };
 
-  const removeDefault = () => {
+  const removeCurrentNode = (returnResult: boolean) => {
     // props를 전달받지 않으면 해당 모달만 종료
     const body = document.body;
     const list = Array.from(
@@ -118,6 +137,8 @@ const closeModal = (props?: ModalCloseFuncType) => {
         closeModal(current.parentElement?.parentElement);
       } else if (current.parentElement) closeModal(current.parentElement);
     }
+
+    return returnResult;
   };
 
   const getIsWindow = (el: Element) => {
@@ -140,20 +161,15 @@ const closeModal = (props?: ModalCloseFuncType) => {
         if (el.parentElement) closeModal(el.parentElement);
       }
     } else {
-      Modal.open({
-        children: `입력된 "${props.id}" id 선택자를 찾을 수 없습니다.`,
-        className: "wrong-modal-select",
-      });
-
       // 입력한 id값이 잘못된 값이라면
-      removeDefault();
+      return removeCurrentNode(false);
     }
   } else if (props?.className) {
     // 모든 className 모달 종료
     const list = document.getElementsByClassName(
       props?.className || modalClassList.wrapper
     );
-    if (list && list.length)
+    if (list && list.length) {
       Array.from(list).forEach((el) => {
         if (
           el.parentElement?.parentElement?.classList.contains(
@@ -164,13 +180,65 @@ const closeModal = (props?: ModalCloseFuncType) => {
           closeModal(el.parentElement?.parentElement);
         // state로 오픈했을 경우
         else if (el.parentElement) closeModal(el.parentElement);
+        // return removeCurrentNode(true);
       });
+    } else {
+      // 해당하는 className이 없다면
+      return removeCurrentNode(false);
+    }
   } else {
     // 선택자 지정이 없다면 자신만 종료
-    removeDefault();
+    return removeCurrentNode(true);
   }
 
   return true;
+};
+
+// 모달 닫기 최종 함수
+export const closeModalFn = ({
+  wrapperRef, // wrapper 태그
+  itemRef, // item 태그
+  contentsRef, // contents 태그
+  showBGAnimation, // 배경 애니메이션 사용 여부
+  showModalOpenAnimation, // 모달 애니메이션 사용 여부
+  openIdx, // window로 실행시 부여되는 번호
+  _wmo, // window 실행 여부
+  target,
+}: {
+  wrapperRef: HTMLDivElement;
+  itemRef: HTMLDivElement;
+  contentsRef: HTMLDivElement;
+  showBGAnimation: boolean;
+  showModalOpenAnimation: boolean;
+  openIdx?: number;
+  _wmo?: boolean;
+  target?: Element;
+}) => {
+  if (showBGAnimation && wrapperRef)
+    wrapperRef.classList.add(modalFuncClass.bgClose);
+
+  if (itemRef) {
+    if (showModalOpenAnimation) itemRef?.classList.add(modalFuncClass.minimum);
+
+    if (showBGAnimation || showModalOpenAnimation)
+      if (itemRef?.classList.contains(modalFuncClass.itemShow))
+        itemRef?.classList.remove(modalFuncClass.itemShow);
+  }
+
+  if (showModalOpenAnimation && contentsRef)
+    if (contentsRef?.classList.contains(modalFuncClass.itemShow))
+      contentsRef?.classList.remove(modalFuncClass.itemShow);
+
+  window.setTimeout(() => {
+    if (target) {
+      target.remove();
+    } else if (_wmo && openIdx) {
+      const el = document.getElementById(`mcm-modal-${openIdx}`);
+      if (el) {
+        el.remove();
+      }
+    }
+  }, ((showBGAnimation || showModalOpenAnimation) && 200) || 0);
 };
 
 export { openModal, closeModal };

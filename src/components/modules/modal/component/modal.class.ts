@@ -24,6 +24,8 @@ export const modalFuncClass = {
   minimum: "mcm-modal-item-minimum",
   itemShow: "mcm-modal-item-show",
   bgClose: "mcm-modal-bg-close",
+  hasBGAnimtaion: "mcm-modal-has-bg-animation",
+  hasOpenAnimation: "mcm-modal-has-open-animation",
 };
 
 modalClassList as typeof modalClassList;
