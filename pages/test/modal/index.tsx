@@ -74,23 +74,41 @@ export default function ModalExamplePage() {
         <button
           onClick={() =>
             Modal.open({
-              onCloseModal: () => Modal.close(),
+              onCloseModal: () => {
+                Modal.close();
+              },
               showBGAnimation: true,
               showModalOpenAnimation: true,
               id: "aaa",
               children: (
-                <button
-                  onClick={() =>
-                    Modal.open({
-                      showBGAnimation: true,
-                      showModalOpenAnimation: true,
-                      modalSize: { width: "250px", height: "250px" },
-                      onCloseModal: () => Modal.close({ id: "aaa" }),
-                    })
-                  }
-                >
-                  하위 모달 오픈
-                </button>
+                <>111</>
+                // <button
+                //   onClick={() =>
+                //     Modal.open({
+                //       showBGAnimation: true,
+                //       showModalOpenAnimation: true,
+                //       modalSize: { width: "250px", height: "250px" },
+
+                //       children: (
+                //         <button
+                //           onClick={() =>
+                //             Modal.open({
+                //               showBGAnimation: true,
+                //               showModalOpenAnimation: true,
+                //               modalSize: { width: "100px", height: "100px" },
+                //               onCloseModal: () => Modal.close(),
+                //             })
+                //           }
+                //         >
+                //           최하위 모달 오픈
+                //         </button>
+                //       ),
+                //       // onCloseModal: () => Modal.close({ id: "aaas" }),
+                //     })
+                //   }
+                // >
+                //   하위 모달 오픈
+                // </button>
               ),
             })
           }
@@ -129,11 +147,12 @@ export default function ModalExamplePage() {
             >
               <Modal
                 show={true}
-                onCloseModal={() => Modal.close({ className: "aaa" })}
+                onCloseModal={() => Modal.close({})}
                 showBGAnimation
                 showModalOpenAnimation
                 modalSize={{ width: "200px", height: "200px" }}
                 className="bbb"
+                id="ccc"
               ></Modal>
             </Modal>
           </Modal>

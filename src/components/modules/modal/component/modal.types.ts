@@ -64,5 +64,5 @@ export type ModalType = typeof OriginModal & {
 export interface ModalCloseFuncType {
   id?: string;
   className?: string;
-  onCloseModal?: () => void;
+  // onCloseModal?: () => void;
 }
