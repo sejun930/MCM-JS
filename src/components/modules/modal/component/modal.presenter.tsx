@@ -75,7 +75,7 @@ const ModalUIPage = (props: {
                 closeMent={closeMent}
               >
                 <_Button
-                  onClickEvent={!onCloseModal ? _onCloseModal : onCloseModal}
+                  onClickEvent={_onCloseModal}
                   className={modalClassList.closeButtonMentButton}
                   buttonType="button"
                 >

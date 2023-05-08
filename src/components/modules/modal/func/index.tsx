@@ -26,6 +26,7 @@ const openModal = (props?: ModalCloseFuncType) => {
       show={true}
       // @ts-ignore
       onCloseModal={props?.onCloseModal}
+      // @ts-ignore
       openIdx={idx}
       _wmo={true}
       {...props}
@@ -35,6 +36,15 @@ const openModal = (props?: ModalCloseFuncType) => {
 
 // 모달 종료 (이벤트 적용)하기
 const closeModal = (props?: ModalCloseFuncType) => {
+  let target: Array<HTMLElement> = [];
+
+  // window 오픈 여부 확인하기
+  const getIsWindow = (el: Element) => {
+    return el.parentElement?.parentElement?.classList.contains(
+      modalFuncClass.windowOpen
+    );
+  };
+
   // 해당 노드 데이터 찾기
   const findNode = (
     className: string,
@@ -61,141 +71,66 @@ const closeModal = (props?: ModalCloseFuncType) => {
     return result;
   };
 
-  const closeModal = async (node: Element) => {
-    const origin = node;
-    const wrapper = findNode(modalClassList.wrapper, origin);
-    const items = findNode(modalClassList.items, wrapper || origin);
-    const contents = findNode(modalClassList.contents, items || origin);
-
-    let showBGAnimation = false; // 배경 애니메이션 사용 여부
-    let showModalOpenAnimation = false; // 모달 애니메이션 사용 여부
-
-    if (wrapper && items && contents) {
-      // 배경 애니메이션을 사용중이라면
-      showBGAnimation =
-        wrapper.classList.contains(modalFuncClass.hasBGAnimtaion) ||
-        items.classList.contains(modalFuncClass.hasBGAnimtaion);
-
-      // 오픈 애니메이션을 사용중이라면
-      showModalOpenAnimation =
-        items.classList.contains(modalFuncClass.hasOpenAnimation) ||
-        contents.classList.contains(modalFuncClass.hasOpenAnimation);
-
-      closeModalFn({
-        wrapperRef: wrapper,
-        itemRef: items,
-        contentsRef: contents,
-        showBGAnimation,
-        showModalOpenAnimation,
-        target: origin,
-      });
-    }
-
-    // wrapper에 관한 종료 처리
-    // if (wrapper) {
-    //   if (wrapper?.classList.contains(modalFuncClass.open))
-    //     wrapper.classList.remove(modalFuncClass.open);
-
-    //   // if (wrapper?.classList.contains(modalFuncClass.animation))
-    //   //   hasAnimation = true;
-    // }
-
-    // if (items) {
-    //   // items에 관한 종료 처리
-    //   if (items?.classList.contains(modalFuncClass.animation)) {
-    //     // hasAnimation = true;
-    //     items.classList.add(modalFuncClass.minimum);
-    //   }
-    // }
-
-    // if (contents) {
-    //   // contents에 관한 종료 처리
-    //   if (contents?.classList.contains(modalFuncClass.itemShow))
-    //     contents.classList.remove(modalFuncClass.itemShow);
-
-    //   // if (contents?.classList.contains(modalFuncClass.animation))
-    //   //   hasAnimation = true;
-    // }
-  };
-
-  const removeCurrentNode = (returnResult: boolean) => {
-    // props를 전달받지 않으면 해당 모달만 종료
-    const body = document.body;
-    const list = Array.from(
-      body.getElementsByClassName(modalClassList.wrapper)
-    );
-    const current = list.at(-1);
-
-    // 제일 마지막 요소가 현재 오픈되어 있는 모달
-    if (current !== undefined) {
-      if (
-        current?.parentElement?.parentElement?.classList.contains(
-          modalFuncClass.windowOpen
-        )
-      ) {
-        // window로 오픈했을 경우
-        closeModal(current.parentElement?.parentElement);
-      } else if (current.parentElement) closeModal(current.parentElement);
-    }
-
-    return returnResult;
-  };
-
-  const getIsWindow = (el: Element) => {
-    return el.parentElement?.parentElement?.classList.contains(
-      modalFuncClass.windowOpen
-    );
-  };
-
-  if (props?.id) {
-    // id가 있다면 우선 적용
-    let el: HTMLElement | null = document.getElementById(props.id);
-
-    if (el) {
-      // window로 오픈했을 경우
-      if (getIsWindow(el)) {
-        if (el?.parentElement?.parentElement)
-          closeModal(el?.parentElement.parentElement);
-      } else {
-        // state로 오픈했을 경우
-        if (el.parentElement) closeModal(el.parentElement);
+  // 종료시킬 모달이 있는 경우
+  if (props) {
+    // id 선택자 추적하기
+    if (props.id) {
+      const element = document.getElementById(props.id);
+      if (element) {
+        target = [element];
       }
-    } else {
-      // 입력한 id값이 잘못된 값이라면
-      return removeCurrentNode(false);
     }
-  } else if (props?.className) {
-    // 모든 className 모달 종료
-    const list = document.getElementsByClassName(
-      props?.className || modalClassList.wrapper
-    );
-    if (list && list.length) {
-      Array.from(list).forEach((el) => {
-        if (
-          el.parentElement?.parentElement?.classList.contains(
-            modalFuncClass.windowOpen
-          )
-        )
-          // window로 오픈했을 경우 부모태그까지 접근
-          closeModal(el.parentElement?.parentElement);
-        // state로 오픈했을 경우
-        else if (el.parentElement) closeModal(el.parentElement);
-        // return removeCurrentNode(true);
-      });
-    } else {
-      // 해당하는 className이 없다면
-      return removeCurrentNode(false);
+    // class 선택자 추적하기
+    if (props.className && !target.length) {
+      const elements = document.getElementsByClassName(props.className);
+      if (elements.length) target = Array.from(elements) as Array<HTMLElement>;
     }
-  } else {
-    // 선택자 지정이 없다면 자신만 종료
-    return removeCurrentNode(true);
   }
 
+  if (target.length) {
+    target.forEach((node) => {
+      if (node?.parentElement) {
+        const origin = getIsWindow(node)
+          ? node.parentElement.parentElement
+          : node.parentElement;
+
+        if (origin) {
+          const wrapper = findNode(modalClassList.wrapper, origin);
+          const items = findNode(modalClassList.items, wrapper || origin);
+          const contents = findNode(modalClassList.contents, items || origin);
+
+          let showBGAnimation = false; // 배경 애니메이션 사용 여부
+          let showModalOpenAnimation = false; // 모달 애니메이션 사용 여부
+
+          if (wrapper && items && contents) {
+            // 배경 애니메이션을 사용중이라면
+            showBGAnimation =
+              wrapper.classList.contains(modalFuncClass.hasBGAnimtaion) ||
+              items.classList.contains(modalFuncClass.hasBGAnimtaion);
+
+            // 오픈 애니메이션을 사용중이라면
+            showModalOpenAnimation =
+              items.classList.contains(modalFuncClass.hasOpenAnimation) ||
+              contents.classList.contains(modalFuncClass.hasOpenAnimation);
+
+            return closeModalFn({
+              wrapperRef: wrapper,
+              itemRef: items,
+              contentsRef: contents,
+              showBGAnimation,
+              showModalOpenAnimation,
+              target: origin,
+            });
+          }
+        }
+      }
+    });
+  }
   return true;
 };
 
 // 모달 닫기 최종 함수
-export const closeModalFn = ({
+export const closeModalFn = async ({
   wrapperRef, // wrapper 태그
   itemRef, // item 태그
   contentsRef, // contents 태그
@@ -229,16 +164,19 @@ export const closeModalFn = ({
     if (contentsRef?.classList.contains(modalFuncClass.itemShow))
       contentsRef?.classList.remove(modalFuncClass.itemShow);
 
-  window.setTimeout(() => {
-    if (target) {
-      target.remove();
-    } else if (_wmo && openIdx) {
-      const el = document.getElementById(`mcm-modal-${openIdx}`);
-      if (el) {
-        el.remove();
-      }
-    }
-  }, ((showBGAnimation || showModalOpenAnimation) && 200) || 0);
+  const wait = (time: number) => new Promise((res) => setTimeout(res, time));
+  await wait(((showBGAnimation || showModalOpenAnimation) && 100) || 0);
+  if (target) {
+    target.remove();
+  } else if (_wmo && openIdx) {
+    // window로 오픈했을 경우
+    const el = document.getElementById(`mcm-modal-${openIdx}`);
+    if (el) return el;
+  } else {
+    // 그외 state를 이용해서 오픈했을 경우
+    if (wrapperRef.parentElement) return wrapperRef.parentElement;
+  }
+  return true;
 };
 
 export { openModal, closeModal };

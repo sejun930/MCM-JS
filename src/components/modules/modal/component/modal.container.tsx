@@ -91,17 +91,14 @@ export function _RenderModal(props: ModalPropsType) {
   }, [show]);
 
   // 모달 닫기 이벤트 실행
-  const _onCloseModal = () => {
-    console.log(123123);
-    // const wrapperList = Array.from(
-    //   document.getElementsByClassName(modalClassList.wrapper)
-    // );
+  const _onCloseModal = async () => {
+    console.log(_wrapperRef.current, ableClose);
+
     if (!ableClose) return;
     ableClose = false;
-    // // 가장 최상위 모달 종료하기
 
-    // onCloseModal을 전달하지 않으면 해당 모달 닫기
-    closeModalFn({
+    // 1. 현재 실행중인 모달은 우선 제거
+    await closeModalFn({
       wrapperRef: _wrapperRef.current,
       itemRef: _itemRef.current,
       contentsRef: _contentsRef.current,
@@ -109,18 +106,36 @@ export function _RenderModal(props: ModalPropsType) {
       showModalOpenAnimation: showModalOpenAnimation || false,
       openIdx,
       _wmo,
+    }).then((target: Element | boolean) => {
+      // 2. 해당 모달 삭제가 완료되면 onCloseEvent 처리하기
+      window.setTimeout(() => {
+        // 3. onCloseModal 이벤트 실행
+        if (onCloseModal !== undefined) onCloseModal();
+
+        window.setTimeout(() => {
+          // 4. 삭제 후 남은 모달의 개수 체크하기
+          const wrapperList = document.getElementsByClassName(
+            modalClassList.wrapper
+          );
+
+          // 5. 이벤트로 인해 제거되지 않았다면
+          if (typeof target !== "boolean") {
+            if (document.body.contains(target)) {
+              target.remove();
+            }
+          }
+          // 6. 다른 모달이 남아 있다면 다음 모달 제거 가능으로 변경
+          if (wrapperList.length) ableClose = true;
+        }, 100);
+      }, 0);
     });
-    // setTimeout(() => {
-    //   if (onCloseModal) onCloseModal();
-    //   if (wrapperList.length) ableClose = true;
-    // }, (hasAnimation && 200) || 0);
   };
 
   const handleClickEvent = (event: BaseSyntheticEvent) => {
     if (_itemRef.current && !_itemRef.current.contains(event.target)) {
       if (!offAutoClose && ableClose) {
-        if (onCloseModal) onCloseModal();
-        else _onCloseModal();
+        console.log(111);
+        _onCloseModal();
       }
     }
   };
