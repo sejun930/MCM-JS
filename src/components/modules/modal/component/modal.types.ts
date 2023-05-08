@@ -54,7 +54,7 @@ export interface ModalPropsUITypes {
 }
 
 type ModalOmitOpenWindowType = Omit<ModalPropsType, "openIdx" | "_mwo">;
-type ModalPartialWithToggleType = Partial<ModalOmitOpenWindowType>;
+export type ModalPartialWithToggleType = Partial<ModalOmitOpenWindowType>;
 
 export type ModalType = typeof OriginModal & {
   open: (props?: ModalPartialWithToggleType) => void;

@@ -92,10 +92,10 @@ export function _RenderModal(props: ModalPropsType) {
 
   // 모달 닫기 이벤트 실행
   const _onCloseModal = async () => {
+    console.log(_wrapperRef.current, ableClose);
+
     if (!ableClose) return;
     ableClose = false;
-
-    console.log(_wrapperRef.current);
 
     // 1. 현재 실행중인 모달은 우선 제거
     await closeModalFn({
@@ -127,27 +127,7 @@ export function _RenderModal(props: ModalPropsType) {
           // 6. 다른 모달이 남아 있다면 다음 모달 제거 가능으로 변경
           if (wrapperList.length) ableClose = true;
         }, 100);
-
-        // let wrapperList = Array.from(
-        //   document.getElementsByClassName(modalClassList.wrapper)
-        // ).map((nodeEl) =>
-        //   openIdx && _wmo
-        //     ? nodeEl.parentElement?.parentElement
-        //     : nodeEl.parentElement
-        // );
-        // wrapperList
-        //   .filter((FilterNode) => FilterNode === node)
-        //   .forEach((removeNode) => {
-        //     removeNode?.remove();
-        //   });
-        // console.log(wrapperList);
-        // if (onCloseModal !== undefined) onCloseModal();
       }, 0);
-
-      // wrapperList = wrapperList.filter((nodeFilter) => nodeFilter === node);
-      // if (wrapperList.length) {
-      //   wrapperList.forEach((node) => node?.remove());
-      // }
     });
   };
 
