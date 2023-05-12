@@ -33,7 +33,6 @@ const ModalUIPage = (props: {
     closeMent,
     closeButtonInfo,
     handleClickEvent,
-    onCloseModal,
     _wmo,
   } = _props;
 

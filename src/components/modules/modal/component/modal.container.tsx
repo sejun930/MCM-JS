@@ -26,6 +26,7 @@ export function _RenderModal(props: ModalPropsType) {
     _wmo,
     showBGAnimation,
     showModalOpenAnimation,
+    onAfterCloseEvent,
   } = props;
   const _modalWrapperRef = useRef() as MutableRefObject<HTMLDivElement>;
   const _wrapperRef = useRef() as MutableRefObject<HTMLDivElement>;
@@ -92,8 +93,6 @@ export function _RenderModal(props: ModalPropsType) {
 
   // 모달 닫기 이벤트 실행
   const _onCloseModal = async () => {
-    console.log(_wrapperRef.current, ableClose);
-
     if (!ableClose) return;
     ableClose = false;
 
@@ -126,6 +125,8 @@ export function _RenderModal(props: ModalPropsType) {
           }
           // 6. 다른 모달이 남아 있다면 다음 모달 제거 가능으로 변경
           if (wrapperList.length) ableClose = true;
+          // 7. 모달 종료 직후에 실행할 이벤트가 있다면 실행
+          if (onAfterCloseEvent) onAfterCloseEvent();
         }, 100);
       }, 0);
     });
@@ -134,7 +135,6 @@ export function _RenderModal(props: ModalPropsType) {
   const handleClickEvent = (event: BaseSyntheticEvent) => {
     if (_itemRef.current && !_itemRef.current.contains(event.target)) {
       if (!offAutoClose && ableClose) {
-        console.log(111);
         _onCloseModal();
       }
     }
