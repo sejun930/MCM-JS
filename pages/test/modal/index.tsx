@@ -1,11 +1,13 @@
 import React from "react";
 import { Modal } from "../../../src";
 // import Modal from "../../../src/components/modules/modal/modal.container";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 import _Modal from "../../../src/components/modules/modal";
+import { _Input } from "mcm-js-commons";
 
 export default function ModalExamplePage() {
+  const inputRef = useRef();
   // 모달을 실행하거나 종료 시킬 수 있는 state 값을 설정합니다.
   const [outerOpen, setOutOpen] = useState(false);
   const [innerOpen, setInnerOpen] = useState(false);
@@ -41,7 +43,6 @@ export default function ModalExamplePage() {
         <Modal
           show={outerOpen}
           onCloseModal={() => {
-            console.log("11");
             setOutOpen(false);
           }}
           id="outer-modal"
@@ -51,7 +52,6 @@ export default function ModalExamplePage() {
           <Modal
             show={innerOpen}
             onCloseModal={() => {
-              console.log(22);
               setInnerOpen(false);
             }}
             modalSize={{ width: "250px", height: "250px" }}
@@ -185,10 +185,14 @@ export default function ModalExamplePage() {
                                     height: "100px",
                                   },
                                   id: "a3",
-                                  offAutoClose: true,
+                                  // offAutoClose: true,
+                                  onCloseModal: () => Modal.close({ id: "a1" }),
+                                  onAfterCloseEvent: () => {
+                                    inputRef.current.focus();
+                                  },
                                   children: (
                                     <div>
-                                      <button
+                                      {/* <button
                                         onClick={() =>
                                           Modal.close({ id: "a3" })
                                         }
@@ -202,7 +206,7 @@ export default function ModalExamplePage() {
                                         }
                                       >
                                         모두 닫기
-                                      </button>
+                                      </button> */}
                                     </div>
                                   ),
                                 })
@@ -225,6 +229,7 @@ export default function ModalExamplePage() {
         >
           모달 실행하기 - Multiple & Close Modal
         </button>
+        <input ref={inputRef as any} />
       </p>
     </div>
   );

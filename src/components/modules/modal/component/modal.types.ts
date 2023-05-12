@@ -42,6 +42,8 @@ export interface ModalPropsType {
   // (window modal open) window 형식의 오픈 여부
   openIdx?: number;
   // state 렌더가 아닌 window 형식의 오픈시 제거할 id 값
+  onAfterCloseEvent?: () => void;
+  // 모달이 종료된 다음 시점에 실행될 이벤트
 }
 
 export interface ModalPropsUITypes {

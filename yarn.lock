@@ -1727,14 +1727,6 @@
   resolved "https://registry.yarnpkg.com/@mdx-js/react/-/react-1.6.22.tgz#ae09b4744fddc74714ee9f9d6f17a66e77c43573"
   integrity sha512-TDoPum4SHdfPiGSAaRBw7ECyI8VaHpK8GJugbJIJuqyh6kzw9ZLJZW3HGL3NNrJGxcAixUvqROm+YuQOo5eXtg==
 
-"@mdx-js/react@^2.3.0":
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/@mdx-js/react/-/react-2.3.0.tgz#4208bd6d70f0d0831def28ef28c26149b03180b3"
-  integrity sha512-zQH//gdOmuu7nt2oJR29vFhDv88oGPmVw6BggmrHeMI+xgEkp1B2dX9/bMBSYtK0dyLX/aOmesKS09g222K1/g==
-  dependencies:
-    "@types/mdx" "^2.0.0"
-    "@types/react" ">=16"
-
 "@mdx-js/util@1.6.22":
   version "1.6.22"
   resolved "https://registry.yarnpkg.com/@mdx-js/util/-/util-1.6.22.tgz#219dfd89ae5b97a8801f015323ffa4b62f45718b"
@@ -3149,11 +3141,6 @@
   dependencies:
     "@types/unist" "*"
 
-"@types/mdx@^2.0.0":
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/@types/mdx/-/mdx-2.0.4.tgz#d1cad61ccc803b3c248c3d9990a2a6880bef537f"
-  integrity sha512-qCYrNdpKwN6YO6FVnx+ulfqifKlE3lQGsNhvDaW9Oxzyob/cRLBJWow8GHBBD4NxQ7BVvtsATgLsX0vZAWmtrg==
-
 "@types/minimatch@*", "@types/minimatch@^5.1.2":
   version "5.1.2"
   resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-5.1.2.tgz#07508b45797cb81ec3f273011b054cd0755eddca"
@@ -3229,7 +3216,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@>=16":
+"@types/react@*":
   version "18.0.37"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-18.0.37.tgz#7a784e2a8b8f83abb04dc6b9ed9c9b4c0aee9be7"
   integrity sha512-4yaZZtkRN3ZIQD3KSEwkfcik8s0SWV+82dlJot1AbGYHCzJkWP3ENBY6wYeDRmKZ6HkrgoGAmR2HqdwYGp6OEw==
@@ -8823,42 +8810,14 @@ markdown-escapes@^1.0.0:
   resolved "https://registry.yarnpkg.com/markdown-escapes/-/markdown-escapes-1.0.4.tgz#c95415ef451499d7602b91095f3c8e8975f78535"
   integrity sha512-8z4efJYk43E0upd0NbVXwgSTQs6cT3T06etieCMEg7dRbzCbxUCK/GHlX8mhHRDcp+OLlHkPKsvqQTCvsRl2cg==
 
-mcm-js-commons@^0.0.30:
-  version "0.0.30"
-  resolved "https://registry.yarnpkg.com/mcm-js-commons/-/mcm-js-commons-0.0.30.tgz#b31da16d27efeb263e224e089233414ff2d34861"
-  integrity sha512-+AxYuRCgOuxZiioJSu3uEZ1DriG6UDWc0AvZdyHaftf0yidl3DWgHHPE0UVFne6IB7dqswXV7tUEWMVPeGieww==
+mcm-js-commons@^0.0.43:
+  version "0.0.43"
+  resolved "https://registry.yarnpkg.com/mcm-js-commons/-/mcm-js-commons-0.0.43.tgz#9a12f879feb953d758d0ce84c08bc4c1890d76b7"
+  integrity sha512-heCfJ/ChF+vKf6sclBGDQ7iRFHaYrd8s0UjFt6nebzO8mnsPCRmgFel50a5xhCP9cfNsPovl3ryKV1xDUNd70w==
   dependencies:
     "@emotion/react" "^11.10.6"
     "@emotion/styled" "^11.10.6"
     dompurify "^3.0.1"
-    next "13.1.6"
-    react "18.2.0"
-    react-dom "18.2.0"
-    uuid "^9.0.0"
-
-mcm-js-commons@^0.0.31:
-  version "0.0.31"
-  resolved "https://registry.yarnpkg.com/mcm-js-commons/-/mcm-js-commons-0.0.31.tgz#ff20031736994619edda006c7e06f5b49bf040e2"
-  integrity sha512-pnQmXtEUbbSKWyKGVSgVtj0oKZFkjh+zcJNW1IbrcB9L8988QJDudFVIZ5T6nJnL09tsIymrlEUJriu3SjOw9Q==
-  dependencies:
-    "@emotion/react" "^11.10.6"
-    "@emotion/styled" "^11.10.6"
-    dompurify "^3.0.1"
-    mcm-js "^0.0.16"
-    next "13.1.6"
-    react "18.2.0"
-    react-dom "18.2.0"
-    uuid "^9.0.0"
-
-mcm-js@^0.0.16:
-  version "0.0.16"
-  resolved "https://registry.yarnpkg.com/mcm-js/-/mcm-js-0.0.16.tgz#7c9787cd23e1047453428c9b9d38049f2ca04ff8"
-  integrity sha512-Rn8bL2p2tSo9DnQQgmnTHjQCXw3qtb3R3JmaxRwHdQ2lMVITiqmzJ5HGckTIkcr9I5FOfctkBhu2hmED4JNgZA==
-  dependencies:
-    "@emotion/react" "^11.10.5"
-    "@emotion/styled" "^11.10.5"
-    "@mdx-js/react" "^2.3.0"
-    mcm-js-commons "^0.0.30"
     next "13.1.6"
     react "18.2.0"
     react-dom "18.2.0"
