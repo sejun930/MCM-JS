@@ -25,6 +25,7 @@ const ModalUIPage = (props: {
     _wrapperRef,
     _contentsRef,
     modalSize,
+    modalStyles,
     mobileModalSize,
     children,
     showModalOpenAnimation,
@@ -66,6 +67,7 @@ const ModalUIPage = (props: {
               showModalOpenAnimation={showModalOpenAnimation}
               isOpen={show}
               ref={_itemRef}
+              style={modalStyles}
             >
               <CloseButtonWrapper
                 className={modalClassList.closeButtonWrapper}
