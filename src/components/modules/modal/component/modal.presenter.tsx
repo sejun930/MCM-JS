@@ -19,6 +19,8 @@ const ModalUIPage = (props: {
   const _props = { ...props.props };
   const {
     className,
+    id,
+    name,
     show,
     _modalWrapperRef,
     _itemRef,
@@ -57,6 +59,8 @@ const ModalUIPage = (props: {
               modalClassList.wrapper,
               className
             )}
+            id={id}
+            data-name={name}
             onMouseDown={handleClickEvent}
             ref={_wrapperRef}
           >

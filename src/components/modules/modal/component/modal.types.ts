@@ -8,6 +8,8 @@ export interface ModalPropsType {
   // wrapper에 삽입될 className
   id?: string;
   // wrapper에 삽입될 id
+  name?: string;
+  // wrapper에 삽입될 data-name
   modalSize?: {
     width?: string;
     height?: string;
