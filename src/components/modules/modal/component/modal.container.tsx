@@ -37,6 +37,9 @@ export function _RenderModal(props: ModalPropsType) {
 
   useEffect(() => {
     if (show) {
+      // 스크롤 이동 방지
+      if (document.body) document.body.style.overflow = "hidden";
+
       ableClose = false;
       window.setTimeout(() => {
         ableClose = true;
@@ -51,7 +54,7 @@ export function _RenderModal(props: ModalPropsType) {
             _wrapperRef.current?.classList.add(modalFuncClass.hasBGAnimtaion);
           }
           // wrapper에 id 추가하기
-          if (id) _wrapperRef.current.setAttribute("id", id);
+          // if (id) _wrapperRef.current.setAttribute("id", id);
         }
 
         if (_itemRef) {
@@ -127,6 +130,16 @@ export function _RenderModal(props: ModalPropsType) {
           if (wrapperList.length) ableClose = true;
           // 7. 모달 종료 직후에 실행할 이벤트가 있다면 실행
           if (onAfterCloseEvent) onAfterCloseEvent();
+
+          // 8. 스크롤 이동 가능
+          if (document.body) {
+            // 실행되어 있는 여분의 모달이 있는지 검색
+            const extraModal =
+              document.getElementsByClassName("mcm-modal-wrapper");
+
+            // 실행된 모달이 하나도 없다면 스크롤 이동 가능으로 설정
+            if (!extraModal.length) document.body.style.overflow = "auto";
+          }
         }, 100);
       }, 0);
     });

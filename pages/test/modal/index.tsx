@@ -58,6 +58,7 @@ export default function ModalExamplePage() {
             id="inner-modal"
             showBGAnimation
             showModalOpenAnimation
+            modalStyles={{ border: "solid 2px black" }}
           >
             <button onClick={() => setLastOpen(true)}>모달 실행</button>
             <Modal
@@ -80,6 +81,7 @@ export default function ModalExamplePage() {
               showBGAnimation: true,
               showModalOpenAnimation: true,
               id: "aaa",
+              name: "test",
               children: (
                 <>111</>
                 // <button
@@ -117,7 +119,7 @@ export default function ModalExamplePage() {
           모달 실행하기 - In Function
         </button>
       </p>
-      <p>
+      <p style={{ height: "2000px" }}>
         <button onClick={() => setOuterOpen2(true)}>
           모달 실행하기 - Use With State & Close Modal
         </button>

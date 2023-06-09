@@ -1,4 +1,4 @@
-import { MouseEvent, MutableRefObject } from "react";
+import { CSSProperties, MouseEvent, MutableRefObject } from "react";
 import OriginModal from "./modal.container";
 
 export interface ModalPropsType {
@@ -8,10 +8,14 @@ export interface ModalPropsType {
   // wrapper에 삽입될 className
   id?: string;
   // wrapper에 삽입될 id
+  name?: string;
+  // wrapper에 삽입될 data-name
   modalSize?: {
     width?: string;
     height?: string;
   };
+  // 모달에 적용되는 스타일
+  modalStyles?: CSSProperties;
   // 모달 사이즈 (width, height) 지정
   mobileModalSize?: {
     width?: string;

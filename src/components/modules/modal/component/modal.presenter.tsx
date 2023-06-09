@@ -19,12 +19,15 @@ const ModalUIPage = (props: {
   const _props = { ...props.props };
   const {
     className,
+    id,
+    name,
     show,
     _modalWrapperRef,
     _itemRef,
     _wrapperRef,
     _contentsRef,
     modalSize,
+    modalStyles,
     mobileModalSize,
     children,
     showModalOpenAnimation,
@@ -56,6 +59,8 @@ const ModalUIPage = (props: {
               modalClassList.wrapper,
               className
             )}
+            id={id}
+            data-name={name}
             onMouseDown={handleClickEvent}
             ref={_wrapperRef}
           >
@@ -66,6 +71,7 @@ const ModalUIPage = (props: {
               showModalOpenAnimation={showModalOpenAnimation}
               isOpen={show}
               ref={_itemRef}
+              style={modalStyles}
             >
               <CloseButtonWrapper
                 className={modalClassList.closeButtonWrapper}

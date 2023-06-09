@@ -1,7 +1,7 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 
-import { ModalPropsType } from "../../../src/components/modules/modal/modal.types";
+import { ModalPropsType } from "../../../src/components/modules/modal/component/modal.types";
 import SB_Modal from "./Modal";
 
 export default {
@@ -84,4 +84,20 @@ OffAutoClose.args = {
   showBGAnimation: true,
   hideCloseButton: false,
   offAutoClose: true,
+} as ModalPropsType;
+
+// 자동 닫기 끄기
+export const AfterCloseEvent = Template.bind({});
+AfterCloseEvent.args = {
+  children: (
+    <div>모달이 종료된 후 실행되는 이벤트입니다. 2초 후 시작됩니다.</div>
+  ),
+  showModalOpenAnimation: true,
+  showBGAnimation: true,
+  modalSize: { height: "200px" },
+  onAfterCloseEvent: () => {
+    window.setTimeout(() => {
+      alert("이 메세지는 2초 후 실행됩니다.");
+    }, 2000);
+  },
 } as ModalPropsType;
