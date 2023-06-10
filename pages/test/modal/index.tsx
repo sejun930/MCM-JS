@@ -64,9 +64,14 @@ export default function ModalExamplePage() {
             <Modal
               show={lastOpen}
               onCloseModal={() => setLastOpen(false)}
+              onAfterCloseEvent={() => {
+                Modal.close({ id: "outer-modal" });
+                setOutOpen(false);
+              }}
               modalSize={{ width: "100px", height: "100px" }}
               showBGAnimation
               showModalOpenAnimation
+              onFixWindow
             ></Modal>
           </Modal>
         </Modal>
@@ -75,13 +80,11 @@ export default function ModalExamplePage() {
         <button
           onClick={() =>
             Modal.open({
-              onCloseModal: () => {
-                Modal.close();
-              },
               showBGAnimation: true,
               showModalOpenAnimation: true,
               id: "aaa",
               name: "test",
+              offAutoClose: true,
               children: (
                 <>111</>
                 // <button

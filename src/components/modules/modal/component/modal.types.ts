@@ -48,6 +48,8 @@ export interface ModalPropsType {
   // state 렌더가 아닌 window 형식의 오픈시 제거할 id 값
   onAfterCloseEvent?: () => void;
   // 모달이 종료된 다음 시점에 실행될 이벤트
+  onFixWindow?: boolean;
+  // 모달이 열려있는 상태에서 스크롤 이동을 방지할 건지에 대한 여부
 }
 
 export interface ModalPropsUITypes {

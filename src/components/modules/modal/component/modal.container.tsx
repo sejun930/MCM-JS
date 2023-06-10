@@ -18,7 +18,6 @@ export default function _Modal(
 // 2. 최종 모달 렌더 컴포넌트
 export function _RenderModal(props: ModalPropsType) {
   const {
-    id,
     show,
     offAutoClose,
     onCloseModal,
@@ -27,6 +26,7 @@ export function _RenderModal(props: ModalPropsType) {
     showBGAnimation,
     showModalOpenAnimation,
     onAfterCloseEvent,
+    onFixWindow,
   } = props;
   const _modalWrapperRef = useRef() as MutableRefObject<HTMLDivElement>;
   const _wrapperRef = useRef() as MutableRefObject<HTMLDivElement>;
@@ -38,7 +38,7 @@ export function _RenderModal(props: ModalPropsType) {
   useEffect(() => {
     if (show) {
       // 스크롤 이동 방지
-      if (document.body) document.body.style.overflow = "hidden";
+      if (document.body && onFixWindow) document.body.style.overflow = "hidden";
 
       ableClose = false;
       window.setTimeout(() => {
@@ -133,12 +133,14 @@ export function _RenderModal(props: ModalPropsType) {
 
           // 8. 스크롤 이동 가능
           if (document.body) {
-            // 실행되어 있는 여분의 모달이 있는지 검색
-            const extraModal =
-              document.getElementsByClassName("mcm-modal-wrapper");
+            window.setTimeout(() => {
+              // 실행되어 있는 여분의 모달이 있는지 검색
+              const extraModal =
+                document.getElementsByClassName("mcm-modal-wrapper");
 
-            // 실행된 모달이 하나도 없다면 스크롤 이동 가능으로 설정
-            if (!extraModal.length) document.body.style.overflow = "auto";
+              // 실행된 모달이 하나도 없다면 스크롤 이동 가능으로 설정
+              if (!extraModal.length) document.body.style.overflow = "auto";
+            }, 0);
           }
         }, 100);
       }, 0);
