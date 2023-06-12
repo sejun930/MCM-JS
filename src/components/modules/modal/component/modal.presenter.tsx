@@ -46,6 +46,9 @@ const ModalUIPage = (props: {
   const closeBtnTop =
     `-${Number(_closeButtonSize.split("px")[0]) + 10}px` || "-25px";
 
+  const buttonWrapperStyles = modalStyles?.closeButton || {};
+  buttonWrapperStyles.top = closeBtnTop;
+
   return (
     <_Error
       propsList={_props}
@@ -63,6 +66,7 @@ const ModalUIPage = (props: {
             data-name={name}
             onMouseDown={handleClickEvent}
             ref={_wrapperRef}
+            style={modalStyles?.wrapper || {}}
           >
             <Items
               className={modalClassList.items}
@@ -71,12 +75,12 @@ const ModalUIPage = (props: {
               showModalOpenAnimation={showModalOpenAnimation}
               isOpen={show}
               ref={_itemRef}
-              style={modalStyles}
+              style={modalStyles?.items || {}}
             >
               <CloseButtonWrapper
                 className={modalClassList.closeButtonWrapper}
                 isOpen={show}
-                style={{ top: closeBtnTop }}
+                style={buttonWrapperStyles}
                 closeMent={closeMent}
               >
                 <_Button
@@ -104,6 +108,7 @@ const ModalUIPage = (props: {
               <ContentsWrapper
                 className={modalClassList.contents}
                 ref={_contentsRef}
+                style={modalStyles?.contents || {}}
               >
                 {show ? children : undefined}
               </ContentsWrapper>
