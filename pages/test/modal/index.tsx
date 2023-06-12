@@ -58,7 +58,6 @@ export default function ModalExamplePage() {
             id="inner-modal"
             showBGAnimation
             showModalOpenAnimation
-            modalStyles={{ border: "solid 2px black" }}
           >
             <button onClick={() => setLastOpen(true)}>모달 실행</button>
             <Modal

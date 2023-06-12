@@ -14,8 +14,13 @@ export interface ModalPropsType {
     width?: string;
     height?: string;
   };
-  // 모달에 적용되는 스타일
-  modalStyles?: CSSProperties;
+  // 모달에 적용되는 스타일, 각각의 태그 별로 설정이 가능하다.
+  modalStyles?: {
+    wrapper?: CSSProperties;
+    items?: CSSProperties;
+    closeButton?: CSSProperties;
+    contents?: CSSProperties;
+  };
   // 모달 사이즈 (width, height) 지정
   mobileModalSize?: {
     width?: string;
