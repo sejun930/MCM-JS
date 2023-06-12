@@ -176,6 +176,10 @@ export const closeModalFn = async ({
     // 그외 state를 이용해서 오픈했을 경우
     if (wrapperRef.parentElement) return wrapperRef.parentElement;
   }
+
+  const extraModal = document.getElementsByClassName("mcm-modal-wrapper");
+  if (!extraModal.length) document.body.style.overflow = "auto";
+
   return true;
 };
 

@@ -47,6 +47,7 @@ export default function ModalExamplePage() {
           id="outer-modal"
           showBGAnimation
           showModalOpenAnimation
+          name="test"
         >
           <Modal
             show={innerOpen}
