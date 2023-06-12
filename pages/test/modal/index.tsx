@@ -34,7 +34,6 @@ export default function ModalExamplePage() {
 
   return (
     <div id="test">
-      {/* <form> */}
       <p>
         <button onClick={openOuterModal} type="button">
           {" "}
@@ -48,6 +47,7 @@ export default function ModalExamplePage() {
           id="outer-modal"
           showBGAnimation
           showModalOpenAnimation
+          name="test"
         >
           <Modal
             show={innerOpen}
