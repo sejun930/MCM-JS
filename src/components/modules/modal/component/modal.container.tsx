@@ -66,6 +66,8 @@ export function _RenderModal(props: ModalPropsType) {
           _itemRef.current?.classList.add(modalFuncClass.itemShow);
         }
       }, 0);
+    } else {
+      disableOverflow();
     }
 
     if (_itemRef) {
@@ -93,6 +95,14 @@ export function _RenderModal(props: ModalPropsType) {
         }, (showModalOpenAnimation && 200) || 0);
     }
   }, [show]);
+
+  const disableOverflow = () => {
+    // 실행되어 있는 여분의 모달이 있는지 검색
+    const extraModal = document.getElementsByClassName("mcm-modal-wrapper");
+
+    // 실행된 모달이 하나도 없다면 스크롤 이동 가능으로 설정
+    if (!extraModal.length) document.body.style.overflow = "auto";
+  };
 
   // 모달 닫기 이벤트 실행
   const _onCloseModal = async () => {
@@ -135,11 +145,7 @@ export function _RenderModal(props: ModalPropsType) {
           if (document.body) {
             window.setTimeout(() => {
               // 실행되어 있는 여분의 모달이 있는지 검색
-              const extraModal =
-                document.getElementsByClassName("mcm-modal-wrapper");
-
-              // 실행된 모달이 하나도 없다면 스크롤 이동 가능으로 설정
-              if (!extraModal.length) document.body.style.overflow = "auto";
+              disableOverflow();
             }, 0);
           }
         }, 100);
