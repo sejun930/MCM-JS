@@ -26,6 +26,7 @@ export const TooltipLayout = styled.div`
   align-items: flex-end;
   justify-content: center;
   position: relative;
+  width: 100%;
 `;
 
 export const TooltipTailWrapper = styled.div`
