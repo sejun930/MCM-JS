@@ -67,7 +67,7 @@ export const Items = styled.div`
     };
   }}
 
-  @media ${breakPoints.mobile} {
+  @media ${breakPoints.mobileLarge} {
     width: 80% !important;
     height: 70% !important;
 

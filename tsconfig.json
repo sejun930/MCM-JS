@@ -1,10 +1,6 @@
 {
   "compilerOptions": {
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
@@ -16,18 +12,12 @@
     //////// 변경 내용 ////////
     "noEmit": false,
     "module": "CommonJS",
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "declaration": true,
     "outDir": "./dist",
     ////////////////////////
     "incremental": true
   },
-  "include": [
-    "next-env.d.ts",
-    "src/**/*.tsx",
-    "src/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["next-env.d.ts", "src/**/*.tsx", "src/**/*.ts"],
+  "exclude": ["node_modules"]
 }

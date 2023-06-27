@@ -8810,10 +8810,10 @@ markdown-escapes@^1.0.0:
   resolved "https://registry.yarnpkg.com/markdown-escapes/-/markdown-escapes-1.0.4.tgz#c95415ef451499d7602b91095f3c8e8975f78535"
   integrity sha512-8z4efJYk43E0upd0NbVXwgSTQs6cT3T06etieCMEg7dRbzCbxUCK/GHlX8mhHRDcp+OLlHkPKsvqQTCvsRl2cg==
 
-mcm-js-commons@^0.0.43:
-  version "0.0.43"
-  resolved "https://registry.yarnpkg.com/mcm-js-commons/-/mcm-js-commons-0.0.43.tgz#9a12f879feb953d758d0ce84c08bc4c1890d76b7"
-  integrity sha512-heCfJ/ChF+vKf6sclBGDQ7iRFHaYrd8s0UjFt6nebzO8mnsPCRmgFel50a5xhCP9cfNsPovl3ryKV1xDUNd70w==
+mcm-js-commons@^0.0.64:
+  version "0.0.64"
+  resolved "https://registry.yarnpkg.com/mcm-js-commons/-/mcm-js-commons-0.0.64.tgz#2e7b39db057a9c9f924b009d8be3b0d5a0d1057d"
+  integrity sha512-fqK2kfrX1gODxbplblKxxLrVKY6qFVaA+tM0t+C1kV9VCy4xxLThgxV9MFhOkr7b7jolMjo0HqE1j3GQGoVCmA==
   dependencies:
     "@emotion/react" "^11.10.6"
     "@emotion/styled" "^11.10.6"
