@@ -21,6 +21,10 @@ export default function _TooltipUIPage(
     show,
     toggleTail,
     tailRef,
+    render,
+    tooltipStyles,
+    position,
+    showMobile,
   } = props;
 
   return (
@@ -41,9 +45,16 @@ export default function _TooltipUIPage(
             className="mcm-tooltip-tail-wrapper"
             ref={tailRef}
             useShowAnimation={useShowAnimation}
-            show={show}
+            show={render}
+            tooltipStyles={tooltipStyles}
+            showMobile={showMobile}
+            position={position || "top"}
           >
-            <TooltipTailContents className="mcm-tooltip-tail-contents">
+            <TooltipTailContents
+              className="mcm-tooltip-tail-contents"
+              tooltipStyles={tooltipStyles}
+              position={position || "top"}
+            >
               {tooltipText}
             </TooltipTailContents>
           </TooltipTailWrapper>

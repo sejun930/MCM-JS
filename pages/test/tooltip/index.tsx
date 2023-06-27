@@ -15,26 +15,53 @@ export default function Test() {
           paddingTop: "200px",
         }}
       >
-        <div style={{ display: "flex", gap: "0px 20px" }}>
+        <div
+          style={{
+            display: "flex",
+            gap: "0px 20px",
+          }}
+        >
           <_Tooltip
-            tooltipText="open1"
+            tooltipText={
+              <div>
+                <div>1</div>
+                <div>1</div>
+                <div>1</div>
+                <div>1</div>
+                <div>1</div>
+                <div>1</div>
+                <div>1</div>
+                <div>1</div>
+                <div>1</div>
+                <div>1</div>
+              </div>
+            }
             useShowAnimation
-            position={{ top: "-100px" }}
+            tooltipStyles={{
+              backgroundColor: "red",
+              // border: {
+              //   width: "10px",
+              // },
+            }}
+            position="right"
+            showMobile
           >
             📌
           </_Tooltip>
           <_Tooltip
-            tooltipText="open2"
-            useShowAnimation
-            position={{ top: "-50px" }}
+            tooltipText={
+              <img src="https://us.123rf.com/450wm/mblach/mblach1402/mblach140200030/25799171-%EC%82%AC%EA%B3%BC.jpg" />
+            }
+            // useShowAnimation
+            position="bottom"
+            tooltipStyles={{
+              backgroundColor: "red",
+            }}
+            isDisable
           >
             <div>오픈 2</div>
           </_Tooltip>
-          <_Tooltip
-            tooltipText="open3"
-            useShowAnimation
-            position={{ top: "-10px" }}
-          >
+          <_Tooltip tooltipText="open3" useShowAnimation isDisable>
             <div>오픈 3</div>
           </_Tooltip>
         </div>
@@ -42,15 +69,15 @@ export default function Test() {
         {/* <div>qqqqqqqq</div> */}
         <div style={{ marginTop: "50px" }}>
           <_Tooltip
-            tooltipText="안녕하세요?"
-            useShowAnimation
-            isDisable={disAble}
+            tooltipText="안녕하세요? 1231312312312312"
+            // isDisable={disAble}
+            isDisable
           >
             <div>
               {/* 말풍선 오픈하기 */}
               {/* <span>말풍선 오픈하기</span> */}
               {/* <h1 style={{ margin: "0px" }}>말풍선 오픈하기</h1> */}
-              <img src="https://us.123rf.com/450wm/mblach/mblach1402/mblach140200030/25799171-%EC%82%AC%EA%B3%BC.jpg" />
+              {/* <img src="https://us.123rf.com/450wm/mblach/mblach1402/mblach140200030/25799171-%EC%82%AC%EA%B3%BC.jpg" /> */}
             </div>
           </_Tooltip>
         </div>

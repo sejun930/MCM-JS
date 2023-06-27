@@ -1,6 +1,6 @@
 {
   "name": "mcm-js",
-  "version": "0.0.41",
+  "version": "0.0.42",
   "private": false,
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -19,7 +19,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
-    "mcm-js-commons": "^0.0.43",
+    "mcm-js-commons": "^0.0.64",
     "next": "^13.3.0",
     "react": "18.2.0",
     "react-dom": "^18.2.0",
