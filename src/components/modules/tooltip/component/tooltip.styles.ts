@@ -35,7 +35,6 @@ export const TooltipTailWrapper = styled.div`
   border-radius: 10px;
   background-color: white;
   min-width: 40px;
-  /* margin-top: ${(props) => `${props.positionTop}px`}; */
   animation-fill-mode: forwards;
   animation-direction: alternate;
 

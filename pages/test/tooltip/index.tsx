@@ -15,7 +15,14 @@ export default function Test() {
           paddingTop: "200px",
         }}
       >
-        <div style={{ display: "flex", gap: "0px 20px" }}>
+        <div
+          style={{
+            display: "flex",
+            gap: "0px 20px",
+            height: "20px",
+            overflow: "hidden",
+          }}
+        >
           <_Tooltip
             tooltipText="open1"
             useShowAnimation
