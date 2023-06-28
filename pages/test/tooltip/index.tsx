@@ -24,16 +24,16 @@ export default function Test() {
           <_Tooltip
             tooltipText={
               <div>
-                <div>1</div>
-                <div>1</div>
-                <div>1</div>
-                <div>1</div>
-                <div>1</div>
-                <div>1</div>
-                <div>1</div>
-                <div>1</div>
-                <div>1</div>
-                <div>1</div>
+                <div>ㅋ</div>
+                <div>ㅋ</div>
+                <div>ㅋ</div>
+                <div>ㅋ</div>
+                <div>ㅋ</div>
+                <div>ㅋ</div>
+                <div>ㅋ</div>
+                <div>ㅋ</div>
+                <div>ㅋ</div>
+                <div>ㅋ</div>
               </div>
             }
             useShowAnimation
