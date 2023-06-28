@@ -28,6 +28,7 @@ const ModalUIPage = (props: {
     _contentsRef,
     modalSize,
     modalStyles,
+    mobileModalStyles,
     mobileModalSize,
     children,
     showModalOpenAnimation,
@@ -66,7 +67,8 @@ const ModalUIPage = (props: {
             data-name={name}
             onMouseDown={handleClickEvent}
             ref={_wrapperRef}
-            style={modalStyles?.wrapper || {}}
+            modalStyle={modalStyles?.wrapper || {}}
+            mobileModalStyles={mobileModalStyles?.wrapper || {}}
           >
             <Items
               className={modalClassList.items}
@@ -75,12 +77,14 @@ const ModalUIPage = (props: {
               showModalOpenAnimation={showModalOpenAnimation}
               isOpen={show}
               ref={_itemRef}
-              style={modalStyles?.items || {}}
+              modalStyle={modalStyles?.items || {}}
+              mobileModalStyles={mobileModalStyles?.items || {}}
             >
               <CloseButtonWrapper
                 className={modalClassList.closeButtonWrapper}
                 isOpen={show}
-                style={buttonWrapperStyles}
+                modalStyle={buttonWrapperStyles}
+                mobileModalStyles={mobileModalStyles?.closeButton || {}}
                 closeMent={closeMent}
               >
                 <_Button
@@ -108,7 +112,8 @@ const ModalUIPage = (props: {
               <ContentsWrapper
                 className={modalClassList.contents}
                 ref={_contentsRef}
-                style={modalStyles?.contents || {}}
+                modalStyle={modalStyles?.contents || {}}
+                mobileModalStyles={mobileModalStyles?.contents || {}}
               >
                 {show ? children : undefined}
               </ContentsWrapper>

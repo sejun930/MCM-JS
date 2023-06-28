@@ -21,6 +21,14 @@ export type ModalPropsType = CommonsSelectorTypes &
       closeButton?: CSSProperties;
       contents?: CSSProperties;
     };
+    // 모달에 적용되는 스타일, 각각의 태그 별로 설정이 가능하다. (모바일 적용)
+    mobileModalStyles?: {
+      wrapper?: CSSProperties;
+      items?: CSSProperties;
+      closeButton?: CSSProperties;
+      contents?: CSSProperties;
+    };
+
     // 모달 사이즈 (width, height) 지정
     mobileModalSize?: {
       width?: string;

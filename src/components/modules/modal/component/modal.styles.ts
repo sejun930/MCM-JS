@@ -12,6 +12,8 @@ interface StyleTypes {
   hideCloseButton?: boolean;
   closeMent?: string;
   modalCount?: number;
+  modalStyle?: CSSProperties;
+  mobileModalStyles?: CSSProperties;
 }
 
 export const ModalWrapper = styled.div`
@@ -52,6 +54,24 @@ export const Wrapper = styled.div`
   justify-content: center;
   z-index: -1;
   opacity: 0;
+
+  // (웹) modal wrapper style 적용하기
+  ${(props: StyleTypes) => {
+    let styles = {};
+    if (props.modalStyle) styles = props.modalStyle;
+
+    return styles;
+  }}
+
+  @media ${breakPoints.mobileLarge} {
+    // (모바일) modal wrapper style 적용하기
+    ${(props: StyleTypes) => {
+      let styles = {};
+      if (props.mobileModalStyles) styles = props.mobileModalStyles;
+
+      return styles;
+    }}
+  }
 `;
 
 export const Items = styled.div`
@@ -59,23 +79,35 @@ export const Items = styled.div`
   background-color: white;
   border-radius: 10px;
   opacity: 0;
+  width: 500px;
+  height: 500px;
 
+  // (웹) modal items style 적용하기
   ${(props: StyleTypes) => {
-    return {
-      width: props.modalSize?.width ? props.modalSize.width : "500px",
-      height: props.modalSize?.height ? props.modalSize.height : "500px",
-    };
+    let styles = {};
+
+    if (props.modalStyle) styles = props.modalStyle;
+    // modal Size가 있다면 modalStyle의 스타일보다 더 우선 순위를 가진다.
+    if (props.modalSize) styles = { ...styles, ...props.modalSize };
+
+    return styles;
   }}
 
   @media ${breakPoints.mobileLarge} {
-    width: 80% !important;
-    height: 70% !important;
+    width: 80%;
+    height: 70%;
 
-    ${(props) =>
-      props.mobileModalSize && {
-        width: `${props.mobileModalSize.width} !important`,
-        height: `${props.mobileModalSize.height} !important`,
-      }}
+    // (모바일) modal items style 적용하기
+    ${(props: StyleTypes) => {
+      let styles = {};
+
+      if (props.mobileModalStyles) styles = props.mobileModalStyles;
+      // modal Size가 있다면 mobileModalStyle의 스타일보다 더 우선 순위를 가진다.
+      if (props.mobileModalSize)
+        styles = { ...styles, ...props.mobileModalSize };
+
+      return styles;
+    }}
   }
 `;
 
@@ -90,15 +122,24 @@ export const CloseButtonWrapper = styled.div`
   border: unset;
 
   ${(props: StyleTypes) => {
-    const styles: { [key: string]: string | number } & CSSProperties = {};
+    let styles: { [key: string]: string | number } & CSSProperties = {};
 
     // 닫기 버튼 보이기
-    if (props.isOpen) styles.opacity = 1;
-    // 애니메이션 적용하기
-    if (props.isAnimation) styles.transition = "all .3s ease-out";
-    // 버튼 숨기기
-    if (props.hideCloseButton) styles.display = "none";
+    if (props.isOpen) {
+      styles.opacity = 1;
 
+      if (props.hideCloseButton) {
+        // 버튼 숨기기
+        styles.display = "none";
+      } else {
+        // 애니메이션 적용하기
+        if (props.isAnimation) styles.transition = "all .3s ease-out";
+
+        if (props.modalStyle)
+          // (웹) modal closeButton style 적용하기
+          styles = { ...styles, ...props.modalStyle };
+      }
+    }
     return styles;
   }}
 
@@ -125,6 +166,16 @@ export const CloseButtonWrapper = styled.div`
     -ms-user-select: none;
     user-select: none;
   }
+
+  @media ${breakPoints.mobileLarge} {
+    ${(props: StyleTypes) => {
+      // (모바일) modal closeButton style 적용하기
+      let styles = {};
+
+      if (props.mobileModalStyles) styles = props.mobileModalStyles;
+      return styles;
+    }}
+  }
 `;
 
 export const ContentsWrapper = styled.div`
@@ -136,4 +187,22 @@ export const ContentsWrapper = styled.div`
   transition: unset;
   padding: 1rem;
   opacity: 0;
+
+  // (웹) modal contents style 적용하기
+  ${(props: StyleTypes) => {
+    let styles = {};
+
+    if (props.modalStyle) styles = props.modalStyle;
+    return styles;
+  }}
+
+  @media ${breakPoints.mobileLarge} {
+    // (모바일) modal contents style 적용하기
+    ${(props) => {
+      let styles = {};
+
+      if (props.mobileModalStyles) styles = props.mobileModalStyles;
+      return styles;
+    }}
+  }
 `;

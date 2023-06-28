@@ -84,36 +84,42 @@ export default function ModalExamplePage() {
               id: "aaa",
               name: "test",
               offAutoClose: true,
-              children: (
-                <>111</>
-                // <button
-                //   onClick={() =>
-                //     Modal.open({
-                //       showBGAnimation: true,
-                //       showModalOpenAnimation: true,
-                //       modalSize: { width: "250px", height: "250px" },
-
-                //       children: (
-                //         <button
-                //           onClick={() =>
-                //             Modal.open({
-                //               showBGAnimation: true,
-                //               showModalOpenAnimation: true,
-                //               modalSize: { width: "100px", height: "100px" },
-                //               onCloseModal: () => Modal.close(),
-                //             })
-                //           }
-                //         >
-                //           최하위 모달 오픈
-                //         </button>
-                //       ),
-                //       // onCloseModal: () => Modal.close({ id: "aaas" }),
-                //     })
-                //   }
-                // >
-                //   하위 모달 오픈
-                // </button>
-              ),
+              children: <>111</>,
+              modalSize: {
+                // width: "400px",
+              },
+              modalStyles: {
+                wrapper: {
+                  color: "red",
+                },
+                items: {
+                  width: "200px",
+                },
+                closeButton: {
+                  backgroundColor: "red",
+                  width: "200px",
+                },
+                contents: {
+                  backgroundColor: "skyblue",
+                  width: "50%",
+                },
+              },
+              mobileModalStyles: {
+                wrapper: {
+                  color: "blue",
+                },
+                items: {
+                  width: "300px",
+                },
+                closeButton: {
+                  backgroundColor: "blue",
+                  width: "100px",
+                },
+                contents: {
+                  backgroundColor: "gray",
+                  width: "70%",
+                },
+              },
             })
           }
           type="button"
@@ -235,6 +241,12 @@ export default function ModalExamplePage() {
         </button>
         <input ref={inputRef as any} />
       </p>
+      <button
+        style={{ position: "fixed", top: 0, zIndex: 99999, color: "white" }}
+        onClick={() => setOutOpen(false)}
+      >
+        모달 닫기
+      </button>
     </div>
   );
 }

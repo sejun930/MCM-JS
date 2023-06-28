@@ -5,6 +5,8 @@ import { MutableRefObject, useEffect, useRef, useState } from "react";
 
 import { TooltipPropsType } from "./tooltip.types";
 
+// position의 종류가 아래의 4가지에 일치하는지 검증
+const filterPosition = ["top", "bottom", "left", "right"];
 // 추가 설명을 위한 말풍선 모듈
 export default function _Tooltip(props: TooltipPropsType) {
   // 중복 실행 방지 변수
@@ -14,6 +16,11 @@ export default function _Tooltip(props: TooltipPropsType) {
   const tailRef = useRef() as MutableRefObject<HTMLDivElement>;
   const { children, tooltipText, useShowAnimation, isDisable, position } =
     props;
+
+  // position이 4가지의 종류에 일치하지 않는다면 기본값 top 부여
+  let _position = filterPosition.some((el) => el === position)
+    ? position
+    : "top";
 
   // 말풍선 실행 여부
   const [show, setShow] = useState(false);
@@ -37,20 +44,20 @@ export default function _Tooltip(props: TooltipPropsType) {
         let movePosition = height;
         let bonus = -5;
 
-        if (position === "bottom") {
+        if (_position === "bottom") {
           // 배치가 아래를 향할 경우
           height = 20;
           bonus = 5;
 
           movePosition = height;
-        } else if (position === "left") {
+        } else if (_position === "left") {
           // 배치가 왼쪽을 향할 경우
           height = height / 2;
           width = width + -25;
 
           movePosition = width;
           tailRef.current.style.marginLeft = `${width + bonus}px`;
-        } else if (position === "right") {
+        } else if (_position === "right") {
           // 배치가 오른쪽을 향할 경우
           height = height / 2;
           width = Math.abs(width) + 25;
@@ -58,8 +65,6 @@ export default function _Tooltip(props: TooltipPropsType) {
           movePosition = width;
           bonus = 5;
           tailRef.current.style.marginLeft = `${width + bonus}px`;
-
-          console.log(movePosition, bonus);
         }
 
         if (useShowAnimation) {
@@ -75,9 +80,9 @@ export default function _Tooltip(props: TooltipPropsType) {
         }
 
         // 말풍선의 최종 위치
-        if (!position || position === "top" || position === "bottom")
+        if (!_position || _position === "top" || _position === "bottom")
           tailRef.current.style.marginTop = `${height + bonus}px`;
-        else if (position === "left" || position === "right") {
+        else if (_position === "left" || _position === "right") {
           tailRef.current.style.marginTop = `${height + 13}px`;
         }
 
@@ -101,7 +106,7 @@ export default function _Tooltip(props: TooltipPropsType) {
         timer = 250; // 변환 시간 지연
 
         if (tailRef && tailRef.current) {
-          if (!position || position === "top" || position === "bottom")
+          if (!_position || _position === "top" || _position === "bottom")
             tailRef.current.style.animation = "CLOSE_TOOLTIP_TOP 0.3s";
           else tailRef.current.style.animation = "CLOSE_TOOLTIP_LEFT 0.3s";
         }
@@ -125,6 +130,7 @@ export default function _Tooltip(props: TooltipPropsType) {
         toggleTail={toggleTail}
         tailRef={tailRef}
         render={render}
+        position={_position}
       />
     </_Error>
   );
