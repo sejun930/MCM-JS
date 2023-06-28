@@ -91,6 +91,7 @@ export default function ModalExamplePage() {
               modalStyles: {
                 wrapper: {
                   color: "red",
+                  backgroundColor: "rgba(30, 0, 50, 0.7)",
                 },
                 items: {
                   width: "200px",
@@ -107,6 +108,7 @@ export default function ModalExamplePage() {
               mobileModalStyles: {
                 wrapper: {
                   color: "blue",
+                  backgroundColor: "rgba(100, 0, 50, 0.7)",
                 },
                 items: {
                   width: "300px",

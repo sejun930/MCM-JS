@@ -60,6 +60,14 @@ export const Wrapper = styled.div`
     let styles = {};
     if (props.modalStyle) styles = props.modalStyle;
 
+    // 배경색 (background-color)는 최우선 순위로 변경
+    if (props.modalStyle.backgroundColor) {
+      styles = {
+        ...styles,
+        ["backgroundColor"]: `${props.modalStyle.backgroundColor} !important`,
+      };
+    }
+
     return styles;
   }}
 
@@ -68,6 +76,14 @@ export const Wrapper = styled.div`
     ${(props: StyleTypes) => {
       let styles = {};
       if (props.mobileModalStyles) styles = props.mobileModalStyles;
+
+      // 배경색 (background-color)는 최우선 순위로 변경
+      if (props.mobileModalStyles.backgroundColor) {
+        styles = {
+          ...styles,
+          ["backgroundColor"]: `${props.mobileModalStyles.backgroundColor} !important`,
+        };
+      }
 
       return styles;
     }}
