@@ -15,6 +15,8 @@ export default function _Modal(
   return <_RenderModal {...props} />;
 }
 
+// 자동 종료 변수
+let autoCloseTimer: number | ReturnType<typeof setTimeout>;
 // 2. 최종 모달 렌더 컴포넌트
 export function _RenderModal(props: ModalPropsType) {
   const {
@@ -27,6 +29,7 @@ export function _RenderModal(props: ModalPropsType) {
     showModalOpenAnimation,
     onAfterCloseEvent,
     onFixWindow,
+    timer,
   } = props;
   const _modalWrapperRef = useRef() as MutableRefObject<HTMLDivElement>;
   const _wrapperRef = useRef() as MutableRefObject<HTMLDivElement>;
@@ -37,6 +40,7 @@ export function _RenderModal(props: ModalPropsType) {
 
   useEffect(() => {
     if (show) {
+      clearTimeout(autoCloseTimer);
       // 스크롤 이동 방지
       if (document.body && onFixWindow) document.body.style.overflow = "hidden";
 
@@ -64,6 +68,13 @@ export function _RenderModal(props: ModalPropsType) {
           }
 
           _itemRef.current?.classList.add(modalFuncClass.itemShow);
+        }
+
+        if (timer >= 1000) {
+          // 최소 1초 이상일 때만 자동종료 실행
+          autoCloseTimer = window.setTimeout(() => {
+            _onCloseModal();
+          }, timer);
         }
       }, 0);
     } else {

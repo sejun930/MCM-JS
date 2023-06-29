@@ -174,7 +174,8 @@ export const closeModalFn = async ({
     if (el) return el;
   } else {
     // 그외 state를 이용해서 오픈했을 경우
-    if (wrapperRef.parentElement) return wrapperRef.parentElement;
+    if (wrapperRef && wrapperRef?.parentElement)
+      return wrapperRef.parentElement;
   }
 
   const extraModal = document.getElementsByClassName("mcm-modal-wrapper");

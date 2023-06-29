@@ -28,7 +28,6 @@ export type ModalPropsType = CommonsSelectorTypes &
       closeButton?: CSSProperties;
       contents?: CSSProperties;
     };
-
     // 모달 사이즈 (width, height) 지정
     mobileModalSize?: {
       width?: string;
@@ -63,6 +62,8 @@ export type ModalPropsType = CommonsSelectorTypes &
     // 모달이 종료된 다음 시점에 실행될 이벤트
     onFixWindow?: boolean;
     // 모달이 열려있는 상태에서 스크롤 이동을 방지할 건지에 대한 여부
+    timer?: number;
+    // 모달 자동 종료 시간
   };
 
 export interface ModalPropsUITypes {

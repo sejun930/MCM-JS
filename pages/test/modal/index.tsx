@@ -43,13 +43,20 @@ export default function ModalExamplePage() {
           show={outerOpen}
           onCloseModal={() => {
             setOutOpen(false);
+            alert("실행 1");
           }}
           id="outer-modal"
           showBGAnimation
           showModalOpenAnimation
           name="test"
+          hideCloseButton
+          timer={10000}
+          offAutoClose
+          onAfterCloseEvent={() => {
+            alert("실행 2");
+          }}
         >
-          <Modal
+          {/* <Modal
             show={innerOpen}
             onCloseModal={() => {
               setInnerOpen(false);
@@ -72,7 +79,7 @@ export default function ModalExamplePage() {
               showModalOpenAnimation
               onFixWindow
             ></Modal>
-          </Modal>
+          </Modal> */}
         </Modal>
       </p>
       <p>
