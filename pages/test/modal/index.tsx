@@ -1,7 +1,7 @@
-import React from "react";
 import { Modal } from "../../../src";
-// import Modal from "../../../src/components/modules/modal/modal.container";
-import { useState, useRef } from "react";
+import React, { useState, useRef } from "react";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
 import _Modal from "../../../src/components/modules/modal";
 import { _Input } from "mcm-js-commons";
@@ -14,6 +14,7 @@ export default function ModalExamplePage() {
   const [lastOpen, setLastOpen] = useState(false);
 
   const [outerOpen2, setOuterOpen2] = useState(false);
+  const router = useRouter();
 
   // 모달을 실행하는 함수입니다.
   const openOuterModal = () => {
@@ -34,227 +35,58 @@ export default function ModalExamplePage() {
 
   return (
     <div id="test">
-      <p>
-        <button onClick={openOuterModal} type="button">
-          {" "}
-          모달 실행하기 - Use With State
-        </button>
-        <Modal
-          show={outerOpen}
-          onCloseModal={() => {
-            setOutOpen(false);
-            alert("실행 1");
-          }}
-          id="outer-modal"
-          showBGAnimation
-          showModalOpenAnimation
-          name="test"
-          hideCloseButton
-          timer={10000}
-          offAutoClose
-          onAfterCloseEvent={() => {
-            alert("실행 2");
-          }}
-        >
-          {/* <Modal
-            show={innerOpen}
-            onCloseModal={() => {
-              setInnerOpen(false);
-            }}
-            modalSize={{ width: "250px", height: "250px" }}
-            id="inner-modal"
-            showBGAnimation
-            showModalOpenAnimation
-          >
-            <button onClick={() => setLastOpen(true)}>모달 실행</button>
-            <Modal
-              show={lastOpen}
-              onCloseModal={() => setLastOpen(false)}
-              onAfterCloseEvent={() => {
-                Modal.close({ id: "outer-modal" });
-                setOutOpen(false);
-              }}
-              modalSize={{ width: "100px", height: "100px" }}
-              showBGAnimation
-              showModalOpenAnimation
-              onFixWindow
-            ></Modal>
-          </Modal> */}
-        </Modal>
-      </p>
-      <p>
-        <button
-          onClick={() =>
-            Modal.open({
-              showBGAnimation: true,
-              showModalOpenAnimation: true,
-              id: "aaa",
-              name: "test",
-              offAutoClose: true,
-              children: <>111</>,
-              modalSize: {
-                // width: "400px",
-              },
-              modalStyles: {
-                wrapper: {
-                  color: "red",
-                  backgroundColor: "rgba(30, 0, 50, 0.7)",
-                },
-                items: {
-                  width: "200px",
-                },
-                closeButton: {
-                  backgroundColor: "red",
-                  width: "200px",
-                },
-                contents: {
-                  backgroundColor: "skyblue",
-                  width: "50%",
-                },
-              },
-              mobileModalStyles: {
-                wrapper: {
-                  color: "blue",
-                  backgroundColor: "rgba(100, 0, 50, 0.7)",
-                },
-                items: {
-                  width: "300px",
-                },
-                closeButton: {
-                  backgroundColor: "blue",
-                  width: "100px",
-                },
-                contents: {
-                  backgroundColor: "gray",
-                  width: "70%",
-                },
-              },
-            })
-          }
-          type="button"
-        >
-          모달 실행하기 - In Function
-        </button>
-      </p>
-      <p style={{ height: "2000px" }}>
-        <button onClick={() => setOuterOpen2(true)}>
-          모달 실행하기 - Use With State & Close Modal
-        </button>
-        <Modal
-          show={outerOpen2}
-          onCloseModal={() => setOuterOpen2(false)}
-          showBGAnimation
-          showModalOpenAnimation
-          className="aaab"
-        >
-          <Modal
-            show={true}
-            onCloseModal={() => Modal.close()}
-            showBGAnimation
-            showModalOpenAnimation
-            modalSize={{ width: "400px", height: "400px" }}
-            className="aaa"
-          >
-            <Modal
-              show={true}
-              onCloseModal={() => Modal.close()}
-              showBGAnimation
-              showModalOpenAnimation
-              modalSize={{ width: "300px", height: "300px" }}
-              id="bbbb"
-              className="aaa"
-            >
-              <Modal
-                show={true}
-                onCloseModal={() => Modal.close({ className: "aaa" })}
-                showBGAnimation
-                showModalOpenAnimation
-                modalSize={{ width: "200px", height: "200px" }}
-                className="bbb"
-                id="ccc"
-              ></Modal>
-            </Modal>
-          </Modal>
-        </Modal>
-      </p>
-      <p>
-        <button
-          onClick={() =>
-            Modal.open({
-              show: true,
-              showBGAnimation: true,
-              showModalOpenAnimation: true,
-              id: "a1",
-              children: (
-                <div>
-                  <button
-                    onClick={() =>
-                      Modal.open({
-                        showBGAnimation: true,
-                        showModalOpenAnimation: true,
-                        children: (
-                          <div>
-                            <button
-                              onClick={() =>
-                                Modal.open({
-                                  showBGAnimation: true,
-                                  showModalOpenAnimation: true,
-                                  modalSize: {
-                                    width: "100px",
-                                    height: "100px",
-                                  },
-                                  id: "a3",
-                                  // offAutoClose: true,
-                                  onCloseModal: () => Modal.close({ id: "a1" }),
-                                  onAfterCloseEvent: () => {
-                                    inputRef.current.focus();
-                                  },
-                                  children: (
-                                    <div>
-                                      {/* <button
-                                        onClick={() =>
-                                          Modal.close({ id: "a3" })
-                                        }
-                                      >
-                                        하나만 닫기
-                                      </button>
-                                      <p></p>
-                                      <button
-                                        onClick={() =>
-                                          Modal.close({ id: "a1" })
-                                        }
-                                      >
-                                        모두 닫기
-                                      </button> */}
-                                    </div>
-                                  ),
-                                })
-                              }
-                            >
-                              하위 모달 오픈 2
-                            </button>
-                          </div>
-                        ),
-                        modalSize: { width: "400px", height: "400px" },
-                      })
-                    }
-                  >
-                    하위 모달 오픈 1
-                  </button>
-                </div>
-              ),
-            })
-          }
-        >
-          모달 실행하기 - Multiple & Close Modal
-        </button>
-        <input ref={inputRef as any} />
-      </p>
-      <button
-        style={{ position: "fixed", top: 0, zIndex: 99999, color: "white" }}
-        onClick={() => setOutOpen(false)}
+      <button onClick={() => setOutOpen(true)}>모달 실행</button>
+      <Modal
+        show={outerOpen}
+        onCloseModal={() => setOutOpen(false)}
+        onFixWindow
+        offAutoClose
+        showBGAnimation
+        showModalOpenAnimation
       >
-        모달 닫기
+        <button
+          onClick={() =>
+            Modal.open({
+              children: <div>하위 모달</div>,
+              modalSize: { width: "100px", height: "100px" },
+            })
+          }
+        >
+          하위 모달 열기
+        </button>
+      </Modal>
+      <button
+        onClick={() =>
+          Modal.open({
+            children: (
+              <button
+                onClick={() =>
+                  Modal.open({
+                    children: <div>하위 모달</div>,
+                    modalSize: { width: "100px", height: "100px" },
+                  })
+                }
+              >
+                하위 모달 열기
+              </button>
+            ),
+            onFixWindow: true,
+          })
+        }
+      >
+        모달 열기2
+      </button>
+      <button
+        style={{
+          position: "fixed",
+          top: 0,
+          zIndex: 99999,
+          color: "white",
+          left: "300px",
+        }}
+        onClick={() => router.push("/test/modal2")}
+      >
+        페이지 이동
       </button>
     </div>
   );

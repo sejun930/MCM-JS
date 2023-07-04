@@ -23,14 +23,16 @@ export function _RenderModal(props: ModalPropsType) {
     show,
     offAutoClose,
     onCloseModal,
-    openIdx,
-    _wmo,
     showBGAnimation,
     showModalOpenAnimation,
     onAfterCloseEvent,
     onFixWindow,
     timer,
   } = props;
+  let { openIdx, _wmo } = props;
+  // 페이지 전환을 체크하기 위해 현재 모달이 실행되어 있는 페이지 주소 저장
+  let originPathName = "";
+
   const _modalWrapperRef = useRef() as MutableRefObject<HTMLDivElement>;
   const _wrapperRef = useRef() as MutableRefObject<HTMLDivElement>;
   const _itemRef = useRef() as MutableRefObject<HTMLDivElement>;
@@ -106,6 +108,27 @@ export function _RenderModal(props: ModalPropsType) {
         }, (showModalOpenAnimation && 200) || 0);
     }
   }, [show]);
+
+  useEffect(() => {
+    // 현재 페이지 주소 저장
+    if (!originPathName) originPathName = location.pathname;
+
+    return () => {
+      // 페이지 전환을 감지했을 경우
+      if (originPathName !== location.pathname) {
+        ableClose = true;
+        _onCloseModal().then(() => {
+          // 함수로 모달을 오픈했을 경우, 오픈된 모든 모달 제거
+          const list = document.getElementsByClassName("mcm-modal-window-type");
+          if (list.length) {
+            Array.from(list).forEach((node) => {
+              node.remove();
+            });
+          }
+        });
+      }
+    };
+  });
 
   const disableOverflow = () => {
     // 실행되어 있는 여분의 모달이 있는지 검색
