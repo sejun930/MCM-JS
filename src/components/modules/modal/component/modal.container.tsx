@@ -28,8 +28,9 @@ export function _RenderModal(props: ModalPropsType) {
     onAfterCloseEvent,
     onFixWindow,
     timer,
+    openIdx,
+    _wmo,
   } = props;
-  let { openIdx, _wmo } = props;
   // 페이지 전환을 체크하기 위해 현재 모달이 실행되어 있는 페이지 주소 저장
   let originPathName = "";
 
@@ -122,7 +123,7 @@ export function _RenderModal(props: ModalPropsType) {
           const list = document.getElementsByClassName("mcm-modal-window-type");
           if (list.length) {
             Array.from(list).forEach((node) => {
-              node.remove();
+              if (node) node.remove();
             });
           }
         });

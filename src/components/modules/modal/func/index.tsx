@@ -17,9 +17,9 @@ const openModal = (props?: ModalCloseFuncType) => {
     document.getElementsByClassName("mcm-modal-contents")
   );
   // 최상위 모달이 하나도 없을 경우에는 body에 렌더
-  if (!parents.length) document.body.appendChild(_div);
+  if (parents && !parents.length) document.body.appendChild(_div);
   // 상위 모달에 바로 렌더
-  else parents.at(-1)?.appendChild(_div);
+  else if (parents) parents.at(-1)?.appendChild(_div);
 
   createRoot(_div).render(
     <OriginModal
@@ -82,17 +82,25 @@ const closeModal = (props?: ModalCloseFuncType) => {
     }
     // class 선택자 추적하기
     if (props.className && !target.length) {
-      const elements = document.getElementsByClassName(props.className);
-      if (elements.length) target = Array.from(elements) as Array<HTMLElement>;
+      const elements = Array.from(
+        document.getElementsByClassName(props.className)
+      );
+      if (elements && elements.length)
+        target = Array.from(elements) as Array<HTMLElement>;
     }
   }
 
   if (target.length) {
     target.forEach((node) => {
       if (node?.parentElement) {
-        const origin = getIsWindow(node)
+        let origin = getIsWindow(node)
           ? node.parentElement.parentElement
           : node.parentElement;
+
+        // window로 오픈했을 경우에는 부모를 참조할 수 없다.
+        if (node.classList.contains("mcm-modal-window-type")) {
+          origin = node;
+        }
 
         if (origin) {
           const wrapper = findNode(modalClassList.wrapper, origin);

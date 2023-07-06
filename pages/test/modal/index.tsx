@@ -76,7 +76,19 @@ export default function ModalExamplePage() {
       >
         모달 열기2
       </button>
-      <button
+      <Link
+        href={"/test/modal2"}
+        style={{
+          position: "fixed",
+          top: 0,
+          zIndex: 99999,
+          color: "white",
+          left: "300px",
+        }}
+      >
+        페이지 이동
+      </Link>
+      {/* <button
         style={{
           position: "fixed",
           top: 0,
@@ -87,7 +99,7 @@ export default function ModalExamplePage() {
         onClick={() => router.push("/test/modal2")}
       >
         페이지 이동
-      </button>
+      </button> */}
     </div>
   );
 }
