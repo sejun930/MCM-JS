@@ -17,6 +17,9 @@ export default function _Modal(
 
 // 자동 종료 변수
 let autoCloseTimer: number | ReturnType<typeof setTimeout>;
+// 자동 종료 감지 변수
+let _offAutoClose = false;
+
 // 2. 최종 모달 렌더 컴포넌트
 export function _RenderModal(props: ModalPropsType) {
   const {
@@ -33,6 +36,9 @@ export function _RenderModal(props: ModalPropsType) {
   } = props;
   // 페이지 전환을 체크하기 위해 현재 모달이 실행되어 있는 페이지 주소 저장
   let originPathName = "";
+
+  // 자동종료 변수 실시간 감지
+  if (offAutoClose !== undefined) _offAutoClose = offAutoClose;
 
   const _modalWrapperRef = useRef() as MutableRefObject<HTMLDivElement>;
   const _wrapperRef = useRef() as MutableRefObject<HTMLDivElement>;
@@ -124,6 +130,7 @@ export function _RenderModal(props: ModalPropsType) {
           if (list.length) {
             Array.from(list).forEach((node) => {
               if (node) node.remove();
+              if (onAfterCloseEvent) onAfterCloseEvent();
             });
           }
         });
@@ -190,7 +197,7 @@ export function _RenderModal(props: ModalPropsType) {
 
   const handleClickEvent = (event: BaseSyntheticEvent) => {
     if (_itemRef.current && !_itemRef.current.contains(event.target)) {
-      if (!offAutoClose && ableClose) {
+      if (!_offAutoClose && ableClose) {
         _onCloseModal();
       }
     }

@@ -19,7 +19,7 @@ interface StyleTypes {
 export const ModalWrapper = styled.div`
   .mcm-modal-open {
     background-color: rgba(0, 0, 0, 0.6);
-    z-index: ${(props: StyleTypes) => (props.modalCount || 0) + 999};
+    z-index: ${(props: StyleTypes) => props.modalCount || 0};
     opacity: 1;
     display: flex;
   }
