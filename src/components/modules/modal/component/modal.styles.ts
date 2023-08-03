@@ -14,12 +14,19 @@ interface StyleTypes {
   modalCount?: number;
   modalStyle?: CSSProperties;
   mobileModalStyles?: CSSProperties;
+  timer?: number;
 }
 
 export const ModalWrapper = styled.div`
+  ${(props) =>
+    props.timer &&
+    {
+      // zIndex: 9999,
+    }}
+
   .mcm-modal-open {
     background-color: rgba(0, 0, 0, 0.6);
-    z-index: ${(props: StyleTypes) => props.modalCount || 0};
+    z-index: ${(props: StyleTypes) => (props.modalCount || 0) + 999};
     opacity: 1;
     display: flex;
   }

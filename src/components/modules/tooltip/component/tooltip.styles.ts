@@ -273,18 +273,4 @@ export const TooltipTailContents = styled.div`
       return styles;
     }}
   }
-
-  /* ::after {
-    position: absolute;
-    content: "";
-    width: 12px;
-    height: 16px;
-    background-color: #ffff;
-    border-radius: 4px;
-    box-shadow: -1px 1px black;
-    transform: rotate(-55deg);
-    position: absolute;
-    z-index: 2;
-    bottom: -6.5px;
-  } */
 `;

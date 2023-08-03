@@ -17,8 +17,6 @@ export default function _Modal(
 
 // 자동 종료 변수
 let autoCloseTimer: number | ReturnType<typeof setTimeout>;
-// 자동 종료 감지 변수
-let _offAutoClose = false;
 
 // 2. 최종 모달 렌더 컴포넌트
 export function _RenderModal(props: ModalPropsType) {
@@ -37,8 +35,9 @@ export function _RenderModal(props: ModalPropsType) {
   // 페이지 전환을 체크하기 위해 현재 모달이 실행되어 있는 페이지 주소 저장
   let originPathName = "";
 
-  // 자동종료 변수 실시간 감지
-  if (offAutoClose !== undefined) _offAutoClose = offAutoClose;
+  // 자동 종료 실시간 감지 변수
+  let _offAutoClose = offAutoClose || false;
+  console.log(_offAutoClose);
 
   const _modalWrapperRef = useRef() as MutableRefObject<HTMLDivElement>;
   const _wrapperRef = useRef() as MutableRefObject<HTMLDivElement>;
@@ -49,7 +48,7 @@ export function _RenderModal(props: ModalPropsType) {
 
   useEffect(() => {
     if (show) {
-      clearTimeout(autoCloseTimer);
+      // clearTimeout(autoCloseTimer);
       // 스크롤 이동 방지
       if (document.body && onFixWindow) document.body.style.overflow = "hidden";
 
@@ -81,8 +80,8 @@ export function _RenderModal(props: ModalPropsType) {
 
         if (timer >= 1000) {
           // 최소 1초 이상일 때만 자동종료 실행
-          autoCloseTimer = window.setTimeout(() => {
-            _onCloseModal();
+          window.setTimeout(() => {
+            _onCloseModal(true);
           }, timer);
         }
       }, 0);
@@ -147,8 +146,9 @@ export function _RenderModal(props: ModalPropsType) {
   };
 
   // 모달 닫기 이벤트 실행
-  const _onCloseModal = async () => {
-    if (!ableClose) return;
+  const _onCloseModal = async (forc?: boolean) => {
+    // forc : 강제 실행
+    if (!ableClose && !forc) return;
     ableClose = false;
 
     // 1. 현재 실행중인 모달은 우선 제거
@@ -172,12 +172,13 @@ export function _RenderModal(props: ModalPropsType) {
             modalClassList.wrapper
           );
 
-          // 5. 이벤트로 인해 제거되지 않았다면
+          // 5. 이벤트로 인해 제거되지 않았다면 강제 삭제
           if (typeof target !== "boolean") {
             if (document.body.contains(target)) {
               target.remove();
             }
           }
+
           // 6. 다른 모달이 남아 있다면 다음 모달 제거 가능으로 변경
           if (wrapperList.length) ableClose = true;
           // 7. 모달 종료 직후에 실행할 이벤트가 있다면 실행
@@ -196,9 +197,11 @@ export function _RenderModal(props: ModalPropsType) {
   };
 
   const handleClickEvent = (event: BaseSyntheticEvent) => {
-    if (_itemRef.current && !_itemRef.current.contains(event.target)) {
-      if (!_offAutoClose && ableClose) {
-        _onCloseModal();
+    if (show) {
+      if (_itemRef.current && !_itemRef.current.contains(event.target)) {
+        if (!_offAutoClose && ableClose) {
+          _onCloseModal();
+        }
       }
     }
   };
@@ -212,6 +215,7 @@ export function _RenderModal(props: ModalPropsType) {
     _wrapperRef,
     _contentsRef,
     _wmo,
+    timer,
   };
 
   return <_ModalUIPage props={{ ..._props }} />;
