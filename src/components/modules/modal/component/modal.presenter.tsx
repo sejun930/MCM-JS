@@ -39,7 +39,6 @@ const ModalUIPage = (props: {
     closeButtonInfo,
     handleClickEvent,
     _wmo,
-    timer,
   } = _props;
 
   const _closeButtonSize = getPXForm(
@@ -59,7 +58,7 @@ const ModalUIPage = (props: {
       mouduleName="Modal"
     >
       {(show && (
-        <ModalWrapper ref={_modalWrapperRef} timer={timer}>
+        <ModalWrapper ref={_modalWrapperRef}>
           <Wrapper
             className={getAllComponentsClassName(
               modalClassList.wrapper,

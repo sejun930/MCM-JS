@@ -219,7 +219,6 @@ export function _RenderModal(props: ModalPropsType) {
     _wrapperRef,
     _contentsRef,
     _wmo,
-    timer,
   };
 
   return <_ModalUIPage props={{ ..._props }} />;
