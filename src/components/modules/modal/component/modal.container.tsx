@@ -42,7 +42,6 @@ export function _RenderModal(props: ModalPropsType) {
 
   // 자동 종료 실시간 감지 변수
   let _offAutoClose = offAutoClose || false;
-  console.log(_offAutoClose);
 
   const _modalWrapperRef = useRef() as MutableRefObject<HTMLDivElement>;
   const _wrapperRef = useRef() as MutableRefObject<HTMLDivElement>;
