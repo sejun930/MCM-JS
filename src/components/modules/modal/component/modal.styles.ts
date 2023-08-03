@@ -68,7 +68,7 @@ export const Wrapper = styled.div`
     if (props.modalStyle) styles = props.modalStyle;
 
     // 배경색 (background-color)는 최우선 순위로 변경
-    if (props.modalStyle.backgroundColor) {
+    if (props?.modalStyle && props?.modalStyle.backgroundColor) {
       styles = {
         ...styles,
         ["backgroundColor"]: `${props.modalStyle.backgroundColor} !important`,
@@ -85,7 +85,10 @@ export const Wrapper = styled.div`
       if (props.mobileModalStyles) styles = props.mobileModalStyles;
 
       // 배경색 (background-color)는 최우선 순위로 변경
-      if (props.mobileModalStyles.backgroundColor) {
+      if (
+        props.mobileModalStyles &&
+        props?.mobileModalStyles?.backgroundColor
+      ) {
         styles = {
           ...styles,
           ["backgroundColor"]: `${props.mobileModalStyles.backgroundColor} !important`,

@@ -1,4 +1,9 @@
-import { BaseSyntheticEvent, MutableRefObject, useEffect, useRef } from "react";
+import React, {
+  BaseSyntheticEvent,
+  MutableRefObject,
+  useEffect,
+  useRef,
+} from "react";
 import _ModalUIPage from "./modal.presenter";
 
 import { ModalPropsType, ModalPropsUITypes } from "./modal.types";
@@ -78,7 +83,7 @@ export function _RenderModal(props: ModalPropsType) {
           _itemRef.current?.classList.add(modalFuncClass.itemShow);
         }
 
-        if (timer >= 1000) {
+        if (timer && timer >= 1000) {
           // 최소 1초 이상일 때만 자동종료 실행
           window.setTimeout(() => {
             _onCloseModal(true);
