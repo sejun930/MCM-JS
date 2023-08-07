@@ -1,9 +1,12 @@
+import React from "react";
+
 import _TooltipUIPage from "./tooltip.presenter";
 
 import { _Error } from "mcm-js-commons";
 import { MutableRefObject, useEffect, useRef, useState } from "react";
 
 import { TooltipPropsType } from "./tooltip.types";
+import { positionList } from "./tooltip.data";
 
 // position의 종류가 아래의 4가지에 일치하는지 검증
 const filterPosition = ["top", "bottom", "left", "right"];
@@ -37,54 +40,26 @@ export default function _Tooltip(props: TooltipPropsType) {
     if (tailRef && tailRef.current) {
       // 말풍선 오픈시
       if (show) {
-        // 말풍선의 위치값 구하기
-        let height = -tailRef.current.offsetHeight;
-        let width = -tailRef.current.offsetWidth;
-
-        let movePosition = height;
-        let bonus = -5;
-
-        if (_position === "bottom") {
-          // 배치가 아래를 향할 경우
-          height = 20;
-          bonus = 5;
-
-          movePosition = height;
-        } else if (_position === "left") {
-          // 배치가 왼쪽을 향할 경우
-          height = height / 2;
-          width = width + -25;
-
-          movePosition = width;
-          tailRef.current.style.marginLeft = `${width + bonus}px`;
-        } else if (_position === "right") {
-          // 배치가 오른쪽을 향할 경우
-          height = height / 2;
-          width = Math.abs(width) + 25;
-
-          movePosition = width;
-          bonus = 5;
-          tailRef.current.style.marginLeft = `${width + bonus}px`;
-        }
+        const currentPosition = positionList[_position || "top"];
 
         if (useShowAnimation) {
           // 애니메이션 사용중일 경우
+
+          // 시작 기준점
           tailRef.current.style.setProperty(
-            "--move-start-position",
-            `${movePosition}px`
+            `--move-start-${currentPosition.target}`,
+            `${currentPosition.startPoint}%`
           );
+          // 종료 기준점
           tailRef.current.style.setProperty(
-            "--move-end-position",
-            `${movePosition + bonus}px`
+            `--move-end-${currentPosition.target}`,
+            `100%`
           );
         }
 
         // 말풍선의 최종 위치
-        if (!_position || _position === "top" || _position === "bottom")
-          tailRef.current.style.marginTop = `${height + bonus}px`;
-        else if (_position === "left" || _position === "right") {
-          tailRef.current.style.marginTop = `${height + 13}px`;
-        }
+        if (tailRef.current.style)
+          tailRef.current.style[currentPosition.target] = "100%";
 
         setRender(true);
       }
@@ -107,7 +82,9 @@ export default function _Tooltip(props: TooltipPropsType) {
 
         if (tailRef && tailRef.current) {
           if (!_position || _position === "top" || _position === "bottom")
+            // 위 또는 아래 방향일 때
             tailRef.current.style.animation = "CLOSE_TOOLTIP_TOP 0.3s";
+          // 왼쪽 또는 오른쪽 방향일 때
           else tailRef.current.style.animation = "CLOSE_TOOLTIP_LEFT 0.3s";
         }
       }

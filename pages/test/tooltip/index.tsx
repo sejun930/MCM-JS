@@ -1,90 +1,29 @@
 import React, { useState } from "react";
 import _Tooltip from "../../../src/components/modules/tooltip/component/tooltip.container";
 
+import { _Title } from "mcm-js-commons";
+
 export default function Test() {
   const [disAble, setDisAble] = useState(false);
   return (
-    <div>
-      <div></div>
-
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          paddingTop: "200px",
-        }}
+    <div style={{ padding: "280px", display: "flex", gap: "0px 100px" }}>
+      <_Tooltip
+        tooltipText={
+          <img style={{ width: "140px" }} src="/images/watermelon.webp" />
+        }
+        useShowAnimation
       >
-        <div
-          style={{
-            display: "flex",
-            gap: "0px 20px",
-          }}
-        >
-          <_Tooltip
-            tooltipText={
-              <div>
-                <div>ㅋ</div>
-                <div>ㅋ</div>
-                <div>ㅋ</div>
-                <div>ㅋ</div>
-                <div>ㅋ</div>
-                <div>ㅋ</div>
-                <div>ㅋ</div>
-                <div>ㅋ</div>
-                <div>ㅋ</div>
-                <div>ㅋ</div>
-              </div>
-            }
-            useShowAnimation
-            tooltipStyles={{
-              backgroundColor: "red",
-              // border: {
-              //   width: "10px",
-              // },
-            }}
-            position="right"
-            showMobile
-          >
-            📌
-          </_Tooltip>
-          <_Tooltip
-            tooltipText={
-              <img src="https://us.123rf.com/450wm/mblach/mblach1402/mblach140200030/25799171-%EC%82%AC%EA%B3%BC.jpg" />
-            }
-            // useShowAnimation
-            position="bottom"
-            tooltipStyles={{
-              backgroundColor: "red",
-            }}
-            isDisable
-          >
-            <div>오픈 2</div>
-          </_Tooltip>
-          <_Tooltip tooltipText="open3" useShowAnimation isDisable>
-            <div>오픈 3</div>
-          </_Tooltip>
-        </div>
+        <button style={{ fontSize: "24px" }}>사진 보기</button>
+      </_Tooltip>
 
-        {/* <div>qqqqqqqq</div> */}
-        <div style={{ marginTop: "50px" }}>
-          <_Tooltip
-            tooltipText="안녕하세요? 1231312312312312"
-            // isDisable={disAble}
-            isDisable
-          >
-            <div>
-              {/* 말풍선 오픈하기 */}
-              {/* <span>말풍선 오픈하기</span> */}
-              {/* <h1 style={{ margin: "0px" }}>말풍선 오픈하기</h1> */}
-              {/* <img src="https://us.123rf.com/450wm/mblach/mblach1402/mblach140200030/25799171-%EC%82%AC%EA%B3%BC.jpg" /> */}
-            </div>
-          </_Tooltip>
-        </div>
-      </div>
-      <button onClick={() => setDisAble((prev) => !prev)}>
-        말풍선 {disAble ? "on" : "off"}
-      </button>
+      <_Tooltip
+        tooltipText={
+          <span style={{ fontSize: "20px" }}>수박 (Watermelon)</span>
+        }
+        useShowAnimation
+      >
+        <button style={{ fontSize: "24px" }}>내용 보기</button>
+      </_Tooltip>
     </div>
   );
 }

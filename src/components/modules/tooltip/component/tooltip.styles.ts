@@ -23,7 +23,25 @@ export const TooltipItems = styled.div`
   flex-direction: column;
   position: relative;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: flex-end;
+
+  ${(props: StyleTypes) => {
+    const styles: CSSProperties & { [key: string]: string } = {};
+
+    if (props.position === "bottom") {
+      // 배치가 아래일 경우
+      styles.justifyContent = "flex-start";
+    } else if (props.position !== "top") {
+      // 배치가 왼쪽, 오른쪽일 경우
+      styles.justifyContent = "center";
+
+      if (props.position === "left") {
+        styles.alignItems = "flex-end";
+      }
+    }
+
+    return styles;
+  }}
 `;
 
 export const TooltipLayout = styled.div`
@@ -44,6 +62,7 @@ export const TooltipTailWrapper = styled.div`
   animation-direction: alternate;
   z-index: 1;
   opacity: 0;
+  transition: all 0.3s;
 
   ${(props: StyleTypes) => {
     const styles: { [key: string]: string } & CSSProperties = {};
@@ -57,11 +76,9 @@ export const TooltipTailWrapper = styled.div`
         // 실행 애니메이션 스타일 적용
         if (props.position === "top" || props.position === "bottom") {
           // 상, 하 애니메이션 적용
-          styles.transition = "margin-top 0.3s";
           styles.animation = "SHOW_TOOLTIP_TOP 0.3s";
         } else {
           // 좌, 우 애니메이션 적용
-          styles.transition = "margin-left 0.3s";
           styles.animation = "SHOW_TOOLTIP_LEFT 0.3s";
         }
       }
@@ -88,50 +105,69 @@ export const TooltipTailWrapper = styled.div`
   }}
 
   // 애니메이션용 margin-top
-  --move-start-position: -25;
-  --move-end-position: -20;
+  --move-start-bottom: unset;
+  --move-end-bottom: unset;
 
+  --move-start-top: unset;
+  --move-end-top: unset;
+
+  --move-start-right: unset;
+  --move-end-right: unset;
+
+  --move-start-left: unset;
+  --move-end-left: unset;
+
+  // 아래에서 위로 오르기
   @keyframes SHOW_TOOLTIP_TOP {
     from {
       opacity: 0;
-      margin-top: var(--move-start-position);
+      bottom: var(--move-start-bottom);
+      top: var(--move-start-top);
     }
     to {
       opacity: 1;
-      margin-top: var(--move-end-position);
+      bottom: var(--move-end-bottom);
+      top: var(--move-end-top);
     }
   }
 
   @keyframes SHOW_TOOLTIP_LEFT {
     from {
       opacity: 0;
-      margin-left: var(--move-start-position);
+      right: var(--move-start-right);
+      left: var(--move-start-left);
     }
     to {
       opacity: 1;
-      margin-left: var(--move-end-position);
+      right: var(--move-end-right);
+      left: var(--move-end-left);
     }
   }
 
+  // 위에서 아래로 내려가기
   @keyframes CLOSE_TOOLTIP_TOP {
     from {
       opacity: 1;
-      margin-top: var(--move-end-position);
+      bottom: var(--move-end-bottom);
+      top: var(--move-end-top);
     }
     to {
       opacity: 0;
-      margin-top: var(--move-start-position);
+      bottom: var(--move-start-bottom);
+      top: var(--move-start-top);
     }
   }
 
   @keyframes CLOSE_TOOLTIP_LEFT {
     from {
       opacity: 1;
-      margin-left: var(--move-end-position);
+      right: var(--move-end-right);
+      left: var(--move-end-left);
     }
     to {
       opacity: 0;
-      margin-left: var(--move-start-position);
+      right: var(--move-start-right);
+      left: var(--move-start-left);
     }
   }
 
@@ -152,6 +188,7 @@ export const TooltipTailContents = styled.div`
   align-items: flex-end;
   padding: 6px;
   width: 100%;
+  min-height: 30px;
   white-space: pre;
   font-size: 12px;
 

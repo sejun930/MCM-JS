@@ -1,3 +1,4 @@
+import React from "react";
 import {
   TooltipItems,
   TooltipLayout,
@@ -33,7 +34,7 @@ export default function _TooltipUIPage(
       id={id}
       onMouseLeave={toggleTail(false)}
     >
-      <TooltipItems className="mcm-tooltip-items">
+      <TooltipItems className="mcm-tooltip-items" position={position}>
         <TooltipLayout
           className="mcm-tooltip-layout"
           onMouseOver={toggleTail(true)}
