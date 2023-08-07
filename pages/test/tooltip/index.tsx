@@ -43,7 +43,6 @@ export default function Test() {
               //   width: "10px",
               // },
             }}
-            position="right"
             showMobile
           >
             📌

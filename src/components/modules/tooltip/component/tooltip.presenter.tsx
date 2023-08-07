@@ -1,3 +1,4 @@
+import React from "react";
 import {
   TooltipItems,
   TooltipLayout,
@@ -25,6 +26,7 @@ export default function _TooltipUIPage(
     tooltipStyles,
     position,
     showMobile,
+    wrapperRef,
   } = props;
 
   return (
@@ -32,6 +34,7 @@ export default function _TooltipUIPage(
       className={getAllComponentsClassName("mcm-tooltip-wrapper", className)}
       id={id}
       onMouseLeave={toggleTail(false)}
+      ref={wrapperRef}
     >
       <TooltipItems className="mcm-tooltip-items">
         <TooltipLayout

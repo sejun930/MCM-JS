@@ -36,15 +36,32 @@ export default function ModalExamplePage() {
   };
 
   return (
-    <div id="test">
-      <button onClick={() => setOutOpen(true)}>모달 실행</button>
+    <div
+      id="test"
+      style={{ padding: "200px", paddingLeft: "650px", paddingTop: "300px" }}
+    >
+      <button onClick={() => setOutOpen(true)} style={{ fontSize: "24px" }}>
+        모달 실행
+      </button>
       <Modal
         onCloseModal={() => setOutOpen(false)}
         show={outerOpen}
         offAutoClose={offAutoClose}
         onAfterCloseEvent={() => setOffAutoClose(false)}
+        showBGAnimation
+        showModalOpenAnimation
+        closeMent="모달 닫기"
+        modalStyles={{
+          items: {
+            width: "300px",
+            height: "300px",
+          },
+        }}
       >
-        <button onClick={() => setOffAutoClose(true)}> 자동 종료 끄기</button>
+        <button onClick={() => setOffAutoClose(true)}>
+          {" "}
+          Modal Components ...{" "}
+        </button>
       </Modal>
     </div>
   );

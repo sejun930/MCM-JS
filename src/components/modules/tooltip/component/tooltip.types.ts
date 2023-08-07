@@ -40,6 +40,7 @@ export interface TooltipUIPropsType {
   render: boolean; // 말풍선 최종 렌더
   toggleTail: (bool: boolean) => () => void;
   tailRef: MutableRefObject<HTMLDivElement>;
+  wrapperRef: MutableRefObject<HTMLDivElement>;
 }
 
 export type TooltipType = typeof _Tooltip;

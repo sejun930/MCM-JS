@@ -1,3 +1,4 @@
+import React from "react";
 import { createRoot } from "react-dom/client";
 import OriginModal from "../component/modal.container";
 
@@ -50,7 +51,7 @@ const closeModal = (props?: ModalCloseFuncType) => {
     className: string,
     startNode: Element
   ): HTMLDivElement | null => {
-    let result = null;
+    let result: null | Element = null;
 
     const getNode = (node: Element) => {
       if (node.classList.contains(className)) {

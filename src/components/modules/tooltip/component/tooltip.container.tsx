@@ -1,3 +1,6 @@
+import React, { createElement } from "react";
+import { createRoot } from "react-dom/client";
+
 import _TooltipUIPage from "./tooltip.presenter";
 
 import { _Error } from "mcm-js-commons";
@@ -12,6 +15,7 @@ export default function _Tooltip(props: TooltipPropsType) {
   // 중복 실행 방지 변수
   let loading = false;
 
+  const wrapperRef = useRef() as MutableRefObject<HTMLDivElement>;
   // 말풍선 ref
   const tailRef = useRef() as MutableRefObject<HTMLDivElement>;
   const { children, tooltipText, useShowAnimation, isDisable, position } =
@@ -37,6 +41,22 @@ export default function _Tooltip(props: TooltipPropsType) {
     if (tailRef && tailRef.current) {
       // 말풍선 오픈시
       if (show) {
+        if (wrapperRef && wrapperRef.current) {
+          const { x, y } = wrapperRef.current.getBoundingClientRect();
+
+          const newDiv = document.createElement("div");
+          newDiv.classList.add("test");
+          newDiv.textContent = "aaa";
+
+          if (newDiv.style) {
+            newDiv.style.left = `${x}px`;
+            newDiv.style.top = `${y - 5}px`;
+          }
+          document.body.appendChild(newDiv);
+
+          createRoot(newDiv).render(<div>2222</div>);
+        }
+
         // 말풍선의 위치값 구하기
         let height = -tailRef.current.offsetHeight;
         let width = -tailRef.current.offsetWidth;
@@ -131,6 +151,7 @@ export default function _Tooltip(props: TooltipPropsType) {
         tailRef={tailRef}
         render={render}
         position={_position}
+        wrapperRef={wrapperRef}
       />
     </_Error>
   );
