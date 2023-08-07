@@ -22,6 +22,11 @@ button {
   padding: 0px;
 }
 
-.test {
+/* Tooltip 관련 */
+
+/* Tooltip 오픈 */
+.open-mcm-tooltip {
   position: absolute;
+  left: 0;
+  top: -20px;
 }
