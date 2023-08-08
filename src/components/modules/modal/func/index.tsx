@@ -57,7 +57,6 @@ const closeModal = (props?: ModalCloseFuncType) => {
       if (node.classList.contains(className)) {
         // 해당 노드를 찾았다면 바로 종료
         result = node;
-        return result;
       }
 
       const children = Array.from(node.children);
