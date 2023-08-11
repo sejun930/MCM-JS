@@ -4,9 +4,7 @@ import _TooltipUIPage from "./tooltip.presenter";
 
 import { _Error } from "mcm-js-commons";
 import { MutableRefObject, useEffect, useRef, useState } from "react";
-
 import { TooltipPropsType } from "./tooltip.types";
-import { positionList } from "./tooltip.data";
 
 // position의 종류가 아래의 4가지에 일치하는지 검증
 const filterPosition = ["top", "bottom", "left", "right"];
@@ -15,10 +13,21 @@ export default function _Tooltip(props: TooltipPropsType) {
   // 중복 실행 방지 변수
   let loading = false;
 
+  // wrapper ref
+  const wrapperRef = useRef() as MutableRefObject<HTMLDivElement>;
   // 말풍선 ref
   const tailRef = useRef() as MutableRefObject<HTMLDivElement>;
-  const { children, tooltipText, useShowAnimation, isDisable, position } =
-    props;
+
+  const {
+    children,
+    tooltipText,
+    useShowAnimation,
+    isDisable,
+    position,
+    open,
+    isFix,
+    hideMobile,
+  } = props;
 
   // position이 4가지의 종류에 일치하지 않는다면 기본값 top 부여
   let _position = filterPosition.some((el) => el === position)
@@ -26,49 +35,55 @@ export default function _Tooltip(props: TooltipPropsType) {
     : "top";
 
   // 말풍선 실행 여부
-  const [show, setShow] = useState(false);
+  const [tooltipOpen, setTooltipOpen] = useState(open || false);
   // 말풍선 최종 렌더
   const [render, setRender] = useState(false);
 
   // isDisable 설정시, 말풍선 off
   useEffect(() => {
-    if (isDisable) setShow(false);
+    if (isDisable) setTooltipOpen(false);
   }, [isDisable]);
 
   // 실행 및 종료시 최종 말풍선 위치값 구하기
   useEffect(() => {
     if (tailRef && tailRef.current) {
       // 말풍선 오픈시
-      if (show) {
-        const currentPosition = positionList[_position || "top"];
+      if (tooltipOpen) {
+        const targetList = ["top", "bottom", "left", "right"];
+        const currentIdx = targetList.indexOf(_position || "top");
+        // 현재 위치에서 대응되는 위치값 가져오기 (top <-> bottom, left <-> right)
+        const target = targetList[currentIdx + (currentIdx % 2 === 0 ? 1 : -1)];
+
+        let finalPosition = "108%";
+        // 말풍선의 최종 위치
+        if (tailRef.current.style) {
+          if (!position || position === "top" || position === "bottom") {
+            finalPosition = "120%";
+          }
+          tailRef.current.style[target] = finalPosition;
+        }
 
         if (useShowAnimation) {
           // 애니메이션 사용중일 경우
 
           // 시작 기준점
-          tailRef.current.style.setProperty(
-            `--move-start-${currentPosition.target}`,
-            `${currentPosition.startPoint}%`
-          );
+          tailRef.current.style.setProperty(`--move-start-${target}`, `80%`);
           // 종료 기준점
           tailRef.current.style.setProperty(
-            `--move-end-${currentPosition.target}`,
-            `100%`
+            `--move-end-${target}`,
+            finalPosition
           );
         }
-
-        // 말풍선의 최종 위치
-        if (tailRef.current.style)
-          tailRef.current.style[currentPosition.target] = "100%";
 
         setRender(true);
       }
     }
-  }, [show, children, position]);
+  }, [tooltipOpen, children, position]);
 
   // 마우스 hover시 말풍선 오픈
   const toggleTail = (bool: boolean) => async () => {
-    if (bool === show || loading || isDisable) return;
+    if (bool === tooltipOpen || loading || isDisable) return;
+    if (!bool && isFix) return; // 고정된 툴팁은 종료되지 않음
 
     // 스테이트 변환 시간
     let timer = 0;
@@ -91,7 +106,7 @@ export default function _Tooltip(props: TooltipPropsType) {
     }
 
     window.setTimeout(() => {
-      setShow(bool);
+      setTooltipOpen(bool);
       loading = false;
     }, timer);
   };
@@ -103,11 +118,12 @@ export default function _Tooltip(props: TooltipPropsType) {
     >
       <_TooltipUIPage
         {...props}
-        show={show}
+        tooltipOpen={tooltipOpen}
         toggleTail={toggleTail}
         tailRef={tailRef}
         render={render}
         position={_position}
+        wrapperRef={wrapperRef}
       />
     </_Error>
   );

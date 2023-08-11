@@ -3,19 +3,35 @@ import { CSSProperties } from "react";
 import { breakPoints } from "mcm-js-commons/dist/responsive";
 
 import { TooltipStylesTypes, TooltipPositionType } from "./tooltip.types";
+import {
+  getPropsContentsStyles,
+  getPropsTooltipTextStyles,
+  getPropsWrapperStyles,
+  getPropsTooltipContentsAfterStyles,
+  getPropsTooltipContentsBeforeStyles,
+} from "./tooltip.styles.data";
 
 interface StyleTypes {
   // 말풍선 실행 애니메이션
   useShowAnimation?: boolean;
   show?: boolean;
   tooltipStyles?: TooltipStylesTypes;
+  tooltipMobileStyles?: TooltipStylesTypes;
   position?: TooltipPositionType;
-  showMobile?: boolean;
+  hideMobile?: boolean;
 }
 
 export const TooltipWrapper = styled.div`
   display: inline-block;
   cursor: default;
+  vertical-align: unset;
+
+  @media ${breakPoints.mobileLarge} {
+    ${(props: StyleTypes) =>
+      props.hideMobile && {
+        verticalAlign: "baseline",
+      }}
+  }
 `;
 
 export const TooltipItems = styled.div`
@@ -64,45 +80,8 @@ export const TooltipTailWrapper = styled.div`
   opacity: 0;
   transition: all 0.3s;
 
-  ${(props: StyleTypes) => {
-    const styles: { [key: string]: string } & CSSProperties = {};
-
-    // 말풍선 실행했을 경우
-    if (props.show) styles.opacity = 1;
-
-    // 실행 애니메이션을 사용하는 경우
-    if (props.useShowAnimation) {
-      if (props.show) {
-        // 실행 애니메이션 스타일 적용
-        if (props.position === "top" || props.position === "bottom") {
-          // 상, 하 애니메이션 적용
-          styles.animation = "SHOW_TOOLTIP_TOP 0.3s";
-        } else {
-          // 좌, 우 애니메이션 적용
-          styles.animation = "SHOW_TOOLTIP_LEFT 0.3s";
-        }
-      }
-    }
-
-    // 스타일이 적용되었을 경우
-    if (props.tooltipStyles) {
-      // 배경색 변경
-      if (props.tooltipStyles.backgroundColor)
-        styles.backgroundColor = props.tooltipStyles.backgroundColor;
-
-      // 테두리 변경
-      if (props.tooltipStyles.border) {
-        // 테두리 색상 변경
-        if (props.tooltipStyles.border.color)
-          styles.borderColor = props.tooltipStyles.border.color;
-        // 테두리 두께 변경
-        if (props.tooltipStyles.border.width)
-          styles.borderWidth = props.tooltipStyles.border.width;
-      }
-    }
-
-    return styles;
-  }}
+  // styles 스타일 적용하기
+  ${(props: StyleTypes) => getPropsWrapperStyles(props.tooltipStyles, props)}
 
   // 애니메이션용 margin-top
   --move-start-bottom: unset;
@@ -172,12 +151,17 @@ export const TooltipTailWrapper = styled.div`
   }
 
   @media ${breakPoints.mobileLarge} {
-    display: none;
+    ${(props: StyleTypes) => {
+      const styles: CSSProperties & { [key: string]: string } = {};
 
-    ${(props) =>
-      props.showMobile && {
-        display: "flex",
-      }}
+      // 모바일에서 사용하지 않을 경우, none 처리
+      if (props.hideMobile) styles.display = "none";
+      // 모바일 환경의 스타일 적용하기
+      else if (props.tooltipMobileStyles)
+        return getPropsWrapperStyles(props.tooltipMobileStyles, props);
+
+      return styles;
+    }}
   }
 `;
 
@@ -186,11 +170,37 @@ export const TooltipTailContents = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  padding: 6px;
+  padding: 10px;
   width: 100%;
   min-height: 30px;
   white-space: pre;
   font-size: 12px;
+  transition: all 0.3s;
+
+  // 전달된 props 값에 적용된 스타일 설정하기
+  ${(props: StyleTypes) => getPropsContentsStyles(props.tooltipStyles)}
+
+  // 모바일 환경에서의 적용된 스타일 설정하기
+  @media ${breakPoints.mobileLarge} {
+    ${(props) => getPropsContentsStyles(props.tooltipMobileStyles)}
+  }
+
+  // 툴팁 메세지가 출력되는 태그
+  .mcm-tooltip-text {
+    width: 100%;
+    height: 100%;
+    transition: all 0.3s;
+
+    // 스타일 적용
+    ${(props) => getPropsTooltipTextStyles(props.tooltipStyles)}
+
+    // 모바일 환경 스타일 적용
+    @media ${breakPoints.mobileLarge} {
+      ${(props) => getPropsTooltipTextStyles(props.tooltipMobileStyles)}
+    }
+  }
+
+  /* /////////////////////////////////////////////////////////////////////// */
 
   ::after {
     border-color: white transparent;
@@ -205,36 +215,18 @@ export const TooltipTailContents = styled.div`
     bottom: -6.5px;
     transform: rotate(180deg);
 
-    // 테두리 스타일 변경
-    ${(props: StyleTypes) => {
-      const styles: { [key: string]: string } & CSSProperties = {};
+    // 스타일 적용
+    ${(props) =>
+      getPropsTooltipContentsAfterStyles(props.tooltipStyles, props.position)}
 
-      if (props.tooltipStyles) {
-        // 말풍선 배경색 변경
-        if (props.tooltipStyles.backgroundColor)
-          styles.borderColor = `${props.tooltipStyles.backgroundColor} transparent`;
-      }
-
-      if (props.position === "bottom") {
-        // 배치가 아래인 경우
-        styles.bottom = "auto";
-        styles.top = "-6.5px";
-        styles.transform = "rotate(0deg)";
-      } else if (props.position === "left" || props.position === "right") {
-        // 배치가 좌, 우인 경우
-        styles.bottom = "50%";
-        styles.right = "-9px";
-        styles.transform = "rotate(90deg)";
-
-        // 오른쪽 배치 처리
-        if (props.position === "right") {
-          styles.left = "-9px";
-          styles.transform = "rotate(270deg)";
-        }
-      }
-
-      return styles;
-    }}
+    // 모바일 스타일 적용
+      @media ${breakPoints.mobileLarge} {
+      ${(props) =>
+        getPropsTooltipContentsAfterStyles(
+          props.tooltipMobileStyles,
+          props.position
+        )}
+    }
   }
 
   ::before {
@@ -250,64 +242,17 @@ export const TooltipTailContents = styled.div`
     bottom: -8px;
     transform: rotate(180deg);
 
-    ${(props: StyleTypes) => {
-      const styles: { [key: string]: string } & CSSProperties = {};
+    // 스타일 적용
+    ${(props: StyleTypes) =>
+      getPropsTooltipContentsBeforeStyles(props.tooltipStyles, props.position)}
 
-      if (props.position === "bottom") {
-        // 배치가 아래일 경우
-        styles.bottom = "auto";
-        styles.top = "-8px";
-        styles.transform = "rotate(0deg)";
-      } else if (props.position === "left" || props.position === "right") {
-        // 배치가 왼쪽인 경우
-        styles.bottom = "50%";
-        styles.right = "-10px";
-        styles.transform = "rotate(90deg)";
-
-        if (props.position === "right") {
-          styles.left = "-10px";
-          styles.transform = "rotate(270deg)";
-        }
-      }
-
-      if (props.tooltipStyles) {
-        // 테두리 스타일 변경
-        if (props.tooltipStyles.border) {
-          // 테두리 색상 변경
-          if (props.tooltipStyles.border.color)
-            styles.borderColor = `${props.tooltipStyles.border.color} transparent`;
-
-          // 테두리 두께 변경
-          if (props.tooltipStyles.border.width) {
-            const width = Number(
-              props.tooltipStyles.border.width.split("px")[0]
-            );
-            // 0이하라면 테두리 표시 안함
-            if (width <= 0) styles.display = "none";
-            // 설정된 테두리만큼 위치값 변경
-            styles.bottom = `${-8 + -width}px`;
-
-            if (props.position === "bottom") {
-              // 배치가 아래인 경우
-              styles.bottom = "auto";
-              styles.top = `${-8 + -width}px`;
-            } else if (
-              props.position === "left" ||
-              props.position === "right"
-            ) {
-              // 배치가 좌, 우인 경우
-              styles.bottom = "50%";
-
-              if (props.position === "left")
-                styles.right = `${-11 + (-width + 1)}px`;
-              if (props.position === "right")
-                styles.left = `${-11 + (-width + 1)}px`;
-            }
-          }
-        }
-      }
-
-      return styles;
-    }}
+    // 모바일 스타일 적용
+    @media ${breakPoints.mobileLarge} {
+      ${(props: StyleTypes) =>
+        getPropsTooltipContentsBeforeStyles(
+          props.tooltipMobileStyles,
+          props.position
+        )}
+    }
   }
 `;

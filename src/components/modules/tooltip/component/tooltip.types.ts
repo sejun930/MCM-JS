@@ -9,10 +9,19 @@ import {
 // 말풍선 스타일 타입
 export interface TooltipStylesTypes {
   backgroundColor?: string; // 말풍선 배경 색상
+  padding?: string; // padding 적용
+  font?: {
+    // 말풍선 안 문자열 정보
+    size?: string; // 문자열 크기
+    color?: string; // 문자열 색상
+    weight?: 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900; // 문자열 굵기
+  };
   border?: {
     // 테두리 정보
     color?: string; // 테두리 색상
     width?: string; // 테두리 두께
+    // style?: "solid" | "dotted" | "double" | "unset"; // 테두리 스타일
+    radius?: string; // 테두리 라운드
   };
 }
 
@@ -29,17 +38,24 @@ export type TooltipPropsType = CommonsChildrenTypes &
     isDisable?: boolean;
     // 말풍선 스타일 (색상, 테두리 색상, 두께 등등)
     tooltipStyles?: TooltipStylesTypes;
+    // 모바일 말풍선 스타일 (색상, 테두리 색상, 두께 등등)
+    tooltipMobileStyles?: TooltipStylesTypes;
     // 말풍선 위치 (default : top)
     position?: TooltipPositionType;
+    // 수동으로 툴팁을 오픈할 건지에 대한 여부
+    open?: boolean;
+    // 오픈된 툴팁을 고정 (= 종료되지 않음)
+    isFix?: boolean;
     // 모바일 환경에서도 동일하게 노출시킬 건지에 대한 여부 (default : false)
-    showMobile?: boolean;
+    hideMobile?: boolean;
   };
 
 export interface TooltipUIPropsType {
-  show: boolean; // 말풍선 실행 여부
+  tooltipOpen: boolean; // 말풍선 실행 여부
   render: boolean; // 말풍선 최종 렌더
   toggleTail: (bool: boolean) => () => void;
   tailRef: MutableRefObject<HTMLDivElement>;
+  wrapperRef: MutableRefObject<HTMLDivElement>;
 }
 
 export type TooltipType = typeof _Tooltip;

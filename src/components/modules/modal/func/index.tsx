@@ -51,9 +51,9 @@ const closeModal = (props?: ModalCloseFuncType) => {
     className: string,
     startNode: Element
   ): HTMLDivElement | null => {
-    let result: null | Element = null;
+    let result: null = null;
 
-    const getNode = (node: Element) => {
+    const getNode = (node) => {
       if (node.classList.contains(className)) {
         // 해당 노드를 찾았다면 바로 종료
         result = node;
