@@ -9,6 +9,7 @@ import {
 import { getAllComponentsClassName } from "mcm-js-commons/dist/hooks";
 
 import { TooltipPropsType, TooltipUIPropsType } from "./tooltip.types";
+import { _SpanText } from "mcm-js-commons";
 
 export default function _TooltipUIPage(
   props: TooltipPropsType & TooltipUIPropsType
@@ -19,13 +20,15 @@ export default function _TooltipUIPage(
     id,
     tooltipText,
     useShowAnimation,
-    show,
+    tooltipOpen,
     toggleTail,
     tailRef,
+    wrapperRef,
     render,
     tooltipStyles,
+    tooltipMobileStyles,
     position,
-    showMobile,
+    hideMobile,
   } = props;
 
   return (
@@ -33,6 +36,8 @@ export default function _TooltipUIPage(
       className={getAllComponentsClassName("mcm-tooltip-wrapper", className)}
       id={id}
       onMouseLeave={toggleTail(false)}
+      hideMobile={hideMobile}
+      ref={wrapperRef}
     >
       <TooltipItems className="mcm-tooltip-items" position={position}>
         <TooltipLayout
@@ -41,22 +46,30 @@ export default function _TooltipUIPage(
         >
           {children}
         </TooltipLayout>
-        {(show && (
+        {(tooltipOpen && (
           <TooltipTailWrapper
             className="mcm-tooltip-tail-wrapper"
             ref={tailRef}
             useShowAnimation={useShowAnimation}
             show={render}
             tooltipStyles={tooltipStyles}
-            showMobile={showMobile}
+            tooltipMobileStyles={tooltipMobileStyles}
+            hideMobile={hideMobile}
             position={position || "top"}
           >
             <TooltipTailContents
               className="mcm-tooltip-tail-contents"
               tooltipStyles={tooltipStyles}
+              tooltipMobileStyles={tooltipMobileStyles}
               position={position || "top"}
             >
-              {tooltipText}
+              {(typeof tooltipText === "string" && (
+                // 문자열일 경우 span 태그에 감싸서 렌더
+                <_SpanText className="mcm-tooltip-text">
+                  {tooltipText}
+                </_SpanText>
+              )) ||
+                tooltipText}
             </TooltipTailContents>
           </TooltipTailWrapper>
         )) || <></>}
