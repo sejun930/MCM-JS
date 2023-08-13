@@ -52,6 +52,8 @@ export type TooltipPropsType = CommonsChildrenTypes &
     onCloseAfterEvent?: () => void;
     // 툴팁이 오픈되면 실행되는 이벤트
     onOpenAfterEvent?: () => void;
+    // 호버 이벤트 무시 여부
+    offHoverEvent?: boolean;
   };
 
 export interface TooltipUIPropsType {

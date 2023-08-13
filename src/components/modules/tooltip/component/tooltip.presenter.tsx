@@ -29,20 +29,21 @@ export default function _TooltipUIPage(
     tooltipMobileStyles,
     position,
     hideMobile,
+    offHoverEvent,
   } = props;
 
   return (
     <TooltipWrapper
       className={getAllComponentsClassName("mcm-tooltip-wrapper", className)}
       id={id}
-      onMouseLeave={toggleTail(false)}
+      onMouseLeave={(!offHoverEvent && toggleTail(false)) || undefined}
       hideMobile={hideMobile}
       ref={wrapperRef}
     >
       <TooltipItems className="mcm-tooltip-items" position={position}>
         <TooltipLayout
           className="mcm-tooltip-layout"
-          onMouseOver={toggleTail(true)}
+          onMouseOver={(!offHoverEvent && toggleTail(true)) || undefined}
         >
           {children}
         </TooltipLayout>

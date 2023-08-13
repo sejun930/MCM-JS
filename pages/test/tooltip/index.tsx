@@ -19,6 +19,7 @@ export default function Test() {
           position="left"
           open={open}
           onCloseAfterEvent={() => setOpen(false)}
+          offHoverEvent
           // isFix
           // isDisable={open}
           hideMobile

@@ -28,6 +28,7 @@ export default function _Tooltip(props: TooltipPropsType) {
     isFix,
     onCloseAfterEvent,
     onOpenAfterEvent,
+    offHoverEvent,
   } = props;
 
   // position이 4가지의 종류에 일치하지 않는다면 기본값 top 부여
@@ -40,8 +41,9 @@ export default function _Tooltip(props: TooltipPropsType) {
   // 말풍선 최종 렌더
   const [render, setRender] = useState(false);
 
+  // 수동으로 툴팁을 오픈하거나 종료할 경우
   useEffect(() => {
-    toggleTail(open || false)();
+    if (!isDisable) toggleTail(open || false)();
   }, [open]);
 
   // isDisable 설정시, 말풍선 off
