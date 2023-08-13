@@ -26,7 +26,9 @@ export default function _Tooltip(props: TooltipPropsType) {
     position,
     open,
     isFix,
-    hideMobile,
+    onCloseAfterEvent,
+    onOpenAfterEvent,
+    offHoverEvent,
   } = props;
 
   // position이 4가지의 종류에 일치하지 않는다면 기본값 top 부여
@@ -38,6 +40,11 @@ export default function _Tooltip(props: TooltipPropsType) {
   const [tooltipOpen, setTooltipOpen] = useState(open || false);
   // 말풍선 최종 렌더
   const [render, setRender] = useState(false);
+
+  // 수동으로 툴팁을 오픈하거나 종료할 경우
+  useEffect(() => {
+    if (!isDisable) toggleTail(open || false)();
+  }, [open]);
 
   // isDisable 설정시, 말풍선 off
   useEffect(() => {
@@ -82,6 +89,7 @@ export default function _Tooltip(props: TooltipPropsType) {
 
   // 마우스 hover시 말풍선 오픈
   const toggleTail = (bool: boolean) => async () => {
+    console.log(bool, tooltipOpen, loading, isDisable);
     if (bool === tooltipOpen || loading || isDisable) return;
     if (!bool && isFix) return; // 고정된 툴팁은 종료되지 않음
 
@@ -108,6 +116,11 @@ export default function _Tooltip(props: TooltipPropsType) {
     window.setTimeout(() => {
       setTooltipOpen(bool);
       loading = false;
+
+      if (!bool && onCloseAfterEvent) onCloseAfterEvent();
+      // 툴팁이 종료될 때 실행될 이벤트가 있을 경우
+      else if (bool && onOpenAfterEvent) onOpenAfterEvent();
+      // 툴팁이 오픈될 때 실행될 이벤트가 있을 경우
     }, timer);
   };
 

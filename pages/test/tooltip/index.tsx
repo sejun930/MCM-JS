@@ -17,9 +17,11 @@ export default function Test() {
           }
           useShowAnimation
           position="left"
-          // open={open}
+          open={open}
+          onCloseAfterEvent={() => setOpen(false)}
+          offHoverEvent
           // isFix
-          isDisable={open}
+          // isDisable={open}
           hideMobile
         >
           <button style={{ fontSize: "24px" }}>사진 보기</button>
