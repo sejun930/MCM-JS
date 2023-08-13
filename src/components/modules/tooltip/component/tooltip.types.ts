@@ -48,6 +48,10 @@ export type TooltipPropsType = CommonsChildrenTypes &
     isFix?: boolean;
     // 모바일 환경에서도 동일하게 노출시킬 건지에 대한 여부 (default : false)
     hideMobile?: boolean;
+    // 툴팁이 종료되면 실행되는 이벤트
+    onCloseAfterEvent?: () => void;
+    // 툴팁이 오픈되면 실행되는 이벤트
+    onOpenAfterEvent?: () => void;
   };
 
 export interface TooltipUIPropsType {
