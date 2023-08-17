@@ -12,12 +12,12 @@
     //////// 변경 내용 ////////
     "noEmit": false,
     "module": "CommonJS",
-    "jsx": "react-jsx",
+    "jsx": "preserve",
     "declaration": true,
     "outDir": "./dist",
     ////////////////////////
     "incremental": true
   },
   "include": ["next-env.d.ts", "src/**/*.tsx", "src/**/*.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "**/*.spec.ts", "**/*.test.ts"]
 }

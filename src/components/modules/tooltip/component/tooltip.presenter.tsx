@@ -1,15 +1,17 @@
 import React from "react";
 import {
   TooltipItems,
-  TooltipLayout,
+  TooltipChildren,
   TooltipTailContents,
-  TooltipTailWrapper,
+  TooltipTextWrapper,
   TooltipWrapper,
 } from "./tooltip.styles";
 import { getAllComponentsClassName } from "mcm-js-commons/dist/hooks";
 
 import { TooltipPropsType, TooltipUIPropsType } from "./tooltip.types";
 import { _SpanText } from "mcm-js-commons";
+
+import { tooltipClassList } from "./tooltip.class";
 
 export default function _TooltipUIPage(
   props: TooltipPropsType & TooltipUIPropsType
@@ -22,7 +24,7 @@ export default function _TooltipUIPage(
     useShowAnimation,
     tooltipOpen,
     toggleTail,
-    tailRef,
+    textRef,
     wrapperRef,
     render,
     tooltipStyles,
@@ -34,23 +36,23 @@ export default function _TooltipUIPage(
 
   return (
     <TooltipWrapper
-      className={getAllComponentsClassName("mcm-tooltip-wrapper", className)}
+      className={getAllComponentsClassName(tooltipClassList.wrapper, className)}
       id={id}
       onMouseLeave={(!offHoverEvent && toggleTail(false)) || undefined}
       hideMobile={hideMobile}
       ref={wrapperRef}
     >
-      <TooltipItems className="mcm-tooltip-items" position={position}>
-        <TooltipLayout
-          className="mcm-tooltip-layout"
+      <TooltipItems className={tooltipClassList.items} position={position}>
+        <TooltipChildren
+          className={tooltipClassList.children}
           onMouseOver={(!offHoverEvent && toggleTail(true)) || undefined}
         >
           {children}
-        </TooltipLayout>
+        </TooltipChildren>
         {(tooltipOpen && (
-          <TooltipTailWrapper
-            className="mcm-tooltip-tail-wrapper"
-            ref={tailRef}
+          <TooltipTextWrapper
+            className={tooltipClassList.textWrapper}
+            ref={textRef}
             useShowAnimation={useShowAnimation}
             show={render}
             tooltipStyles={tooltipStyles}
@@ -59,20 +61,20 @@ export default function _TooltipUIPage(
             position={position || "top"}
           >
             <TooltipTailContents
-              className="mcm-tooltip-tail-contents"
+              className={tooltipClassList.textContents}
               tooltipStyles={tooltipStyles}
               tooltipMobileStyles={tooltipMobileStyles}
               position={position || "top"}
             >
               {(typeof tooltipText === "string" && (
                 // 문자열일 경우 span 태그에 감싸서 렌더
-                <_SpanText className="mcm-tooltip-text">
+                <_SpanText className={tooltipClassList.text}>
                   {tooltipText}
                 </_SpanText>
               )) ||
                 tooltipText}
             </TooltipTailContents>
-          </TooltipTailWrapper>
+          </TooltipTextWrapper>
         )) || <></>}
       </TooltipItems>
     </TooltipWrapper>

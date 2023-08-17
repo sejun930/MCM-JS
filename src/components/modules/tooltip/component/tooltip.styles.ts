@@ -60,7 +60,7 @@ export const TooltipItems = styled.div`
   }}
 `;
 
-export const TooltipLayout = styled.div`
+export const TooltipChildren = styled.div`
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -68,7 +68,7 @@ export const TooltipLayout = styled.div`
   width: 100%;
 `;
 
-export const TooltipTailWrapper = styled.div`
+export const TooltipTextWrapper = styled.div`
   position: absolute;
   border: solid 1px black;
   border-radius: 10px;

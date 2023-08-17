@@ -1,10 +1,3 @@
-// interface ModalClassTypes {
-//   wrapper: "mcm-modal-wrapper";
-//   items: "mcm-modal-items";
-//   closeButtonWrapper: "mcm-modal-close-button-wrapper";
-//   closeButtonMentButton: "mcm-modal-close-ment-button";
-// }
-
 // UI 클래스 모음
 export const modalClassList = {
   wrapper: "mcm-modal-wrapper",

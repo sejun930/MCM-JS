@@ -16,7 +16,7 @@ export default function _Tooltip(props: TooltipPropsType) {
   // wrapper ref
   const wrapperRef = useRef() as MutableRefObject<HTMLDivElement>;
   // 말풍선 ref
-  const tailRef = useRef() as MutableRefObject<HTMLDivElement>;
+  const textRef = useRef() as MutableRefObject<HTMLDivElement>;
 
   const {
     children,
@@ -28,7 +28,6 @@ export default function _Tooltip(props: TooltipPropsType) {
     isFix,
     onCloseAfterEvent,
     onOpenAfterEvent,
-    offHoverEvent,
   } = props;
 
   // position이 4가지의 종류에 일치하지 않는다면 기본값 top 부여
@@ -53,7 +52,7 @@ export default function _Tooltip(props: TooltipPropsType) {
 
   // 실행 및 종료시 최종 말풍선 위치값 구하기
   useEffect(() => {
-    if (tailRef && tailRef.current) {
+    if (textRef && textRef.current) {
       // 말풍선 오픈시
       if (tooltipOpen) {
         const targetList = ["top", "bottom", "left", "right"];
@@ -63,20 +62,20 @@ export default function _Tooltip(props: TooltipPropsType) {
 
         let finalPosition = "108%";
         // 말풍선의 최종 위치
-        if (tailRef.current.style) {
+        if (textRef.current.style) {
           if (!position || position === "top" || position === "bottom") {
             finalPosition = "120%";
           }
-          tailRef.current.style[target] = finalPosition;
+          textRef.current.style[target] = finalPosition;
         }
 
         if (useShowAnimation) {
           // 애니메이션 사용중일 경우
 
           // 시작 기준점
-          tailRef.current.style.setProperty(`--move-start-${target}`, `80%`);
+          textRef.current.style.setProperty(`--move-start-${target}`, `80%`);
           // 종료 기준점
-          tailRef.current.style.setProperty(
+          textRef.current.style.setProperty(
             `--move-end-${target}`,
             finalPosition
           );
@@ -89,7 +88,6 @@ export default function _Tooltip(props: TooltipPropsType) {
 
   // 마우스 hover시 말풍선 오픈
   const toggleTail = (bool: boolean) => async () => {
-    console.log(bool, tooltipOpen, loading, isDisable);
     if (bool === tooltipOpen || loading || isDisable) return;
     if (!bool && isFix) return; // 고정된 툴팁은 종료되지 않음
 
@@ -103,12 +101,12 @@ export default function _Tooltip(props: TooltipPropsType) {
         loading = true; // 중복 실행 방지
         timer = 250; // 변환 시간 지연
 
-        if (tailRef && tailRef.current) {
+        if (textRef && textRef.current) {
           if (!_position || _position === "top" || _position === "bottom")
             // 위 또는 아래 방향일 때
-            tailRef.current.style.animation = "CLOSE_TOOLTIP_TOP 0.3s";
+            textRef.current.style.animation = "CLOSE_TOOLTIP_TOP 0.3s";
           // 왼쪽 또는 오른쪽 방향일 때
-          else tailRef.current.style.animation = "CLOSE_TOOLTIP_LEFT 0.3s";
+          else textRef.current.style.animation = "CLOSE_TOOLTIP_LEFT 0.3s";
         }
       }
     }
@@ -133,7 +131,7 @@ export default function _Tooltip(props: TooltipPropsType) {
         {...props}
         tooltipOpen={tooltipOpen}
         toggleTail={toggleTail}
-        tailRef={tailRef}
+        textRef={textRef}
         render={render}
         position={_position}
         wrapperRef={wrapperRef}
