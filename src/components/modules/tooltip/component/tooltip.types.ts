@@ -60,7 +60,7 @@ export interface TooltipUIPropsType {
   tooltipOpen: boolean; // 말풍선 실행 여부
   render: boolean; // 말풍선 최종 렌더
   toggleTail: (bool: boolean) => () => void;
-  tailRef: MutableRefObject<HTMLDivElement>;
+  textRef: MutableRefObject<HTMLDivElement>;
   wrapperRef: MutableRefObject<HTMLDivElement>;
 }
 
