@@ -5641,9 +5641,9 @@ domhandler@^4.0.0, domhandler@^4.2.0, domhandler@^4.3.1:
     domelementtype "^2.2.0"
 
 dompurify@^3.0.1:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-3.0.2.tgz#bc4c7c011c825e7704341a285461d8d407d9429a"
-  integrity sha512-B8c6JdiEpxAKnd8Dm++QQxJL4lfuc757scZtcapj6qjTjrQzyq5iAyznLKVvK+77eYNiFblHBlt7MM0fOeqoKw==
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-3.0.5.tgz#eb3d9cfa10037b6e73f32c586682c4b2ab01fbed"
+  integrity sha512-F9e6wPGtY+8KNMRAVfxeCOHU0/NPWMSENNq4pQctuXRqqdEPW7q3CrLbR5Nse044WwacyjHGOMlvNsBe1y6z9A==
 
 domutils@^2.5.2, domutils@^2.8.0:
   version "2.8.0"
@@ -8810,10 +8810,10 @@ markdown-escapes@^1.0.0:
   resolved "https://registry.yarnpkg.com/markdown-escapes/-/markdown-escapes-1.0.4.tgz#c95415ef451499d7602b91095f3c8e8975f78535"
   integrity sha512-8z4efJYk43E0upd0NbVXwgSTQs6cT3T06etieCMEg7dRbzCbxUCK/GHlX8mhHRDcp+OLlHkPKsvqQTCvsRl2cg==
 
-mcm-js-commons@^0.0.64:
-  version "0.0.64"
-  resolved "https://registry.yarnpkg.com/mcm-js-commons/-/mcm-js-commons-0.0.64.tgz#2e7b39db057a9c9f924b009d8be3b0d5a0d1057d"
-  integrity sha512-fqK2kfrX1gODxbplblKxxLrVKY6qFVaA+tM0t+C1kV9VCy4xxLThgxV9MFhOkr7b7jolMjo0HqE1j3GQGoVCmA==
+mcm-js-commons@^0.0.7-3.1:
+  version "0.0.7-3.1"
+  resolved "https://registry.yarnpkg.com/mcm-js-commons/-/mcm-js-commons-0.0.7-3.1.tgz#b0376a13e2c14c89a719d9563cb08d5568a4e519"
+  integrity sha512-JffDGjhCQU5mEWlIBl70NWWdKHRT815KeBBVaftfM2GDTVQeqeQWJ8EIF70jmxvOT4v2i8rj7DmLJGqlLSIKAQ==
   dependencies:
     "@emotion/react" "^11.10.6"
     "@emotion/styled" "^11.10.6"

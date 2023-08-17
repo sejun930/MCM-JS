@@ -21,7 +21,7 @@ export default function _Modal(
 }
 
 // 자동 종료 변수
-let autoCloseTimer: number | ReturnType<typeof setTimeout>;
+// let autoCloseTimer: number | ReturnType<typeof setTimeout>;
 
 // 2. 최종 모달 렌더 컴포넌트
 export function _RenderModal(props: ModalPropsType) {

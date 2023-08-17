@@ -19,7 +19,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
-    "mcm-js-commons": "^0.0.64",
+    "mcm-js-commons": "^0.0.7-3.1",
     "next": "^13.3.0",
     "react": "18.2.0",
     "react-dom": "^18.2.0",
