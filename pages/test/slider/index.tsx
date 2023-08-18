@@ -1,38 +1,43 @@
 import React from "react";
 
 import styled from "@emotion/styled";
-import _Slider from "../../../src/components/modules/slider";
+import { Slider } from "../../../src";
 
 export default function SliderTestPage() {
   return (
     <Div>
-      <_Slider useAutoPlay={{ delay: 3000, showTimer: true }}>
+      <Slider
+        useAnimation
+        useAutoPlay={{ delay: 3000, showTimer: true }}
+        pagination={{ showPageList: true }}
+      >
         <img src="https://i.namu.wiki/i/SIHnHey__5syElRWvXqBpod_uf9OtCtB1lgWnxTIn7kxelOGRf-fKrW89m0nmHZ7UtDGkUL8z3rgUqRq_I_exg.webp" />
-        {/* <div style={{ backgroundColor: "red" }} className="test">
-          111
-        </div> */}
         <div style={{ backgroundColor: "green" }} className="test">
-          222
+          <button style={{ width: "500px", height: "500px", zIndex: 100 }}>
+            Click me
+          </button>
         </div>
         <div style={{ backgroundColor: "blue" }} className="test">
           333
         </div>
-        <div style={{ backgroundColor: "yellow" }} className="test">
-          444
-        </div>
-      </_Slider>
+      </Slider>
+      <Slider useAutoPlay={{ delay: 4000, showTimer: true }}>
+        <div className="test">1</div>
+        <div className="test">2</div>
+      </Slider>
     </Div>
   );
 }
 
 const Div = styled.div`
   padding: 100px;
-  height: 600px;
+  /* height: 600px; */
 
   .test,
   img {
     width: 100%;
     height: 100%;
+    min-height: 300px;
     object-fit: fill;
   }
 `;
