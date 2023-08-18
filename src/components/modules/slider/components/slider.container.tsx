@@ -1,18 +1,30 @@
-import React, { useRef, MutableRefObject, useState, useEffect } from "react";
-import { SliderPropsTypes } from "./slider.types";
+import React, {
+  useRef,
+  MutableRefObject,
+  useState,
+  useEffect,
+  useMemo,
+} from "react";
+import { SliderPropsTypes, SliderAddProps } from "./slider.types";
 
 import SliderUIPage from "./slider.presenter";
 import { _Error, _Button } from "mcm-js-commons";
 
-// 자동 넘김 변수
-let autoPlay: ReturnType<typeof setInterval> | number;
-// 일시 중지 변수 (연속 실행 방지)
-let pause = false;
-// selector 임시 저장용
-let _selector = 0;
+import { v4 } from "uuid";
 
-export default function _Slider(props: SliderPropsTypes) {
-  const { children, useAutoPlay, useAnimation } = props;
+// 자동 넘김 반복 이벤트 (컴포넌트 별로 저장)
+const timerList: {
+  [key: string]: ReturnType<typeof setInterval> | NodeJS.Timer;
+} = {};
+
+export default function _RenderSlider(props: SliderPropsTypes) {
+  const uid = v4();
+
+  return <_Slider {...props} uid={uid} />;
+}
+
+const _Slider = (props: SliderPropsTypes & SliderAddProps) => {
+  const { children, useAutoPlay, useAnimation, uid } = props;
 
   const listRef = useRef() as MutableRefObject<HTMLUListElement>;
   const timerRef = useRef() as MutableRefObject<HTMLDivElement>;
@@ -37,29 +49,38 @@ export default function _Slider(props: SliderPropsTypes) {
   }
   // 현재 선택된 슬라이더 위치값
   const [selector, setSelector] = useState(startPage);
+  // 일시 중지 변수 (연속 실행 방지)
+  const [pause, setPause] = useState(false);
 
   useEffect(() => {
-    _selector = startPage;
-    pause = false;
+    setPause(false);
+    setSelector(startPage);
 
-    if (useAutoPlay) clearInterval(autoPlay);
+    // if (useAutoPlay) clearInterval(autoPlay);
     // 리스트가 변경되면 무조건 첫번째 페이지로 이동
-    if (selector !== 1) moveSlider({ type: "page", page: startPage })();
+    if (selector !== 1)
+      moveSlider({ type: "page", page: startPage, selector })();
     // 자동 최초 실행하기
-    if (useAutoPlay) setAutoPlay();
-  }, [children, useAutoPlay]);
+    // if (useAutoPlay) setAutoPlay(startPage);
+  }, []);
 
   // 슬라이더 이동하기
   const moveSlider =
-    ({ type, page }: { type: "next" | "prev" | "page"; page?: number }) =>
+    ({
+      type,
+      page,
+      selector,
+    }: {
+      type: "next" | "prev" | "page";
+      page?: number;
+      selector: number;
+    }) =>
     () => {
       if (pause) return;
-      pause = true;
+      setPause(true);
 
       // 자동 넘김을 실행하고 있다면, 자동 넘김 중지
       if (useAutoPlay) {
-        clearInterval(autoPlay);
-
         // 타이머 일시 정지하기
         if (timerRef.current) timerRef.current.classList.add("pause");
       }
@@ -71,14 +92,15 @@ export default function _Slider(props: SliderPropsTypes) {
       let arrived = false;
       if (type === "page" && page) {
         // 페이지를 선택해서 넘어갈 경우
-        if (page && _selector !== page) movePage = page;
+        movePage = page;
       } else if (type === "next") {
         // 다음으로 이동
-        movePage = _selector + 1;
+        movePage = selector + 1;
+
         // 맨 뒤에 있는 페이지라면, 첫번째 페이지로 이동
         if (movePage > lastPage) movePage = startPage;
-
-        if (useAnimation && _selector === lastPage - 1) {
+        // 애니메이션을 사용한다면
+        else if (useAnimation && movePage === lastPage) {
           arrived = true;
 
           // 애니메이션 사용시 : 가장 끝 페이지에 도달했을 때 -> 맨 앞 페이지로 이동
@@ -86,14 +108,12 @@ export default function _Slider(props: SliderPropsTypes) {
             if (listRef.current) {
               listRef.current.classList.add("pause-animation");
               listRef.current.style.transform = `translateX(${-200}%)`;
-
-              _selector = 2;
             }
           }, 450);
         }
       } else if (type === "prev") {
         // 앞으로 이동
-        movePage = _selector - 1;
+        movePage = selector - 1;
 
         // 첫번째 페이지라면, 맨 뒷 페이지로 이동
         if (movePage < startPage) {
@@ -103,30 +123,29 @@ export default function _Slider(props: SliderPropsTypes) {
             arrived = true;
 
             window.setTimeout(() => {
-              _selector = list.length - 3;
-
               if (listRef.current) {
                 listRef.current.classList.add("pause-animation");
                 listRef.current.style.transform = `translateX(${
-                  _selector * -100
+                  (list.length - 3) * -100
                 }%)`;
               }
             }, 450);
           }
         }
       }
-      _selector = movePage;
 
-      if (!arrived) setSelector(movePage);
-      else {
+      // 최종 저장될 페이지
+      let finalSelector = movePage;
+      if (arrived) {
         // 슬라이더가 맨 끝 또는 맨 앞에 도달한 적이 있는 경우
         if (movePage === lastPage)
           // 맨 끝에 도달했을 경우
-          setSelector(startPage);
+          finalSelector = startPage;
         else if (movePage < startPage)
           // 맨 앞에 도달했을 경우
-          setSelector(lastPage - 1);
+          finalSelector = lastPage - 1;
       }
+      setSelector(finalSelector);
 
       // 슬라이더 최종 이동하기
       if (listRef.current && listRef.current.style) {
@@ -135,7 +154,7 @@ export default function _Slider(props: SliderPropsTypes) {
 
       // 페이지 이동 후 자동 넘김 실행하기
       if (useAutoPlay) {
-        setAutoPlay();
+        setAutoPlay(finalSelector);
 
         // 타이머 재개하기
         if (timerRef.current)
@@ -143,12 +162,11 @@ export default function _Slider(props: SliderPropsTypes) {
             timerRef.current.classList.remove("pause");
           }, 0);
       }
-
       let timer = useAnimation ? 400 : 100;
 
       // 다음 페이지 전환시 텀 두기
       window.setTimeout(() => {
-        pause = false;
+        setPause(false);
 
         if (listRef.current)
           listRef.current.classList.remove("pause-animation");
@@ -156,12 +174,12 @@ export default function _Slider(props: SliderPropsTypes) {
     };
 
   // 슬라이더 자동 넘김 실행하기
-  const setAutoPlay = () => {
+  const setAutoPlay = (selector: number) => {
     if (useAutoPlay) {
-      clearInterval(autoPlay);
+      if (timerList[uid]) clearInterval(timerList[uid]);
       // 설정해둔 시간(1초 이상)마다 다음 페이지로 이동 이벤트 시작
-      autoPlay = setInterval(() => {
-        moveSlider({ type: "next" })();
+      timerList[uid] = setInterval(() => {
+        moveSlider({ type: "next", selector })();
       }, (useAutoPlay.delay && useAutoPlay.delay >= 3000 && useAutoPlay.delay) || 3000);
     }
   };
@@ -182,4 +200,4 @@ export default function _Slider(props: SliderPropsTypes) {
       />
     </_Error>
   );
-}
+};
