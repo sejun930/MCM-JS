@@ -39,7 +39,7 @@ export default function SliderUIPage({
       >
         <Items className={sliderClassList.items}>
           <ArrowButton
-            onClickEvent={moveSlider({ type: "prev" })}
+            onClickEvent={moveSlider({ type: "prev", selector })}
             className={sliderClassList.prevArrow}
           >
             ◀
@@ -71,7 +71,11 @@ export default function SliderUIPage({
                   return (
                     <Page
                       className={sliderClassList.page}
-                      onClickEvent={moveSlider({ type: "page", page })}
+                      onClickEvent={moveSlider({
+                        type: "page",
+                        page,
+                        selector,
+                      })}
                       key={v4()}
                       selected={selector === page}
                     />
@@ -81,7 +85,7 @@ export default function SliderUIPage({
             </Pagination>
           )}
           <ArrowButton
-            onClickEvent={moveSlider({ type: "next" })}
+            onClickEvent={moveSlider({ type: "next", selector })}
             className={sliderClassList.nextArrow}
           >
             ▶

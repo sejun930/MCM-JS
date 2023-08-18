@@ -19,14 +19,20 @@ export type SliderPropsTypes = CommonsSelectorTypes & {
   };
 };
 
+export interface SliderAddProps {
+  uid: string;
+}
+
 export interface SliderUIPropsTypes {
   list: Array<React.ReactNode>;
   moveSlider: ({
     type,
     page,
+    selector,
   }: {
     type: "next" | "prev" | "page";
     page?: number;
+    selector: number;
   }) => () => void;
   listRef: MutableRefObject<HTMLUListElement>;
   selector: number;
