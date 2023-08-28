@@ -1,7 +1,7 @@
 import { CSSProperties } from "react";
 
 import styled from "@emotion/styled";
-import { _Button } from "../../../../../../mcm-js-commons/src";
+import { _Button } from "mcm-js-commons";
 
 interface StyleTypes {
   selected?: boolean;

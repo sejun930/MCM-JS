@@ -1,10 +1,4 @@
-import React, {
-  useRef,
-  MutableRefObject,
-  useState,
-  useEffect,
-  useMemo,
-} from "react";
+import React, { useRef, MutableRefObject, useState, useEffect } from "react";
 import { SliderPropsTypes, SliderAddProps } from "./slider.types";
 
 import SliderUIPage from "./slider.presenter";
@@ -14,7 +8,7 @@ import { v4 } from "uuid";
 
 // 자동 넘김 반복 이벤트 (컴포넌트 별로 저장)
 const timerList: {
-  [key: string]: ReturnType<typeof setInterval> | NodeJS.Timer;
+  [key: string]: ReturnType<typeof setInterval>;
 } = {};
 
 export default function _RenderSlider(props: SliderPropsTypes) {

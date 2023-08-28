@@ -12,7 +12,7 @@
     //////// 변경 내용 ////////
     "noEmit": false,
     "module": "CommonJS",
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "declaration": true,
     "outDir": "./dist",
     ////////////////////////
