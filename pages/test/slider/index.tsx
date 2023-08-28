@@ -23,7 +23,7 @@ export default function SliderTestPage() {
       </Slider>
       <Slider
         pagination={{ showPageList: true }}
-        useAutoPlay={{ delay: 4000, showTimer: true }}
+        // useAutoPlay={{ delay: 4000, showTimer: true }}
       >
         <div className="test">1</div>
         <div className="test">2</div>
