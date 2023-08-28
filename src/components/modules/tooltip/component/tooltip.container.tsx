@@ -28,6 +28,8 @@ export default function _Tooltip(props: TooltipPropsType) {
     isFix,
     onCloseAfterEvent,
     onOpenAfterEvent,
+    hideMobile,
+    offHoverEvent,
   } = props;
 
   // position이 4가지의 종류에 일치하지 않는다면 기본값 top 부여
@@ -49,6 +51,16 @@ export default function _Tooltip(props: TooltipPropsType) {
   useEffect(() => {
     if (isDisable) setTooltipOpen(false);
   }, [isDisable]);
+
+  // 모바일 환경 터치 이벤트 감지
+  useEffect(() => {
+    if (!hideMobile && !offHoverEvent)
+      document.addEventListener("touchend", checkMobileTouchCloseEvent);
+
+    return () => {
+      document.removeEventListener("touchend", checkMobileTouchCloseEvent);
+    };
+  });
 
   // 실행 및 종료시 최종 말풍선 위치값 구하기
   useEffect(() => {
@@ -120,6 +132,16 @@ export default function _Tooltip(props: TooltipPropsType) {
       else if (bool && onOpenAfterEvent) onOpenAfterEvent();
       // 툴팁이 오픈될 때 실행될 이벤트가 있을 경우
     }, timer);
+  };
+
+  // 모바일 환경에서 터치 이벤트 감지하여 툴팁 종료하기
+  const checkMobileTouchCloseEvent = (e) => {
+    if (tooltipOpen) {
+      // 말풍선 위치에서 벗어난 경로를 클릭할 경우
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
+        toggleTail(false)();
+      }
+    }
   };
 
   return (
