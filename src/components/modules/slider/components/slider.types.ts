@@ -17,6 +17,10 @@ export type SliderPropsTypes = CommonsSelectorTypes & {
     delay: number; // 자동 넘김 시간 (1000 = 1초), 최소 3초 입력 필요
     showTimer?: boolean; // 타이머 노출 여부
   };
+  // 마우스 전환 모드 사용 여부
+  useDragMode?: {
+    sideMovePercent: number; // 좌우 이동 비율 (최소 10% ~ 90%)
+  };
 };
 
 export interface SliderAddProps {
@@ -37,6 +41,9 @@ export interface SliderUIPropsTypes {
   listRef: MutableRefObject<HTMLUListElement>;
   selector: number;
   timerRef: MutableRefObject<HTMLDivElement>;
+  startDrag: (pageX: number) => void;
+  moveDrag: (pageX: number) => void;
+  endDrag: () => void;
 }
 
 export type SliderType = typeof _Slider;

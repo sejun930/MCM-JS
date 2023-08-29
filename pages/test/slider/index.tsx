@@ -2,32 +2,42 @@ import React from "react";
 
 import styled from "@emotion/styled";
 import { Slider } from "../../../src";
+import { breakPoints } from "mcm-js-commons/dist/responsive";
 
 export default function SliderTestPage() {
   return (
     <Div>
       <Slider
         useAnimation
-        useAutoPlay={{ delay: 3000, showTimer: true }}
+        useAutoPlay={{ delay: 3000, showTimer: false }}
         pagination={{ showPageList: true }}
+        useDragMode={{
+          sideMovePercent: 23,
+        }}
       >
-        <img src="https://i.namu.wiki/i/SIHnHey__5syElRWvXqBpod_uf9OtCtB1lgWnxTIn7kxelOGRf-fKrW89m0nmHZ7UtDGkUL8z3rgUqRq_I_exg.webp" />
         <div style={{ backgroundColor: "green" }} className="test">
-          <button style={{ width: "500px", height: "500px", zIndex: 100 }}>
-            Click me
-          </button>
+          4444
         </div>
+        <div
+          style={{
+            backgroundImage:
+              'url("https://i.namu.wiki/i/SIHnHey__5syElRWvXqBpod_uf9OtCtB1lgWnxTIn7kxelOGRf-fKrW89m0nmHZ7UtDGkUL8z3rgUqRq_I_exg.webp")',
+            backgroundSize: "cover",
+            width: "100%",
+            height: "100%",
+          }}
+        />
         <div style={{ backgroundColor: "blue" }} className="test">
           333
         </div>
       </Slider>
-      <Slider
+      {/* <Slider
         pagination={{ showPageList: true }}
         useAutoPlay={{ delay: 4000, showTimer: true }}
       >
         <div className="test">1</div>
         <div className="test">2</div>
-      </Slider>
+      </Slider> */}
     </Div>
   );
 }
@@ -42,5 +52,9 @@ const Div = styled.div`
     height: 100%;
     min-height: 300px;
     object-fit: fill;
+  }
+
+  @media ${breakPoints.mobileLarge} {
+    padding: 20px;
   }
 `;

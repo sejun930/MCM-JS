@@ -27,6 +27,10 @@ export default function SliderUIPage({
   useAutoPlay,
   selector,
   timerRef,
+  useDragMode,
+  startDrag,
+  moveDrag,
+  endDrag,
 }: SliderPropsTypes & SliderUIPropsTypes) {
   return (
     (list && list.length && Array.isArray(list) && (
@@ -48,14 +52,23 @@ export default function SliderUIPage({
             className={sliderClassList.list}
             useAnimation={useAnimation}
             ref={listRef}
+            useDragMode={useDragMode !== undefined}
+            onMouseDown={(e) => useDragMode && startDrag(e.pageX || 0)}
+            onMouseMove={(e) => useDragMode && moveDrag(e.pageX || 0)}
+            onClick={(useDragMode && endDrag) || undefined}
+            onTouchStart={(e) =>
+              useDragMode && startDrag(e.targetTouches[0].pageX || 0)
+            }
+            onTouchMove={(e) =>
+              useDragMode && moveDrag(e.targetTouches[0].pageX || 0)
+            }
+            onTouchEnd={(useDragMode && endDrag) || undefined}
           >
-            {list.map((el) => {
-              return (
-                <Contents key={v4()} className={sliderClassList.contents}>
-                  {el}
-                </Contents>
-              );
-            })}
+            {list.map((el) => (
+              <Contents key={v4()} className={sliderClassList.contents}>
+                {el}
+              </Contents>
+            ))}
           </List>
 
           {/* 페이지네이션 기능을 사용할 경우 */}
@@ -66,7 +79,7 @@ export default function SliderUIPage({
             >
               {Array.from(new Array(children.length), (_, idx) => idx).map(
                 (page) => {
-                  page += useAnimation ? 2 : 0;
+                  page += 2;
 
                   return (
                     <Page

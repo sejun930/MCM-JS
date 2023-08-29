@@ -7,6 +7,7 @@ interface StyleTypes {
   selected?: boolean;
   delay?: number;
   useAnimation?: boolean;
+  useDragMode?: boolean;
 }
 
 export const Wrapper = styled.div`
@@ -16,6 +17,7 @@ export const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   position: relative;
+  z-index: 99;
 `;
 
 export const Items = styled.div`
@@ -24,6 +26,7 @@ export const Items = styled.div`
   display: flex;
   overflow: hidden;
   position: relative;
+  z-index: 98;
 
   .mcm-slider-next-button {
     right: 0;
@@ -36,6 +39,10 @@ export const List = styled.ul`
   width: 100%;
   margin: 0px;
   padding: 0px;
+  z-index: 97;
+
+  // 드래그시 추가 이동 위치값
+  --margin-left: 0;
 
   ${(props: StyleTypes) => {
     const styles: CSSProperties & { [key: string]: string } = {};
@@ -47,15 +54,19 @@ export const List = styled.ul`
       styles.transform = `translateX(-200%)`;
     }
 
+    // 슬라이더 기능 사용시
+    if (props.useDragMode) {
+      styles.cursor = "grab";
+    }
+
     return styles;
   }}
-
   &.pause-animation {
-    transition: unset;
+    transition: unset !important;
   }
 
   &.move-start {
-    transform: translateX(-200%);
+    transform: translateX(calc(-200% + var(--margin-left)));
   }
 `;
 
@@ -65,6 +76,7 @@ export const Timer = styled.div`
   position: absolute;
   bottom: 0;
   background-color: rgba(255, 255, 255, 0.6);
+  z-index: 100;
 
   @keyframes SLIDER_TIMER_ANIMTAION {
     from {
@@ -80,6 +92,7 @@ export const Timer = styled.div`
     position: absolute;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
+    animation-play-state: running;
 
     ${(props: StyleTypes) =>
       props.delay && {
@@ -109,11 +122,10 @@ export const ArrowButton = styled(_Button)`
   height: 100%;
   z-index: 1000;
   transition: all 0.25s ease-out;
-  opacity: 0;
+  opacity: 1;
   font-size: 18px;
 
   :hover {
-    opacity: 1;
     background-color: rgba(255, 255, 255, 0.4);
   }
 `;
@@ -127,7 +139,7 @@ export const Pagination = styled.div`
   width: auto;
   gap: 0px 8px;
   white-space: pre;
-  z-index: 20;
+  z-index: 100;
 `;
 
 export const PageList = styled.div`
