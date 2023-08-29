@@ -32,11 +32,28 @@ export default function SliderTestPage() {
         </div>
       </Slider>
       {/* <Slider
+        useAnimation
+        useAutoPlay={{ delay: 3000, showTimer: false }}
         pagination={{ showPageList: true }}
-        useAutoPlay={{ delay: 4000, showTimer: true }}
+        useDragMode={{
+          sideMovePercent: 23,
+        }}
       >
-        <div className="test">1</div>
-        <div className="test">2</div>
+        <div style={{ backgroundColor: "green" }} className="test">
+          4444
+        </div>
+        <div
+          style={{
+            backgroundImage:
+              'url("https://i.namu.wiki/i/SIHnHey__5syElRWvXqBpod_uf9OtCtB1lgWnxTIn7kxelOGRf-fKrW89m0nmHZ7UtDGkUL8z3rgUqRq_I_exg.webp")',
+            backgroundSize: "cover",
+            width: "100%",
+            height: "100%",
+          }}
+        />
+        <div style={{ backgroundColor: "blue" }} className="test">
+          333
+        </div>
       </Slider> */}
     </Div>
   );

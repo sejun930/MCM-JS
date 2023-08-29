@@ -41,9 +41,8 @@ export interface SliderUIPropsTypes {
   listRef: MutableRefObject<HTMLUListElement>;
   selector: number;
   timerRef: MutableRefObject<HTMLDivElement>;
-  startDrag: (pageX: number) => void;
-  moveDrag: (pageX: number) => void;
-  endDrag: () => void;
+  uid: string;
+  timerList: { [key: string]: ReturnType<typeof setInterval> };
 }
 
 export type SliderType = typeof _Slider;

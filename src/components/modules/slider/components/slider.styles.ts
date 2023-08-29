@@ -7,7 +7,7 @@ interface StyleTypes {
   selected?: boolean;
   delay?: number;
   useAnimation?: boolean;
-  useDragMode?: boolean;
+  hasDragMode?: boolean;
 }
 
 export const Wrapper = styled.div`
@@ -55,7 +55,7 @@ export const List = styled.ul`
     }
 
     // 슬라이더 기능 사용시
-    if (props.useDragMode) {
+    if (props.hasDragMode) {
       styles.cursor = "grab";
     }
 
