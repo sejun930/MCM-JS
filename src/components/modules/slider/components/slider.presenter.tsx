@@ -1,9 +1,6 @@
-import React from "react";
 import {
   ArrowButton,
-  Contents,
   Items,
-  List,
   Page,
   Pagination,
   Timer,
@@ -14,6 +11,8 @@ import { v4 } from "uuid";
 import { getAllComponentsClassName } from "mcm-js-commons/dist/hooks";
 import { SliderPropsTypes, SliderUIPropsTypes } from "./slider.types";
 import { sliderClassList } from "./slider.class";
+
+import SliderListPage from "./list/slider.list.container";
 
 export default function SliderUIPage({
   children,
@@ -27,6 +26,9 @@ export default function SliderUIPage({
   useAutoPlay,
   selector,
   timerRef,
+  useDragMode,
+  uid,
+  timerList,
 }: SliderPropsTypes & SliderUIPropsTypes) {
   return (
     (list && list.length && Array.isArray(list) && (
@@ -44,19 +46,18 @@ export default function SliderUIPage({
           >
             ◀
           </ArrowButton>
-          <List
-            className={sliderClassList.list}
+          <SliderListPage
             useAnimation={useAnimation}
-            ref={listRef}
-          >
-            {list.map((el) => {
-              return (
-                <Contents key={v4()} className={sliderClassList.contents}>
-                  {el}
-                </Contents>
-              );
-            })}
-          </List>
+            listRef={listRef}
+            timerRef={timerRef}
+            useDragMode={useDragMode}
+            list={list}
+            uid={uid}
+            timerList={timerList}
+            useAutoPlay={useAutoPlay}
+            selector={selector}
+            moveSlider={moveSlider}
+          />
 
           {/* 페이지네이션 기능을 사용할 경우 */}
           {pagination && pagination.showPageList && (
@@ -66,7 +67,7 @@ export default function SliderUIPage({
             >
               {Array.from(new Array(children.length), (_, idx) => idx).map(
                 (page) => {
-                  page += useAnimation ? 2 : 0;
+                  page += 2;
 
                   return (
                     <Page

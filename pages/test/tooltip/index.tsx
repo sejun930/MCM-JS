@@ -5,6 +5,7 @@ import { _Title } from "mcm-js-commons";
 
 export default function Test() {
   const [open, setOpen] = useState(false);
+  console.log(open);
 
   return (
     <>
@@ -17,12 +18,6 @@ export default function Test() {
           }
           useShowAnimation
           position="left"
-          open={open}
-          onCloseAfterEvent={() => setOpen(false)}
-          offHoverEvent
-          // isFix
-          // isDisable={open}
-          hideMobile
         >
           <button style={{ fontSize: "24px" }}>사진 보기</button>
         </_Tooltip>
@@ -32,31 +27,31 @@ export default function Test() {
           useShowAnimation
           // position="bottom"
           isFix
-          tooltipStyles={{
-            // backgroundColor: "black",
-            padding: "200px",
-            border: {
-              color: "#9BE8D8",
-              width: "4px",
-              radius: "0px",
-            },
-            font: {
-              color: "#9BE8D8",
-              size: "20px",
-              weight: 900,
-            },
-          }}
-          tooltipMobileStyles={{
-            padding: "30px",
-            // backgroundColor: "white",
-            border: {
-              color: "red",
-            },
-            font: {
-              color: "red",
-              size: "100px",
-            },
-          }}
+          // tooltipStyles={{
+          //   // backgroundColor: "black",
+          //   padding: "200px",
+          //   border: {
+          //     color: "#9BE8D8",
+          //     width: "4px",
+          //     radius: "0px",
+          //   },
+          //   font: {
+          //     color: "#9BE8D8",
+          //     size: "20px",
+          //     weight: 900,
+          //   },
+          // }}
+          // tooltipMobileStyles={{
+          //   padding: "30px",
+          //   // backgroundColor: "white",
+          //   border: {
+          //     color: "red",
+          //   },
+          //   font: {
+          //     color: "red",
+          //     size: "100px",
+          //   },
+          // }}
         >
           <button style={{ fontSize: "24px" }}>내용 보기</button>
         </_Tooltip>
