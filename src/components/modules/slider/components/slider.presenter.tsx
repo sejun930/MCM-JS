@@ -16,7 +16,6 @@ import SliderListPage from "./list/slider.list.container";
 
 export default function SliderUIPage({
   children,
-  list,
   className,
   id,
   moveSlider,
@@ -31,7 +30,7 @@ export default function SliderUIPage({
   timerList,
 }: SliderPropsTypes & SliderUIPropsTypes) {
   return (
-    (list && list.length && Array.isArray(list) && (
+    (children && children.length && Array.isArray(children) && (
       <Wrapper
         className={getAllComponentsClassName(
           sliderClassList.wrapper,
@@ -51,12 +50,12 @@ export default function SliderUIPage({
             listRef={listRef}
             timerRef={timerRef}
             useDragMode={useDragMode}
-            list={list}
             uid={uid}
             timerList={timerList}
             useAutoPlay={useAutoPlay}
             selector={selector}
             moveSlider={moveSlider}
+            children={children}
           />
 
           {/* 페이지네이션 기능을 사용할 경우 */}

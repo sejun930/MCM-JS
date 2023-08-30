@@ -9,7 +9,7 @@ export default function SliderTestPage() {
     <Div>
       <Slider
         useAnimation
-        useAutoPlay={{ delay: 3000, showTimer: false }}
+        useAutoPlay={{ delay: 3000, showTimer: true }}
         pagination={{ showPageList: true }}
         useDragMode={{
           sideMovePercent: 23,

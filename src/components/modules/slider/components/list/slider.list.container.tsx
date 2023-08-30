@@ -25,9 +25,15 @@ export default function SliderListPage(props: SliderListTypes) {
     selector,
     useAnimation,
     moveSlider,
+    children,
   } = props;
 
-  // 드래그 이동 함수
+  const list = [
+    ...children.slice(children.length - 2),
+    ...children,
+    ...children.slice(0, 2),
+  ];
+
   // 드래그 시작 함수
   const startDrag = (pageX: number) => {
     if (useDragMode === undefined || dragDisable) return;
@@ -141,6 +147,7 @@ export default function SliderListPage(props: SliderListTypes) {
       startDrag={startDrag}
       moveDrag={moveDrag}
       endDrag={endDrag}
+      list={list}
     />
   );
 }

@@ -40,18 +40,17 @@ export const List = styled.ul`
   margin: 0px;
   padding: 0px;
   z-index: 97;
+  transform: translateX(-200%);
 
   // 드래그시 추가 이동 위치값
   --margin-left: 0;
 
   ${(props: StyleTypes) => {
     const styles: CSSProperties & { [key: string]: string } = {};
-    styles.transform = `translateX(0%)`;
 
     // 애니메이션 적용하기
     if (props.useAnimation) {
       styles.transition = "all 0.5s ease";
-      styles.transform = `translateX(-200%)`;
     }
 
     // 슬라이더 기능 사용시
