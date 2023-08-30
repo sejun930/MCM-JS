@@ -8,9 +8,9 @@ export default function SliderTestPage() {
   return (
     <Div>
       <Slider
-        useAnimation
+        // useAnimation
         useAutoPlay={{ delay: 3000, showTimer: true }}
-        pagination={{ showPageList: true }}
+        // pagination={{ showPageList: true }}
         useDragMode={{
           sideMovePercent: 23,
         }}

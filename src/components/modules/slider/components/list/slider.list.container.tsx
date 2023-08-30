@@ -83,6 +83,10 @@ export default function SliderListPage(props: SliderListTypes) {
         const moveCompleteLocation = -(startLocation - moveLocation);
         finalLocation = moveCompleteLocation;
 
+        if (timerRef.current) {
+          timerRef.current.classList.add("pause");
+        }
+
         // 드래그로 위치 이동하기
         if (listRef && listRef.current) {
           listRef.current.style.transition = "unset";
