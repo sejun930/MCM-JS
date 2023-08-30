@@ -28,7 +28,7 @@ export interface SliderAddProps {
 }
 
 export interface SliderUIPropsTypes {
-  list: Array<React.ReactNode>;
+  children: Array<JSX.Element>;
   moveSlider: ({
     type,
     page,

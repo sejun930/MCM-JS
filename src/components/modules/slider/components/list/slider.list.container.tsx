@@ -25,9 +25,15 @@ export default function SliderListPage(props: SliderListTypes) {
     selector,
     useAnimation,
     moveSlider,
+    children,
   } = props;
 
-  // 드래그 이동 함수
+  const list = [
+    ...children.slice(children.length - 2),
+    ...children,
+    ...children.slice(0, 2),
+  ];
+
   // 드래그 시작 함수
   const startDrag = (pageX: number) => {
     if (useDragMode === undefined || dragDisable) return;
@@ -76,6 +82,10 @@ export default function SliderListPage(props: SliderListTypes) {
         // 이동한 최종 위치값
         const moveCompleteLocation = -(startLocation - moveLocation);
         finalLocation = moveCompleteLocation;
+
+        if (timerRef.current) {
+          timerRef.current.classList.add("pause");
+        }
 
         // 드래그로 위치 이동하기
         if (listRef && listRef.current) {
@@ -141,6 +151,7 @@ export default function SliderListPage(props: SliderListTypes) {
       startDrag={startDrag}
       moveDrag={moveDrag}
       endDrag={endDrag}
+      list={list}
     />
   );
 }

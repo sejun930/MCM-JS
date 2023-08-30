@@ -15,4 +15,5 @@ export interface SliderListUITypes {
   startDrag: (pageX: number) => void;
   moveDrag: (pageX: number) => void;
   endDrag: () => void;
+  list: Array<React.ReactNode>;
 }

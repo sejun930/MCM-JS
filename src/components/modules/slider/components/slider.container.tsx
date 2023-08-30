@@ -18,12 +18,11 @@ export default function _RenderSlider(props: SliderPropsTypes) {
 }
 
 const _Slider = (props: SliderPropsTypes & SliderAddProps) => {
-  const { children, useAutoPlay, useAnimation, uid, useDragMode } = props;
+  const { children, useAutoPlay, useAnimation, uid } = props;
 
   const listRef = useRef() as MutableRefObject<HTMLUListElement>;
   const timerRef = useRef() as MutableRefObject<HTMLDivElement>;
 
-  let list: Array<JSX.Element> = [];
   // 슬라이더의 가장 마지막 페이지 넘버
   let lastPage = 0;
   // 슬라이더의 시작 페이지 넘버
@@ -32,11 +31,6 @@ const _Slider = (props: SliderPropsTypes & SliderAddProps) => {
   if (children) {
     if (Array.isArray(children)) {
       lastPage = children.length + 2;
-      list = [
-        ...children.slice(children.length - 2),
-        ...children,
-        ...children.slice(0, 2),
-      ];
     }
   }
   // 현재 선택된 슬라이더 위치값
@@ -74,8 +68,9 @@ const _Slider = (props: SliderPropsTypes & SliderAddProps) => {
       }
 
       // 애니메이션 사용시 transition 적용하기
-      if (useAnimation) {
-        if (listRef.current) listRef.current.style.transition = "all 0.5s ease";
+      if (listRef.current) {
+        if (useAnimation) listRef.current.style.transition = "all 0.5s ease";
+        else listRef.current.style.transition = "unset";
       }
 
       // 최종적으로 이동할 페이지
@@ -119,7 +114,7 @@ const _Slider = (props: SliderPropsTypes & SliderAddProps) => {
               if (listRef.current) {
                 listRef.current.classList.add("pause-animation");
                 listRef.current.style.transform = `translateX(${
-                  (list.length - 3) * -100
+                  (children.length + 4 - 3) * -100
                 }%)`;
               }
             }, 450);
@@ -187,7 +182,6 @@ const _Slider = (props: SliderPropsTypes & SliderAddProps) => {
     >
       <SliderUIPage
         {...props}
-        list={list}
         moveSlider={moveSlider}
         listRef={listRef}
         timerRef={timerRef}
