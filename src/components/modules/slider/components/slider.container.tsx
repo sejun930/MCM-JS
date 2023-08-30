@@ -18,7 +18,7 @@ export default function _RenderSlider(props: SliderPropsTypes) {
 }
 
 const _Slider = (props: SliderPropsTypes & SliderAddProps) => {
-  const { children, useAutoPlay, useAnimation, uid, useDragMode } = props;
+  const { children, useAutoPlay, useAnimation, uid } = props;
 
   const listRef = useRef() as MutableRefObject<HTMLUListElement>;
   const timerRef = useRef() as MutableRefObject<HTMLDivElement>;
