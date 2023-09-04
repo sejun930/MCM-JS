@@ -16,6 +16,7 @@ export default function ModalExamplePage() {
                 mobileModalSize={{ width: "50%", height: "50%" }}
                 showBGAnimation={true}
                 showModalOpenAnimation={true}
+                autoCloseTimer={2000}
               >
                 <span> 하위 모달을 종료하면 상위 모달도 함께 종료됩니다. </span>
               </Modal>

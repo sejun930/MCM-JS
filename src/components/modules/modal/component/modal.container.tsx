@@ -33,7 +33,7 @@ export function _RenderModal(props: ModalPropsType) {
     showModalOpenAnimation,
     onAfterCloseEvent,
     onFixWindow,
-    timer,
+    autoCloseTimer,
     openIdx,
     _wmo,
   } = props;
@@ -82,11 +82,11 @@ export function _RenderModal(props: ModalPropsType) {
           _itemRef.current?.classList.add(modalFuncClass.itemShow);
         }
 
-        if (timer && timer >= 1000) {
+        if (autoCloseTimer && autoCloseTimer >= 1000) {
           // 최소 1초 이상일 때만 자동종료 실행
           window.setTimeout(() => {
             _onCloseModal(true);
-          }, timer);
+          }, autoCloseTimer);
         }
       }, 0);
     } else {

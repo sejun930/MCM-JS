@@ -28,6 +28,7 @@ export default function SliderUIPage({
   useDragMode,
   uid,
   timerList,
+  hideArrow,
 }: SliderPropsTypes & SliderUIPropsTypes) {
   return (
     (children && children.length && Array.isArray(children) && (
@@ -39,12 +40,14 @@ export default function SliderUIPage({
         id={id}
       >
         <Items className={sliderClassList.items}>
-          <ArrowButton
-            onClickEvent={moveSlider({ type: "prev", selector })}
-            className={sliderClassList.prevArrow}
-          >
-            ◀
-          </ArrowButton>
+          {!hideArrow && (
+            <ArrowButton
+              onClickEvent={moveSlider({ type: "prev", selector })}
+              className={sliderClassList.prevArrow}
+            >
+              ◀
+            </ArrowButton>
+          )}
           <SliderListPage
             useAnimation={useAnimation}
             listRef={listRef}
@@ -56,13 +59,14 @@ export default function SliderUIPage({
             selector={selector}
             moveSlider={moveSlider}
             children={children}
+            hasPageList={pagination?.showPageList || false}
           />
 
           {/* 페이지네이션 기능을 사용할 경우 */}
           {pagination && pagination.showPageList && (
             <Pagination
               className={sliderClassList.pagination}
-              style={{ bottom: useAutoPlay?.showTimer ? "30px" : "10px" }}
+              style={{ bottom: useAutoPlay?.showTimer && "20px" }}
             >
               {Array.from(new Array(children.length), (_, idx) => idx).map(
                 (page) => {
@@ -84,12 +88,14 @@ export default function SliderUIPage({
               )}
             </Pagination>
           )}
-          <ArrowButton
-            onClickEvent={moveSlider({ type: "next", selector })}
-            className={sliderClassList.nextArrow}
-          >
-            ▶
-          </ArrowButton>
+          {!hideArrow && (
+            <ArrowButton
+              onClickEvent={moveSlider({ type: "next", selector })}
+              className={sliderClassList.nextArrow}
+            >
+              ▶
+            </ArrowButton>
+          )}
           {useAutoPlay && useAutoPlay.showTimer && useAutoPlay.delay && (
             <Timer
               ref={timerRef}

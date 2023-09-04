@@ -8,6 +8,7 @@ interface StyleTypes {
   delay?: number;
   useAnimation?: boolean;
   hasDragMode?: boolean;
+  hasPageList?: boolean;
 }
 
 export const Wrapper = styled.div`
@@ -41,6 +42,7 @@ export const List = styled.ul`
   padding: 0px;
   z-index: 97;
   transform: translateX(-200%);
+  min-height: 40px;
 
   // 드래그시 추가 이동 위치값
   --margin-left: 0;
@@ -56,6 +58,11 @@ export const List = styled.ul`
     // 슬라이더 기능 사용시
     if (props.hasDragMode) {
       styles.cursor = "grab";
+    }
+
+    // 페이지네이션을 사용할 경우
+    if (props.hasPageList) {
+      styles.minHeight = "80px";
     }
 
     return styles;
@@ -110,6 +117,8 @@ export const Contents = styled.li`
   min-width: 100%;
   width: 100%;
   display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const ArrowButton = styled(_Button)`
@@ -124,8 +133,15 @@ export const ArrowButton = styled(_Button)`
   opacity: 1;
   font-size: 18px;
 
+  /* pointer-events: none; // PC 이미지 다운로드 금지 */
+  /* -webkit-touch-callout: none; // 아이폰 다운로드 금지 */
+  /* -webkit-user-select: none; // 드래그 방지
+  -moz-user-select: none;
+  -ms-use-select: none;
+  user-select: none; */
+
   :hover {
-    background-color: rgba(255, 255, 255, 0.4);
+    background-color: rgba(125, 125, 125, 0.25);
   }
 `;
 
@@ -134,7 +150,7 @@ export const Pagination = styled.div`
   position: absolute;
   left: 50%;
   transform: translate(-50%, -50%);
-  bottom: 10px;
+  bottom: 0px;
   width: auto;
   gap: 0px 8px;
   white-space: pre;

@@ -21,10 +21,12 @@ export type SliderPropsTypes = CommonsSelectorTypes & {
   useDragMode?: {
     sideMovePercent: number; // 좌우 이동 비율 (최소 10% ~ 90%)
   };
+  // 다음, 이전 버튼 숨기기
+  hideArrow?: boolean;
 };
 
 export interface SliderAddProps {
-  uid: string;
+  _uid: string;
 }
 
 export interface SliderUIPropsTypes {
