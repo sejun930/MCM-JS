@@ -13,6 +13,7 @@ export default function SliderListUIPage({
   moveDrag,
   endDrag,
   uid,
+  hasPageList,
 }: SliderListTypes & SliderListUITypes) {
   return (
     <List
@@ -30,6 +31,7 @@ export default function SliderListUIPage({
         useDragMode && moveDrag(e.targetTouches[0].pageX || 0)
       }
       onTouchEnd={(useDragMode && endDrag) || undefined}
+      hasPageList={hasPageList}
     >
       {list.map((el, key) => (
         <Contents key={`${uid}-${key}`} className={sliderClassList.contents}>

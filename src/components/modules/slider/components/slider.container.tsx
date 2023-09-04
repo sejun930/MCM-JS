@@ -1,4 +1,4 @@
-import { useRef, MutableRefObject, useState, useEffect } from "react";
+import { useRef, MutableRefObject, useState, useEffect, memo } from "react";
 import { SliderPropsTypes, SliderAddProps } from "./slider.types";
 
 import SliderUIPage from "./slider.presenter";
@@ -11,14 +11,13 @@ const timerList: {
   [key: string]: ReturnType<typeof setInterval>;
 } = {};
 
-export default function _RenderSlider(props: SliderPropsTypes) {
+const _RenderSlider = (props: SliderPropsTypes) => {
   const uid = v4();
-
-  return <_Slider {...props} uid={uid} />;
-}
+  return <_Slider {...props} _uid={uid} />;
+};
 
 const _Slider = (props: SliderPropsTypes & SliderAddProps) => {
-  const { children, useAutoPlay, useAnimation, uid } = props;
+  const { children, useAutoPlay, useAnimation, _uid } = props;
 
   const listRef = useRef() as MutableRefObject<HTMLUListElement>;
   const timerRef = useRef() as MutableRefObject<HTMLDivElement>;
@@ -37,6 +36,8 @@ const _Slider = (props: SliderPropsTypes & SliderAddProps) => {
   const [selector, setSelector] = useState(startPage);
   // 일시 중지 변수 (연속 실행 방지)
   const [pause, setPause] = useState(false);
+  // 최초로 받은 uid 고정시키기
+  const [uid] = useState(_uid);
 
   useEffect(() => {
     setPause(false);
@@ -192,3 +193,5 @@ const _Slider = (props: SliderPropsTypes & SliderAddProps) => {
     </_Error>
   );
 };
+
+export default memo(_RenderSlider);
