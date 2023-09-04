@@ -17,7 +17,7 @@ const _RenderSlider = (props: SliderPropsTypes) => {
 };
 
 const _Slider = (props: SliderPropsTypes & SliderAddProps) => {
-  const { children, useAutoPlay, useAnimation, _uid } = props;
+  const { children, useAutoPlay, useAnimation, _uid, firstPage } = props;
 
   const listRef = useRef() as MutableRefObject<HTMLUListElement>;
   const timerRef = useRef() as MutableRefObject<HTMLDivElement>;
@@ -26,6 +26,7 @@ const _Slider = (props: SliderPropsTypes & SliderAddProps) => {
   let lastPage = 0;
   // 슬라이더의 시작 페이지 넘버
   let startPage = 2;
+
   // 리스트 앞, 뒤로 리스트 구성하기
   if (children) {
     if (Array.isArray(children)) {
@@ -42,9 +43,25 @@ const _Slider = (props: SliderPropsTypes & SliderAddProps) => {
   useEffect(() => {
     setPause(false);
     setSelector(startPage);
+    startPage = 2;
+
+    // 제일 먼저 시작되는 페이지
+    let _firstPage = startPage;
+    // 시작 페이지가 정해져 있는 경우
+    if (firstPage) {
+      // 시작 페이지가 컴포넌트의 개수를 넘지 않고, 0보다 클 경우
+      if (children.length >= firstPage && firstPage > 0) {
+        _firstPage = firstPage + 1;
+      }
+    }
 
     if (selector !== 1)
-      moveSlider({ type: "page", page: startPage, selector })();
+      moveSlider({
+        type: "page",
+        page: _firstPage,
+        selector,
+        offAnimtaion: true,
+      })();
   }, []);
 
   // 슬라이더 이동하기
@@ -53,10 +70,12 @@ const _Slider = (props: SliderPropsTypes & SliderAddProps) => {
       type,
       page,
       selector,
+      offAnimtaion,
     }: {
       type: "next" | "prev" | "page";
       page?: number;
       selector: number;
+      offAnimtaion?: boolean; // 애니메이션 일시 비활성화
     }) =>
     () => {
       if (pause) return;
@@ -70,7 +89,8 @@ const _Slider = (props: SliderPropsTypes & SliderAddProps) => {
 
       // 애니메이션 사용시 transition 적용하기
       if (listRef.current) {
-        if (useAnimation) listRef.current.style.transition = "all 0.5s ease";
+        if (useAnimation && !offAnimtaion)
+          listRef.current.style.transition = "all 0.5s ease";
         else listRef.current.style.transition = "unset";
       }
 
@@ -153,7 +173,7 @@ const _Slider = (props: SliderPropsTypes & SliderAddProps) => {
             timerRef.current.classList.remove("pause");
           }, 0);
       }
-      let timer = useAnimation ? 400 : 100;
+      let timer = useAnimation && !offAnimtaion ? 400 : 100;
 
       // 다음 페이지 전환시 텀 두기
       window.setTimeout(() => {
