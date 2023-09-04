@@ -23,6 +23,8 @@ export type SliderPropsTypes = CommonsSelectorTypes & {
   };
   // 다음, 이전 버튼 숨기기
   hideArrow?: boolean;
+  // 제일 먼저 시작되는 페이지
+  firstPage?: number;
 };
 
 export interface SliderAddProps {
