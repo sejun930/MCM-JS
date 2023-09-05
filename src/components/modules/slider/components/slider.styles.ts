@@ -69,14 +69,17 @@ export const List = styled.ul`
     if (props.hasPageList) {
       styles.minHeight = "80px";
     }
-
-    // 웹 사이즈 최소 높이값
-    if (props.listMinHeight && props.listMinHeight?.web) {
-      styles.minHeight = props.listMinHeight.web;
-    }
-
     return styles;
   }}
+
+  @media(min-width : 767px) {
+    ${(props) =>
+      props.listMinHeight &&
+      props.listMinHeight?.web && {
+        minHeight: props.listMinHeight.web,
+      }}
+  }
+
   &.pause-animation {
     transition: unset !important;
   }

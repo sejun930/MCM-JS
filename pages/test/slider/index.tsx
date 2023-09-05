@@ -13,7 +13,7 @@ export default function Test() {
         useAnimation
         firstPage={3}
         hideArrow
-        listMinHeight={{ web: "400px", mobile: "200px" }}
+        listMinHeight={{ web: "400px" }}
       >
         <div>1</div>
         <div>2</div>
