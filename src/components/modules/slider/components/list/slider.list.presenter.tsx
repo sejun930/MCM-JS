@@ -14,6 +14,7 @@ export default function SliderListUIPage({
   endDrag,
   uid,
   hasPageList,
+  listMinHeight,
 }: SliderListTypes & SliderListUITypes) {
   return (
     <List
@@ -32,6 +33,7 @@ export default function SliderListUIPage({
       }
       onTouchEnd={(useDragMode && endDrag) || undefined}
       hasPageList={hasPageList}
+      listMinHeight={listMinHeight}
     >
       {list.map((el, key) => (
         <Contents key={`${uid}-${key}`} className={sliderClassList.contents}>

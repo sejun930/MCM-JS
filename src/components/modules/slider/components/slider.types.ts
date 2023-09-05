@@ -25,6 +25,11 @@ export type SliderPropsTypes = CommonsSelectorTypes & {
   hideArrow?: boolean;
   // 제일 먼저 시작되는 페이지
   firstPage?: number;
+  // 리스트의 최소 높이값 지정
+  listMinHeight?: {
+    web: string; // 웹 사이즈 높이값
+    mobile?: string; // 모바일 사이즈 높이값
+  };
 };
 
 export interface SliderAddProps {

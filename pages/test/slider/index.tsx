@@ -9,7 +9,12 @@ export default function Test() {
       <button onClick={() => setTest((prev) => !prev)}>
         {test ? "changed" : "change"}
       </button>
-      <Slider useAnimation useAutoPlay={{ delay: 3000 }}>
+      <Slider
+        useAnimation
+        firstPage={3}
+        hideArrow
+        listMinHeight={{ web: "400px", mobile: "200px" }}
+      >
         <div>1</div>
         <div>2</div>
         <div>3</div>

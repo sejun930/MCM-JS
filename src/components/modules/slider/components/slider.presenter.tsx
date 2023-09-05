@@ -29,6 +29,7 @@ export default function SliderUIPage({
   uid,
   timerList,
   hideArrow,
+  listMinHeight,
 }: SliderPropsTypes & SliderUIPropsTypes) {
   return (
     (children && children.length && Array.isArray(children) && (
@@ -60,6 +61,7 @@ export default function SliderUIPage({
             moveSlider={moveSlider}
             children={children}
             hasPageList={pagination?.showPageList || false}
+            listMinHeight={listMinHeight}
           />
 
           {/* 페이지네이션 기능을 사용할 경우 */}

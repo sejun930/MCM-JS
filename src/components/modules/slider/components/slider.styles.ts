@@ -2,6 +2,7 @@ import { CSSProperties } from "react";
 
 import styled from "@emotion/styled";
 import { _Button } from "mcm-js-commons";
+import { breakPoints } from "mcm-js-commons/dist/responsive";
 
 interface StyleTypes {
   selected?: boolean;
@@ -9,6 +10,10 @@ interface StyleTypes {
   useAnimation?: boolean;
   hasDragMode?: boolean;
   hasPageList?: boolean;
+  listMinHeight?: {
+    web: string;
+    mobile?: string;
+  };
 }
 
 export const Wrapper = styled.div`
@@ -65,6 +70,11 @@ export const List = styled.ul`
       styles.minHeight = "80px";
     }
 
+    // 웹 사이즈 최소 높이값
+    if (props.listMinHeight && props.listMinHeight?.web) {
+      styles.minHeight = props.listMinHeight.web;
+    }
+
     return styles;
   }}
   &.pause-animation {
@@ -73,6 +83,14 @@ export const List = styled.ul`
 
   &.move-start {
     transform: translateX(calc(-200% + var(--margin-left)));
+  }
+
+  @media ${breakPoints.mobileLarge} {
+    ${(props) =>
+      props.listMinHeight &&
+      props.listMinHeight?.mobile && {
+        minHeight: props.listMinHeight.mobile,
+      }}
   }
 `;
 
