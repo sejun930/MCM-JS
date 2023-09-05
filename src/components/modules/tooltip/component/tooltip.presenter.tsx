@@ -1,4 +1,3 @@
-import React from "react";
 import {
   TooltipItems,
   TooltipChildren,
@@ -10,7 +9,6 @@ import { getAllComponentsClassName } from "mcm-js-commons/dist/hooks";
 
 import { TooltipPropsType, TooltipUIPropsType } from "./tooltip.types";
 import { _SpanText } from "mcm-js-commons";
-
 import { tooltipClassList } from "./tooltip.class";
 
 export default function _TooltipUIPage(
