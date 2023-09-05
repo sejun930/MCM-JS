@@ -11,9 +11,11 @@ export default function Test() {
       </button>
       <Slider
         useAnimation
-        firstPage={3}
-        hideArrow
+        // firstPage={3}
+        // hideArrow
+        useAutoPlay={{ delay: 5000, showTimer: true }}
         listMinHeight={{ web: "400px" }}
+        pagination={{ showPageList: true }}
       >
         <div>1</div>
         <div>2</div>

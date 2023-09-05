@@ -74,16 +74,22 @@ export default function SliderUIPage({
                 (page) => {
                   page += 2;
 
+                  const selected = selector === page;
+
                   return (
                     <Page
                       className={sliderClassList.page}
-                      onClickEvent={moveSlider({
-                        type: "page",
-                        page,
-                        selector,
-                      })}
+                      onClickEvent={() =>
+                        !selected
+                          ? moveSlider({
+                              type: "page",
+                              page,
+                              selector,
+                            })()
+                          : undefined
+                      }
                       key={v4()}
-                      selected={selector === page}
+                      selected={selected}
                     />
                   );
                 }
