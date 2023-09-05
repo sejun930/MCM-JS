@@ -10,6 +10,7 @@ export type SliderListTypes = SliderUIPropsTypes & {
     showTimer?: boolean; // 타이머 노출 여부
   };
   hasPageList: boolean;
+  listMinHeight?: { web: string; mobile?: string };
 };
 
 export interface SliderListUITypes {

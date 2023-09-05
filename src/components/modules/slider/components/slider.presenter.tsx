@@ -29,6 +29,7 @@ export default function SliderUIPage({
   uid,
   timerList,
   hideArrow,
+  listMinHeight,
 }: SliderPropsTypes & SliderUIPropsTypes) {
   return (
     (children && children.length && Array.isArray(children) && (
@@ -60,6 +61,7 @@ export default function SliderUIPage({
             moveSlider={moveSlider}
             children={children}
             hasPageList={pagination?.showPageList || false}
+            listMinHeight={listMinHeight}
           />
 
           {/* 페이지네이션 기능을 사용할 경우 */}
@@ -72,16 +74,22 @@ export default function SliderUIPage({
                 (page) => {
                   page += 2;
 
+                  const selected = selector === page;
+
                   return (
                     <Page
                       className={sliderClassList.page}
-                      onClickEvent={moveSlider({
-                        type: "page",
-                        page,
-                        selector,
-                      })}
+                      onClickEvent={() =>
+                        !selected
+                          ? moveSlider({
+                              type: "page",
+                              page,
+                              selector,
+                            })()
+                          : undefined
+                      }
                       key={v4()}
-                      selected={selector === page}
+                      selected={selected}
                     />
                   );
                 }

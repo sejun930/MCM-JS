@@ -1,5 +1,3 @@
-import React from "react";
-
 import _TooltipUIPage from "./tooltip.presenter";
 
 import { _Error } from "mcm-js-commons";

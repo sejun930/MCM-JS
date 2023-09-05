@@ -1,9 +1,4 @@
-import React, {
-  BaseSyntheticEvent,
-  MutableRefObject,
-  useEffect,
-  useRef,
-} from "react";
+import { BaseSyntheticEvent, MutableRefObject, useEffect, useRef } from "react";
 import _ModalUIPage from "./modal.presenter";
 
 import { ModalPropsType, ModalPropsUITypes } from "./modal.types";
