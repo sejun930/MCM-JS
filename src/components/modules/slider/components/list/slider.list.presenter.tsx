@@ -7,7 +7,7 @@ import { SliderListUITypes } from "./slider.list.types";
 export default function SliderListUIPage({
   useAnimation,
   listRef,
-  useDragMode,
+  useSwipeMode,
   list,
   startDrag,
   moveDrag,
@@ -21,17 +21,17 @@ export default function SliderListUIPage({
       className={sliderClassList.list}
       useAnimation={useAnimation}
       ref={listRef}
-      hasDragMode={useDragMode !== undefined}
-      onMouseDown={(e) => useDragMode && startDrag(e.pageX || 0)}
-      onMouseMove={(e) => useDragMode && moveDrag(e.pageX || 0)}
-      onClick={(useDragMode && endDrag) || undefined}
+      hasDragMode={useSwipeMode !== undefined}
+      onMouseDown={(e) => useSwipeMode && startDrag(e.pageX || 0)}
+      onMouseMove={(e) => useSwipeMode && moveDrag(e.pageX || 0)}
+      onClick={(useSwipeMode && endDrag) || undefined}
       onTouchStart={(e) =>
-        useDragMode && startDrag(e.targetTouches[0].pageX || 0)
+        useSwipeMode && startDrag(e.targetTouches[0].pageX || 0)
       }
       onTouchMove={(e) =>
-        useDragMode && moveDrag(e.targetTouches[0].pageX || 0)
+        useSwipeMode && moveDrag(e.targetTouches[0].pageX || 0)
       }
-      onTouchEnd={(useDragMode && endDrag) || undefined}
+      onTouchEnd={(useSwipeMode && endDrag) || undefined}
       hasPageList={hasPageList}
       listMinHeight={listMinHeight}
     >

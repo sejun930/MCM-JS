@@ -49,9 +49,6 @@ export const List = styled.ul`
   transform: translateX(-200%);
   min-height: 40px;
 
-  // 드래그시 추가 이동 위치값
-  --margin-left: 0;
-
   ${(props: StyleTypes) => {
     const styles: CSSProperties & { [key: string]: string } = {};
 
@@ -82,10 +79,6 @@ export const List = styled.ul`
 
   &.pause-animation {
     transition: unset !important;
-  }
-
-  &.move-start {
-    transform: translateX(calc(-200% + var(--margin-left)));
   }
 
   @media ${breakPoints.mobileLarge} {
@@ -154,15 +147,21 @@ export const ArrowButton = styled(_Button)`
   opacity: 1;
   font-size: 18px;
 
-  /* pointer-events: none; // PC 이미지 다운로드 금지 */
-  /* -webkit-touch-callout: none; // 아이폰 다운로드 금지 */
-  /* -webkit-user-select: none; // 드래그 방지
-  -moz-user-select: none;
-  -ms-use-select: none;
-  user-select: none; */
-
   :hover {
     background-color: rgba(125, 125, 125, 0.25);
+  }
+
+  @media ${breakPoints.mobileLarge} {
+    transition: unset;
+    transform: translate(0px, -50%);
+    bottom: 50%;
+    top: 50%;
+    height: 24px;
+    min-width: 24px;
+
+    :hover {
+      background-color: unset;
+    }
   }
 `;
 

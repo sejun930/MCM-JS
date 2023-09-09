@@ -25,7 +25,7 @@ export default function SliderUIPage({
   useAutoPlay,
   selector,
   timerRef,
-  useDragMode,
+  useSwipeMode,
   uid,
   timerList,
   hideArrow,
@@ -53,7 +53,7 @@ export default function SliderUIPage({
             useAnimation={useAnimation}
             listRef={listRef}
             timerRef={timerRef}
-            useDragMode={useDragMode}
+            useSwipeMode={useSwipeMode}
             uid={uid}
             timerList={timerList}
             useAutoPlay={useAutoPlay}

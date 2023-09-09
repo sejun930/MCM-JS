@@ -16,7 +16,7 @@ let finalLocation = 0;
 
 export default function SliderListPage(props: SliderListTypes) {
   const {
-    useDragMode,
+    useSwipeMode,
     listRef,
     timerRef,
     uid,
@@ -36,7 +36,7 @@ export default function SliderListPage(props: SliderListTypes) {
 
   // 드래그 시작 함수
   const startDrag = (pageX: number) => {
-    if (useDragMode === undefined || dragDisable) return;
+    if (useSwipeMode === undefined || dragDisable) return;
     isStartDrag = true;
     dragDisable = true;
 
@@ -56,7 +56,7 @@ export default function SliderListPage(props: SliderListTypes) {
       // 좌우 영역 구하기
       const { clientWidth } = listRef.current;
       // 좌우 사이드 이동 퍼센트
-      let percent = useDragMode.sideMovePercent || 50;
+      let percent = useSwipeMode.sideMovePercent || 50;
       if (percent < 10) percent = 10; // 최소값 10%
       if (percent > 90) percent = 90; // 최대값 90%
 
@@ -72,7 +72,7 @@ export default function SliderListPage(props: SliderListTypes) {
 
   // 드래그 이동 함수
   const moveDrag = (pageX: number) => {
-    if (!useDragMode) return;
+    if (!useSwipeMode) return;
 
     if (isStartDrag) {
       // 드래그를 통해 위치를 이동했을 경우
@@ -100,7 +100,7 @@ export default function SliderListPage(props: SliderListTypes) {
 
   // 드래그 종료 함수
   const endDrag = () => {
-    if (!useDragMode) return;
+    if (!useSwipeMode) return;
 
     if (useAnimation) {
       listRef.current.style.transition = "all 0.5s ease";
