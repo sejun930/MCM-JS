@@ -2,7 +2,7 @@ import { SliderUIPropsTypes } from "../slider.types";
 
 export type SliderListTypes = SliderUIPropsTypes & {
   useAnimation: boolean;
-  useDragMode: {
+  useSwipeMode: {
     sideMovePercent: number;
   };
   useAutoPlay?: {

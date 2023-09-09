@@ -18,7 +18,7 @@ export type SliderPropsTypes = CommonsSelectorTypes & {
     showTimer?: boolean; // 타이머 노출 여부
   };
   // 마우스 전환 모드 사용 여부
-  useDragMode?: {
+  useSwipeMode?: {
     sideMovePercent: number; // 좌우 이동 비율 (최소 10% ~ 90%)
   };
   // 다음, 이전 버튼 숨기기
