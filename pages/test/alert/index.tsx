@@ -1,18 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import Alert from "../../../src/components/modules/alert";
 
 export default function AlertTestPage() {
+  const [concept, setConcept] = useState("info");
+
+  const changeConcept = (e) => {
+    setConcept(e.target.value);
+  };
+
   const openAlert1 = () => {
     Alert.openAlert({
-      closeDelayTime: 5000000000,
-      children: "중복된 id 선택자 입니다. 2222222",
+      //   closeDelayTime: "infinite",
+      children: "a",
+      alertConcept: concept,
+      className: "test",
       //   id: "aa",
+      useCloseMode: true,
+      //   alertStyles: { width: "360px" },
+      //   alertResponsiveStyles: {
+      //     web: { width: "500px" },
+      //     mobile: { width: "200px", backgroundColor: "white" },
+      //   },
     });
   };
 
   const openAlert2 = () => {
     Alert.openAlert({
-      closeDelayTime: 5000000000,
+      closeDelayTime: "infinite",
       children: "중복된 id 선택자 입니다.",
       id: "aa",
     });
@@ -20,6 +34,12 @@ export default function AlertTestPage() {
 
   return (
     <>
+      <select onChange={changeConcept} name="concept">
+        <option value="info">info</option>
+        <option value="warning">warning</option>
+        <option value="error">error</option>
+        <option value="success">success</option>
+      </select>
       <div>
         <button onClick={openAlert1}>alert 실행하기1</button>
       </div>
@@ -27,8 +47,13 @@ export default function AlertTestPage() {
         <button onClick={openAlert2}>alert 실행하기2</button>
       </div>
       <div>
-        <button onClick={() => Alert.removeAlert({ id: "aa" })}>
-          alert 삭제하기
+        <button onClick={() => Alert.closeAlert({ className: "test" })}>
+          alert 삭제하기 1
+        </button>
+      </div>
+      <div>
+        <button onClick={() => Alert.closeAlert({ id: "aa" })}>
+          alert 삭제하기 2
         </button>
       </div>
       <div>
