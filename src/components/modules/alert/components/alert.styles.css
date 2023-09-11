@@ -1,0 +1,56 @@
+/* Alert 관련 */
+.mcm-alert {
+  display: inline-flex;
+}
+
+/* Alert 오픈 애니메이션 */
+.open-alert {
+  animation: OPEN_ALERT_ANIMATION 0.35s ease;
+  transform: translateY(10px);
+}
+
+/* Alert 종료 애니메이션 */
+.close-alert {
+  animation: CLOSE_ALERT_ANIMATION 0.35s ease !important;
+}
+
+/* Alert 전체 툴 */
+#mcm-alert-area {
+  position: fixed;
+  /* width: 100%; */
+  top: 10px;
+  /* pointer-events: none; */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  flex-direction: column;
+  gap: 6px 0px;
+  align-items: center;
+}
+
+/* Alert 오픈 애니메이션 */
+@keyframes OPEN_ALERT_ANIMATION {
+  from {
+    transform: translateY(0px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(10px);
+    opacity: 1;
+  }
+}
+
+/* Alert 종료 애니메이션 */
+@keyframes CLOSE_ALERT_ANIMATION {
+  from {
+    transform: translateY(10px);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(0px);
+    opacity: 0;
+  }
+}

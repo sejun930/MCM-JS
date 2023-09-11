@@ -30,24 +30,3 @@ button {
   left: 0;
   top: -20px;
 }
-
-/* Alert 관련 */
-.mcm-alert {
-  display: inline-flex;
-}
-
-#mcm-alert-area {
-  position: fixed;
-  /* width: 100%; */
-  top: 10px;
-  pointer-events: none;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  left: 50%;
-  transform: translateX(-50%);
-  display: inline-flex;
-  flex-direction: column;
-  gap: 6px 0px;
-  align-items: center;
-}
