@@ -18,7 +18,7 @@ export default function _Alert(props: AlertPropsType & AlertAddIProps) {
   // swipe 시작 지점
   let startDistance = 0;
   // swipe 시작 여부
-  let isStartDrag = false;
+  let isStartSwipe = false;
   // 이동한 위치 (중복 실행 방지용)
   let moveLocation = 0;
   // 다음 작동까지의 딜레이 적용
@@ -31,18 +31,18 @@ export default function _Alert(props: AlertPropsType & AlertAddIProps) {
     }
   };
 
-  // (웹버전) 드래그 시작
-  const startDrag = (pageX: number) => {
+  // 스와이프 시작
+  const startSwipe = (pageX: number) => {
     if (hasSwipeMode && !waiting) {
       startDistance = pageX;
-      isStartDrag = true;
+      isStartSwipe = true;
       waiting = true;
     }
   };
 
-  // (웹버전) 드래그 이동
-  const moveDrag = (pageX: number) => {
-    if (hasSwipeMode && isStartDrag) {
+  // 스와이프 이동
+  const moveSwipe = (pageX: number, isMobile?: boolean) => {
+    if (hasSwipeMode && isStartSwipe) {
       // 이동한 위치값이 1이라도 있을 경우에만 실행
       if (moveLocation !== pageX) {
         moveLocation = pageX;
@@ -52,22 +52,24 @@ export default function _Alert(props: AlertPropsType & AlertAddIProps) {
           wrapperRef.current.style.transform = `translate(${move}px, 0px)`;
         }
 
-        // const isOver = Math.abs(move) >= wrapperRef.current.clientWidth / 4;
-        // console.log(isOver, Math.abs(move), wrapperRef.current.clientWidth / 4);
+        // 스와이프로 이동한 거리가 일정 영역을 지났는지 체크 (= 종료 시점 체크)
+        const isOver = isMobile
+          ? move >= 10 || move <= -10 // 모바일일 경우 좌, 우 10px만 체크
+          : Math.abs(move) >= wrapperRef.current.clientWidth / 8; // 웹 버전은 알럿의 전체 크기의 8/1 영역을 지날 경우
 
-        if (move >= 10 || move <= -10) {
+        if (isOver) {
           // 좌, 우로 10px 이상 이동할 경우 자동 종료
-          isStartDrag = false;
-          closeAlert(sequence, move <= -10 ? "left" : "right");
+          isStartSwipe = false;
+          closeAlert(sequence, move < 0 ? "left" : "right");
         }
       }
     }
   };
 
-  // (웹버전) 드래그 종료
-  const endDrag = () => {
-    if (hasSwipeMode && isStartDrag) {
-      isStartDrag = false;
+  // 스와이프 종료
+  const endSwipe = () => {
+    if (hasSwipeMode && isStartSwipe) {
+      isStartSwipe = false;
       moveLocation = 0;
 
       // 원래 위치로 이동시키기
@@ -89,9 +91,9 @@ export default function _Alert(props: AlertPropsType & AlertAddIProps) {
       {...props}
       wrapperRef={wrapperRef}
       closeAlertEvent={closeAlertEvent}
-      startDrag={startDrag}
-      moveDrag={moveDrag}
-      endDrag={endDrag}
+      startSwipe={startSwipe}
+      moveSwipe={moveSwipe}
+      endSwipe={endSwipe}
       hasSwipeMode={hasSwipeMode}
     />
   );

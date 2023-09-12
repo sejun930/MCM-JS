@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 
 import { breakPoints } from "mcm-js-commons/dist/responsive";
 import { getOffDrag } from "mcm-js-commons/dist/styled";
-import { _Button } from "mcm-js-commons";
+import { _Button, _SpanText } from "mcm-js-commons";
 
 interface StyleTypes {
   sequence?: number;
@@ -16,6 +16,12 @@ interface StyleTypes {
   conceptColor?: string;
   useTextChildren?: boolean;
   useCloseMode?: boolean;
+  currentConcept?: {
+    color: string;
+    icon: string;
+    size: number;
+  };
+  iconColor?: string;
 }
 
 export const Wrapper = styled.div`
@@ -111,7 +117,7 @@ export const Items = styled.div`
   }}
 `;
 
-export const AlertConcept = styled.div`
+export const AlertConcept = styled(_SpanText)`
   width: 24px;
   max-width: 24px;
   height: 24px;
@@ -124,24 +130,21 @@ export const AlertConcept = styled.div`
   border: double 3px black;
   border-radius: 100%;
   padding: 4px;
-  font-size: 18px;
-  color: transparent;
 
   ${(props: StyleTypes) => {
     // @ts-ignore
     const styles: CSSProperties & { [key: string]: string } = getOffDrag();
 
-    const { alertConcept, conceptColor } = props;
-    if (alertConcept) {
+    const { currentConcept, iconColor } = props;
+    if (currentConcept) {
       // 콘셉트에 따른 폰트 사이즈 조절
-      if (alertConcept === "error") styles.fontSize = "10px";
-      if (alertConcept === "success" || alertConcept === "warning")
-        styles.fontSize = "14px";
+      styles.fontSize = `${currentConcept.size}px`;
     }
 
-    if (conceptColor) {
-      styles.borderColor = conceptColor;
-      styles.textShadow = `0 0 0 ${conceptColor}`;
+    if (currentConcept) {
+      if (iconColor !== "origin") styles.color = "transparent";
+      styles.borderColor = currentConcept.color;
+      styles.textShadow = `0 0 0 ${iconColor || currentConcept.color}`;
     }
 
     return styles;

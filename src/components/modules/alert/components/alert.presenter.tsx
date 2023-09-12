@@ -18,24 +18,42 @@ export default function AlertUIPage(
     useCloseMode,
     closeAlertEvent,
     wrapperRef,
-    startDrag,
-    moveDrag,
-    endDrag,
+    startSwipe,
+    moveSwipe,
+    endSwipe,
     hasSwipeMode,
   } = props;
 
   // Alert 콘셉의 이모지 및 색상 지정
-  const conceptInfo: { [key: string]: { text: string; color: string } } = {
-    info: { text: "ℹ", color: "#279EFF" },
-    warning: { text: "❗", color: "#FD8D14" },
-    error: { text: "❌", color: "#BB2525" },
-    success: { text: "✔", color: "#35A29F" },
+  const conceptInfo: {
+    [key: string]: { icon: string; color: string; size: number };
+  } = {
+    info: { icon: "ℹ", color: "#279EFF", size: 18 },
+    warning: { icon: "❗", color: "#FD8D14", size: 14 },
+    error: { icon: "❌", color: "#BB2525", size: 10 },
+    success: { icon: "✔", color: "#35A29F", size: 14 },
   };
 
   // 콘셉트가 사용중일 경우 현재 선택된 콘셉트 정보 저장
-  const currentConcept: { text: string; color: string } = conceptInfo[
-    alertConcept
-  ] || { text: "", color: "" };
+  const currentConcept: { icon: string; color: string; size: number } =
+    conceptInfo[alertConcept?.type] || { icon: "", color: "", size: 0 };
+
+  // 알럿 컨셉에 컬러 등 커스텀 적용
+  if (alertConcept && alertConcept?.custom) {
+    // 색상 적용
+    if (alertConcept.custom.color)
+      currentConcept.color = alertConcept.custom.color;
+    // 아이콘 변경
+    if (alertConcept.custom.icon) {
+      const iconInfo = alertConcept.custom.icon;
+      if (iconInfo.src)
+        // 아이콘 이모지 변경
+        currentConcept.icon = iconInfo.src;
+      if (iconInfo.size)
+        // 아이콘 크기 변경
+        currentConcept.size = iconInfo.size;
+    }
+  }
 
   // 전달된 children props가 태그가 아닌 문자열을 사용하고 있는지 체크
   const useTextChildren = typeof children === "string";
@@ -51,26 +69,29 @@ export default function AlertUIPage(
         conceptColor={currentConcept.color}
         useTextChildren={useTextChildren}
         useCloseMode={useCloseMode !== undefined}
-        onMouseDown={(e) => hasSwipeMode && startDrag(e.pageX || 0)}
-        onMouseMove={(e) => hasSwipeMode && moveDrag(e.pageX || 0)}
-        onClick={hasSwipeMode && endDrag}
-        onMouseOut={hasSwipeMode && endDrag}
+        onMouseDown={(e) => hasSwipeMode && startSwipe(e.pageX || 0)}
+        onMouseMove={(e) => hasSwipeMode && moveSwipe(e.pageX || 0)}
+        onClick={hasSwipeMode && endSwipe}
+        onMouseOut={hasSwipeMode && endSwipe}
         onTouchStart={(e) =>
-          hasSwipeMode && startDrag(e.targetTouches[0].pageX || 0)
+          hasSwipeMode && startSwipe(e.targetTouches[0].pageX || 0)
         }
         onTouchMove={(e) =>
-          hasSwipeMode && moveDrag(e.targetTouches[0].pageX || 0)
+          hasSwipeMode && moveSwipe(e.targetTouches[0].pageX || 0, true)
         }
-        onTouchEnd={hasSwipeMode && endDrag}
+        onTouchEnd={hasSwipeMode && endSwipe}
       >
-        <Items className={alertClassList.items} alertConcept={alertConcept}>
-          {alertConcept && (
+        <Items
+          className={alertClassList.items}
+          alertConcept={alertConcept?.type}
+        >
+          {alertConcept && currentConcept.icon && (
             <AlertConcept
-              alertConcept={alertConcept}
-              conceptColor={currentConcept.color}
               className={alertClassList.concept}
+              currentConcept={currentConcept}
+              iconColor={alertConcept?.custom?.icon?.color || ""}
             >
-              {currentConcept.text}
+              {currentConcept.icon}
             </AlertConcept>
           )}
           {children && useTextChildren ? (
