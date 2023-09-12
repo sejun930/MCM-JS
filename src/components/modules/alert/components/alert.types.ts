@@ -1,4 +1,4 @@
-import { CSSProperties } from "react";
+import { CSSProperties, MouseEvent, MutableRefObject } from "react";
 import {
   CommonsSelectorTypes,
   CommonsChildrenTypes,
@@ -18,10 +18,21 @@ export type AlertPropsType = CommonsSelectorTypes &
     // Alert 메세지의 콘셉 (success : 성공, error : 에러, warning : 경고, info : 정보)
     alertConcept?: string | ("success" | "error" | "warning" | "info");
     // 알럿 닫기 모드 사용 여부 (마우스 호버시 닫기 노출)
-    useCloseMode?: boolean;
+    useCloseMode?: boolean | { useSwipeMode: boolean };
   };
 
-export interface AlertIProps {
-  searchSequence: (target: HTMLElement) => number;
-  closeAlert: (props: number) => void;
+// func로 부터 받아오는 props
+export interface AlertAddIProps {
+  closeAlert: (props: number, sideCloseAnimation?: "left" | "right") => void;
+  sequence: number;
+}
+
+// presenter로 전달되는 props
+export interface AlertUIProps {
+  wrapperRef: MutableRefObject<HTMLDivElement>;
+  hasSwipeMode: boolean;
+  closeAlertEvent: (e: MouseEvent) => void;
+  startDrag: (pageX: number) => void;
+  moveDrag: (pageX: number) => void;
+  endDrag: () => void;
 }

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Alert from "../../../src/components/modules/alert";
+import { Modal } from "../../../src";
 
 export default function AlertTestPage() {
   const [concept, setConcept] = useState("info");
@@ -10,12 +11,12 @@ export default function AlertTestPage() {
 
   const openAlert1 = () => {
     Alert.openAlert({
-      //   closeDelayTime: "infinite",
-      children: "a",
+      closeDelayTime: "infinite",
+      children: "aasdasdasdasdasdasdasdas",
       alertConcept: concept,
       className: "test",
       //   id: "aa",
-      useCloseMode: true,
+      useCloseMode: { useSwipeMode: true },
       //   alertStyles: { width: "360px" },
       //   alertResponsiveStyles: {
       //     web: { width: "500px" },
@@ -40,6 +41,17 @@ export default function AlertTestPage() {
         <option value="error">error</option>
         <option value="success">success</option>
       </select>
+      <div>
+        <button
+          onClick={() =>
+            Modal.open({
+              children: <button onClick={openAlert1}>alert 실행</button>,
+            })
+          }
+        >
+          모달 실행하기
+        </button>
+      </div>
       <div>
         <button onClick={openAlert1}>alert 실행하기1</button>
       </div>

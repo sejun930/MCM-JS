@@ -15,11 +15,10 @@ interface StyleTypes {
   alertConcept?: string | "success" | "error" | "warning" | "info";
   conceptColor?: string;
   useTextChildren?: boolean;
-  hover?: boolean;
+  useCloseMode?: boolean;
 }
 
 export const Wrapper = styled.div`
-  /* padding: 8px 10px; */
   border: double 3px black;
   border-radius: 999px;
   width: 100%;
@@ -67,6 +66,23 @@ export const Wrapper = styled.div`
       return styles;
     }}
   }
+
+  :hover {
+    .mcm-alert-items {
+      ${(props) =>
+        props.useCloseMode && {
+          filter: "blur(4px)",
+        }};
+    }
+
+    .mcm-alert-close-wrapper {
+      ${(props) =>
+        props.useCloseMode && {
+          opacity: 1,
+          backgroundColor: "rgba(0, 0, 0, 0.4)",
+        }};
+    }
+  }
 `;
 
 export const Items = styled.div`
@@ -90,8 +106,6 @@ export const Items = styled.div`
         justifyContent: "center",
         textAlign: "center",
       };
-
-    if (props.hover) styles.filter = "blur(4px)";
 
     return styles;
   }}
@@ -134,9 +148,7 @@ export const AlertConcept = styled.div`
   }};
 `;
 
-export const AlertContents = styled.div`
-  ${(props: StyleTypes) => props.hover && {}}
-`;
+export const AlertContents = styled.div``;
 
 export const CloseMode = styled(_Button)`
   position: absolute;
@@ -154,10 +166,4 @@ export const CloseMode = styled(_Button)`
   font-weight: 700;
   word-spacing: -0.03rem;
   z-index: 11;
-
-  ${(props: StyleTypes) =>
-    props.hover && {
-      opacity: 1,
-      backgroundColor: "rgba(0, 0, 0, 0.4)",
-    }};
 `;

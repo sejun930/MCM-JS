@@ -1,46 +1,28 @@
-import {
-  Wrapper,
-  Items,
-  AlertConcept,
-  AlertContents,
-  CloseMode,
-} from "./alert.styles";
-import { getAllComponentsClassName } from "mcm-js-commons/dist/hooks";
-
-import { AlertIProps, AlertPropsType } from "./alert.types";
-import { _Error, _SpanText } from "mcm-js-commons";
+import { Wrapper, Items, AlertConcept, CloseMode } from "./alert.styles";
 import { alertClassList } from "./alert.class";
-import { MouseEvent, useState } from "react";
 
-export default function _Alert(props: AlertPropsType & AlertIProps) {
+import { _Error, _SpanText } from "mcm-js-commons";
+import { getAllComponentsClassName } from "mcm-js-commons/dist/hooks";
+import { AlertPropsType, AlertAddIProps, AlertUIProps } from "./alert.types";
+
+export default function AlertUIPage(
+  props: AlertAddIProps & AlertPropsType & AlertUIProps
+) {
   const {
+    children,
+    alertConcept,
     className,
     id,
     alertStyles,
     alertResponsiveStyles,
-    children,
-    alertConcept,
     useCloseMode,
-    searchSequence,
-    closeAlert,
+    closeAlertEvent,
+    wrapperRef,
+    startDrag,
+    moveDrag,
+    endDrag,
+    hasSwipeMode,
   } = props;
-  // 닫기 이벤트 처리를 위한 호버 여부
-  const [target, setTarget] = useState(0);
-
-  // 마우스 호버 이벤트 실행
-  const hoverEvent = (bool: boolean) => (e: MouseEvent) => {
-    if (useCloseMode) {
-      if (bool) {
-        const parents = e.currentTarget.parentElement;
-        setTarget(searchSequence(parents));
-      } else setTarget(0);
-    }
-  };
-
-  // 알럿 닫기 이벤트
-  const closeAlertEvent = () => {
-    if (useCloseMode && target) closeAlert(target);
-  };
 
   // Alert 콘셉의 이모지 및 색상 지정
   const conceptInfo: { [key: string]: { text: string; color: string } } = {
@@ -63,18 +45,25 @@ export default function _Alert(props: AlertPropsType & AlertIProps) {
       <Wrapper
         className={getAllComponentsClassName(alertClassList.wrapper, className)}
         id={id}
+        ref={wrapperRef}
         alertStyles={alertStyles}
         alertResponsiveStyles={alertResponsiveStyles}
         conceptColor={currentConcept.color}
         useTextChildren={useTextChildren}
-        onMouseEnter={hoverEvent(true)}
-        onMouseLeave={hoverEvent(false)}
+        useCloseMode={useCloseMode !== undefined}
+        onMouseDown={(e) => hasSwipeMode && startDrag(e.pageX || 0)}
+        onMouseMove={(e) => hasSwipeMode && moveDrag(e.pageX || 0)}
+        onClick={hasSwipeMode && endDrag}
+        onMouseOut={hasSwipeMode && endDrag}
+        onTouchStart={(e) =>
+          hasSwipeMode && startDrag(e.targetTouches[0].pageX || 0)
+        }
+        onTouchMove={(e) =>
+          hasSwipeMode && moveDrag(e.targetTouches[0].pageX || 0)
+        }
+        onTouchEnd={hasSwipeMode && endDrag}
       >
-        <Items
-          className={alertClassList.items}
-          alertConcept={alertConcept}
-          hover={target !== 0}
-        >
+        <Items className={alertClassList.items} alertConcept={alertConcept}>
           {alertConcept && (
             <AlertConcept
               alertConcept={alertConcept}
@@ -96,7 +85,6 @@ export default function _Alert(props: AlertPropsType & AlertIProps) {
         {useCloseMode && (
           <CloseMode
             className={alertClassList.close}
-            hover={target !== 0}
             onClickEvent={closeAlertEvent}
           >
             Close
