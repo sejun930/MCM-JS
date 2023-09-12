@@ -1,4 +1,4 @@
-import _Alert from "../components";
+import _Alert from "../components/alert.container";
 import { alertClassList } from "../components/alert.class";
 
 import { AlertPropsType } from "../components/alert.types";
@@ -67,19 +67,17 @@ const openAlert = (props: AlertPropsType) => {
 
   // alert 컴포넌트 렌더
   createRoot(_div).render(
-    <_Alert
-      {...props}
-      searchSequence={searchSequence}
-      closeAlert={closeAlert}
-    />
+    <_Alert {...props} closeAlert={closeAlert} sequence={sequence} />
   );
 };
 
 // alert 삭제하기
-const closeAlert = (props: number | { id?: string; className?: string }) => {
+const closeAlert = (
+  props: number | { id?: string; className?: string },
+  sideCloseAnimation?: "left" | "right"
+) => {
   // alert 순서 또는 id 값을 통해 현재 alert 제거
   let target: null | HTMLDivElement | HTMLElement = null;
-  let sequence = null;
 
   // 알럿 최종 종료하기
   const closeCompleteAlert = ({
@@ -90,7 +88,10 @@ const closeAlert = (props: number | { id?: string; className?: string }) => {
     sequence: number;
   }) => {
     if (target && sequence) {
-      target.classList.add("close-alert");
+      // 위로 종료하기
+      if (!sideCloseAnimation) target.classList.add("close-alert");
+      // 왼쪽 및 오른쪽 종료 애니메이션 적용
+      else target.classList.add(`close-${sideCloseAnimation}-alert`);
 
       window.setTimeout(() => {
         target.remove();
