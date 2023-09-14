@@ -11,6 +11,7 @@
     "isolatedModules": true,
     //////// 변경 내용 ////////
     "noEmit": false,
+    "target": "ESNext",
     "module": "CommonJS",
     "jsx": "react-jsx",
     "declaration": true,
@@ -18,6 +19,6 @@
     ////////////////////////
     "incremental": true
   },
-  "include": ["next-env.d.ts", "src/**/*.tsx", "src/**/*.ts"],
+  "include": ["next-env.d.ts", "src/**/*.tsx", "src/**/*.ts", "src/**/*.CSS"],
   "exclude": ["node_modules", "**/*.spec.ts", "**/*.test.ts"]
 }

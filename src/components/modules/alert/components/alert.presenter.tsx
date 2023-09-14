@@ -71,15 +71,15 @@ export default function AlertUIPage(
         useCloseMode={useCloseMode !== undefined}
         onMouseDown={(e) => hasSwipeMode && startSwipe(e.pageX || 0)}
         onMouseMove={(e) => hasSwipeMode && moveSwipe(e.pageX || 0)}
-        onClick={hasSwipeMode && endSwipe}
-        onMouseOut={hasSwipeMode && endSwipe}
+        onClick={(hasSwipeMode && endSwipe) || undefined}
+        onMouseOut={(hasSwipeMode && endSwipe) || undefined}
         onTouchStart={(e) =>
           hasSwipeMode && startSwipe(e.targetTouches[0].pageX || 0)
         }
         onTouchMove={(e) =>
           hasSwipeMode && moveSwipe(e.targetTouches[0].pageX || 0, true)
         }
-        onTouchEnd={hasSwipeMode && endSwipe}
+        onTouchEnd={(hasSwipeMode && endSwipe) || undefined}
       >
         <Items
           className={alertClassList.items}

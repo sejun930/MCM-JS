@@ -21,12 +21,3 @@ button {
   cursor: pointer;
   padding: 0px;
 }
-
-/* Tooltip 관련 */
-
-/* Tooltip 오픈 */
-.open-mcm-tooltip {
-  position: absolute;
-  left: 0;
-  top: -20px;
-}

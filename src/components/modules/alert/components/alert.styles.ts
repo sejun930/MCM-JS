@@ -151,8 +151,6 @@ export const AlertConcept = styled(_SpanText)`
   }};
 `;
 
-export const AlertContents = styled.div``;
-
 export const CloseMode = styled(_Button)`
   position: absolute;
   top: 0;

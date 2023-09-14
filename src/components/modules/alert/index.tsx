@@ -1,11 +1,7 @@
-import { AlertPropsType } from "./components/alert.types";
 import { openAlert, closeAlert, clearAlert } from "./func";
+import { AlertType } from "./components/alert.types";
 
-const Alert: {
-  openAlert: (props: AlertPropsType) => void;
-  closeAlert: (props: number | { id?: string; className?: string }) => void;
-  clearAlert: () => void;
-} = {
+const Alert: AlertType = {
   openAlert,
   closeAlert,
   clearAlert,
