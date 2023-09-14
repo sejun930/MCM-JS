@@ -17,6 +17,7 @@ const initAlertArea = () => {
     const area = document.createElement("div");
     area.style.position = "fixed";
     area.style.top = "0";
+    area.style.zIndex = "999999";
 
     hasAlertArea = true;
 

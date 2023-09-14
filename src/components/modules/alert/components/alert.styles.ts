@@ -9,7 +9,7 @@ interface StyleTypes {
   sequence?: number;
   alertStyles?: CSSProperties;
   alertResponsiveStyles?: {
-    web: CSSProperties;
+    web?: CSSProperties;
     mobile?: CSSProperties;
   };
   alertConcept?: string | "success" | "error" | "warning" | "info";
@@ -138,7 +138,7 @@ export const AlertConcept = styled(_SpanText)`
     const { currentConcept, iconColor } = props;
     if (currentConcept) {
       // 콘셉트에 따른 폰트 사이즈 조절
-      styles.fontSize = `${currentConcept.size}px`;
+      styles.fontSize = `${currentConcept.size || 10}px`;
     }
 
     if (currentConcept) {

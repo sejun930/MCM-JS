@@ -5,7 +5,7 @@ import {
 } from "../../../../commons/types/commons.types";
 import _Alert from "./alert.container";
 
-type AlertConceptTypes = "success" | "error" | "warning" | "info";
+type AlertConceptTypes = "success" | "error" | "warning" | "info" | "custom";
 type Origin = "origin";
 
 export type AlertPropsType = CommonsSelectorTypes &
@@ -16,7 +16,7 @@ export type AlertPropsType = CommonsSelectorTypes &
     alertStyles?: CSSProperties;
     // Alert 스타일 반응형 지정 (web, mobile 별도 적용)
     alertResponsiveStyles?: {
-      web: CSSProperties;
+      web?: CSSProperties;
       mobile?: CSSProperties;
     };
     // Alert 메세지의 콘셉 (success : 성공, error : 에러, warning : 경고, info : 정보)

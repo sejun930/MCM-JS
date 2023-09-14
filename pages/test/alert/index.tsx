@@ -14,21 +14,21 @@ export default function AlertTestPage() {
   const openAlert1 = () => {
     Alert.openAlert({
       closeDelayTime: "infinite",
-      children: "Hello",
-      // alertConcept: {
-      //   // @ts-ignore
-      //   type: concept,
-      //   // custom: {
-      //   //   color: "green",
-      //   //   icon: {
-      //   //     src: "🕹",
-      //   //     size: 1,
-      //   //     color: "origin",
-      //   //   },
-      //   // },
-      // },
+      children: "Hello12312312312312312312",
+      alertConcept: {
+        type: "custom",
+        custom: {
+          color: "#6527BE",
+          icon: {
+            src: "⭐",
+            color: "#6527BE",
+            // size: 10,
+          },
+        },
+      },
       className: "test",
-      useCloseMode: true,
+      useCloseMode: { useSwipeMode: true },
+
       // alertStyles: { width: "360px" },
       //   alertResponsiveStyles: {
       //     web: { width: "500px" },
@@ -59,7 +59,7 @@ export default function AlertTestPage() {
         <option value="error">error</option>
         <option value="success">success</option>
       </select>
-      <div>
+      {/* <div>
         <button
           onClick={() =>
             Modal.open({
@@ -69,10 +69,11 @@ export default function AlertTestPage() {
         >
           모달 실행하기
         </button>
-      </div>
+      </div> */}
       <div>
         <button onClick={openAlert1}>alert 실행하기1</button>
       </div>
+      {/* 
       <div>
         <button onClick={openAlert2}>alert 실행하기2</button>
       </div>
@@ -88,7 +89,7 @@ export default function AlertTestPage() {
       </div>
       <div>
         <button onClick={Alert.clearAlert}>초기화</button>
-      </div>
+      </div> */}
     </Wrapper>
   );
 }
