@@ -6,7 +6,6 @@ import { MouseEvent, MutableRefObject, useRef } from "react";
 
 export default function _Alert(props: AlertPropsType & AlertAddIProps) {
   const { useCloseMode, sequence, closeAlert } = props;
-
   const wrapperRef = useRef() as MutableRefObject<HTMLDivElement>;
 
   // 스와이프 모드를 사용중인지

@@ -1,3 +1,5 @@
+import AlertArea from "../components/area/index";
+
 import _Alert from "../components/alert.container";
 import { alertClassList } from "../components/alert.class";
 
@@ -13,10 +15,13 @@ let hasAlertArea = false;
 const initAlertArea = () => {
   if (!document.getElementById(`mcm-alert-area`) && !hasAlertArea) {
     const area = document.createElement("div");
-    area.id = `mcm-alert-area`;
+    area.style.position = "fixed";
+    area.style.top = "0";
 
     hasAlertArea = true;
+
     document.body.append(area);
+    createRoot(area).render(<AlertArea />);
   }
 };
 
@@ -61,14 +66,18 @@ const openAlert = (props: AlertPropsType) => {
     }, closeDelayTime || 3000);
   else openList[sequence] = null;
 
-  // 설정된 alert 추가하기
-  const area = document.getElementById(`mcm-alert-area`);
-  area.append(_div);
+  window.setTimeout(() => {
+    // 설정된 alert 추가하기
+    const area = document.getElementById(`mcm-alert-area`);
+    if (area) {
+      area.append(_div);
 
-  // alert 컴포넌트 렌더
-  createRoot(_div).render(
-    <_Alert {...props} closeAlert={closeAlert} sequence={sequence} />
-  );
+      // alert 컴포넌트 렌더
+      createRoot(_div).render(
+        <_Alert {...props} closeAlert={closeAlert} sequence={sequence} />
+      );
+    }
+  }, 0);
 };
 
 // alert 삭제하기
@@ -94,7 +103,7 @@ const closeAlert = (
       else target.classList.add(`close-${sideCloseAnimation}-alert`);
 
       window.setTimeout(() => {
-        target.remove();
+        if (target) target.remove();
       }, 340);
       // 삭제 후 비워두기
       clearTimeout(openList[sequence]);
@@ -147,7 +156,9 @@ const clearAlert = () => {
 
   // 전체 틀 삭제하기
   if (document.getElementById("mcm-alert-area")) {
-    document.getElementById("mcm-alert-area").remove();
+    if (document.getElementById("mcm-alert-area").parentElement) {
+      document.getElementById("mcm-alert-area").parentElement.remove();
+    }
   }
   hasAlertArea = false;
   openList = [];

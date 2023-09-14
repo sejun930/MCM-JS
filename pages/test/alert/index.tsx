@@ -15,20 +15,20 @@ export default function AlertTestPage() {
     Alert.openAlert({
       closeDelayTime: "infinite",
       children: "Hello",
-      alertConcept: {
-        // @ts-ignore
-        type: concept,
-        // custom: {
-        //   color: "green",
-        //   icon: {
-        //     src: "🕹",
-        //     size: 1,
-        //     color: "origin",
-        //   },
-        // },
-      },
+      // alertConcept: {
+      //   // @ts-ignore
+      //   type: concept,
+      //   // custom: {
+      //   //   color: "green",
+      //   //   icon: {
+      //   //     src: "🕹",
+      //   //     size: 1,
+      //   //     color: "origin",
+      //   //   },
+      //   // },
+      // },
       className: "test",
-      useCloseMode: { useSwipeMode: true },
+      useCloseMode: true,
       // alertStyles: { width: "360px" },
       //   alertResponsiveStyles: {
       //     web: { width: "500px" },

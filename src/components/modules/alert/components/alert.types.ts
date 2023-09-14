@@ -3,6 +3,7 @@ import {
   CommonsSelectorTypes,
   CommonsChildrenTypes,
 } from "../../../../commons/types/commons.types";
+import _Alert from "./alert.container";
 
 type AlertConceptTypes = "success" | "error" | "warning" | "info";
 type Origin = "origin";
@@ -49,4 +50,10 @@ export interface AlertUIProps {
   startSwipe: (pageX: number) => void;
   moveSwipe: (pageX: number, isMobile?: boolean) => void;
   endSwipe: () => void;
+}
+
+export interface AlertType {
+  openAlert: (props: AlertPropsType) => void;
+  closeAlert: (props: number | { id?: string; className?: string }) => void;
+  clearAlert: () => void;
 }
