@@ -6,8 +6,6 @@ import {
 import _Alert from "./alert.container";
 
 type AlertConceptTypes = "success" | "error" | "warning" | "info" | "custom";
-type Origin = "origin";
-
 export type AlertPropsType = CommonsSelectorTypes &
   CommonsChildrenTypes & {
     // 알럿 실행 후 종료되는 시간까지의 딜레이 타임
@@ -28,7 +26,7 @@ export type AlertPropsType = CommonsSelectorTypes &
         icon?: {
           src: string; // 아이콘 이모지 및 이미지
           size?: number; // 이모지 크기 (font-size)
-          color?: Origin | string; // 아이콘 색상 (origin : 기본 색상 유지)
+          color?: string | null; // 아이콘 색상 (null : 기본 색상 유지)
         };
       };
     };

@@ -130,6 +130,7 @@ export const AlertConcept = styled(_SpanText)`
   border: double 3px black;
   border-radius: 100%;
   padding: 4px;
+  overflow: hidden;
 
   ${(props: StyleTypes) => {
     // @ts-ignore
@@ -142,7 +143,7 @@ export const AlertConcept = styled(_SpanText)`
     }
 
     if (currentConcept) {
-      if (iconColor !== "origin") styles.color = "transparent";
+      if (iconColor !== null) styles.color = "transparent";
       styles.borderColor = currentConcept.color;
       styles.textShadow = `0 0 0 ${iconColor || currentConcept.color}`;
     }

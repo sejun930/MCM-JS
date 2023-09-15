@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Alert from "../../../src/components/modules/alert";
-import { Modal } from "../../../src";
 
 import styled from "@emotion/styled";
 
@@ -21,8 +20,8 @@ export default function AlertTestPage() {
           color: "#6527BE",
           icon: {
             src: "⭐",
-            color: "#6527BE",
-            // size: 10,
+            color: "red",
+            size: 0,
           },
         },
       },
