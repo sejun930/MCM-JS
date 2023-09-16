@@ -24,7 +24,7 @@ export type AlertPropsType = CommonsSelectorTypes & {
       icon?: {
         src?: string; // 아이콘 이모지 및 이미지
         size?: number; // 이모지 크기 (font-size)
-        color?: string | "unset" | ""; // 아이콘 색상 (unset : 기본 색상 유지)
+        color?: string | "unset"; // 아이콘 색상 (unset : 기본 색상 유지)
       };
       text?: {
         // 알럿 메세지 변경
