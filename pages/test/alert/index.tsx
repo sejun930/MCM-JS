@@ -11,17 +11,24 @@ export default function AlertTestPage() {
   };
 
   const openAlert1 = () => {
+    // Alert.closeAlert({ className: "test" });
+
     Alert.openAlert({
       closeDelayTime: "infinite",
+
       children: "Hello12312312312312312312",
       alertConcept: {
-        type: "custom",
+        type: concept,
         custom: {
           color: "#6527BE",
           icon: {
-            src: "⭐",
             color: "red",
-            size: 0,
+            size: 30,
+          },
+          text: {
+            color: "#6527BE",
+            size: 20,
+            weight: 500,
           },
         },
       },

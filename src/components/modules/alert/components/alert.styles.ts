@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 
 import { breakPoints } from "mcm-js-commons/dist/responsive";
 import { getOffDrag } from "mcm-js-commons/dist/styled";
-import { _Button, _SpanText } from "mcm-js-commons";
+import { _Button, _PText, _SpanText } from "mcm-js-commons";
 
 interface StyleTypes {
   sequence?: number;
@@ -14,7 +14,6 @@ interface StyleTypes {
   };
   alertConcept?: string | "success" | "error" | "warning" | "info";
   conceptColor?: string;
-  useTextChildren?: boolean;
   useCloseMode?: boolean;
   currentConcept?: {
     color: string;
@@ -22,6 +21,11 @@ interface StyleTypes {
     size: number;
   };
   iconColor?: string;
+  textStyles?: {
+    color?: string;
+    size?: number;
+    weight?: number;
+  };
 }
 
 export const Wrapper = styled.div`
@@ -131,6 +135,7 @@ export const AlertConcept = styled(_SpanText)`
   border-radius: 100%;
   padding: 4px;
   overflow: hidden;
+  color: transparent;
 
   ${(props: StyleTypes) => {
     // @ts-ignore
@@ -168,4 +173,27 @@ export const CloseMode = styled(_Button)`
   font-weight: 700;
   word-spacing: -0.03rem;
   z-index: 11;
+`;
+
+export const AlertMessage = styled(_SpanText)`
+  font-size: 16px;
+
+  ${(props: StyleTypes) => {
+    const styles: CSSProperties & { [key: string]: string } = {};
+
+    // 메세지 스타일 지정
+    if (props.textStyles) {
+      // 색상 변경
+      if (props.textStyles.color) styles.color = props.textStyles.color;
+      // 사이즈 변경
+      if (props.textStyles.size)
+        styles.fontSize = `${
+          props.textStyles.size < 10 ? 10 : props.textStyles.size
+        }px`;
+      // 굵기 변경
+      if (props.textStyles.weight) styles.fontWeight = props.textStyles.weight;
+    }
+
+    return styles;
+  }}
 `;

@@ -1,4 +1,10 @@
-import { Wrapper, Items, AlertConcept, CloseMode } from "./alert.styles";
+import {
+  Wrapper,
+  Items,
+  AlertConcept,
+  CloseMode,
+  AlertMessage,
+} from "./alert.styles";
 import { alertClassList } from "./alert.class";
 
 import { _Error, _SpanText } from "mcm-js-commons";
@@ -55,9 +61,6 @@ export default function AlertUIPage(
     }
   }
 
-  // 전달된 children props가 태그가 아닌 문자열을 사용하고 있는지 체크
-  const useTextChildren = typeof children === "string";
-
   return (
     <_Error propsList={{ ...props }} requiredList={["children"]}>
       <Wrapper
@@ -67,7 +70,6 @@ export default function AlertUIPage(
         alertStyles={alertStyles}
         alertResponsiveStyles={alertResponsiveStyles}
         conceptColor={currentConcept.color}
-        useTextChildren={useTextChildren}
         useCloseMode={useCloseMode !== undefined}
         onMouseDown={(e) => hasSwipeMode && startSwipe(e.pageX || 0)}
         onMouseMove={(e) => hasSwipeMode && moveSwipe(e.pageX || 0)}
@@ -94,12 +96,13 @@ export default function AlertUIPage(
               {currentConcept.icon}
             </AlertConcept>
           )}
-          {children && useTextChildren ? (
-            // 문자열로 전달받을 경우 텍스트 형태로 렌더
-            <_SpanText className={alertClassList.text}>{children}</_SpanText>
-          ) : (
-            // 태그 형태로 별도 렌더
-            children
+          {children && (
+            <AlertMessage
+              className={alertClassList.text}
+              textStyles={alertConcept?.custom?.text || {}}
+            >
+              {children}
+            </AlertMessage>
           )}
         </Items>
 
