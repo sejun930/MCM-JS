@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Alert from "../../../src/components/modules/alert";
-import { Modal } from "../../../src";
 
 import styled from "@emotion/styled";
 
@@ -12,23 +11,29 @@ export default function AlertTestPage() {
   };
 
   const openAlert1 = () => {
+    // Alert.closeAlert({ className: "test" });
+
     Alert.openAlert({
       closeDelayTime: "infinite",
-      children: "Hello",
-      // alertConcept: {
-      //   // @ts-ignore
-      //   type: concept,
-      //   // custom: {
-      //   //   color: "green",
-      //   //   icon: {
-      //   //     src: "🕹",
-      //   //     size: 1,
-      //   //     color: "origin",
-      //   //   },
-      //   // },
-      // },
+      children: "Hello12312312312312312312",
+      alertConcept: {
+        type: concept,
+        custom: {
+          color: "#6527BE",
+          icon: {
+            color: "blue",
+            size: 30,
+          },
+          text: {
+            color: "red",
+            size: 20,
+            weight: 500,
+          },
+        },
+      },
       className: "test",
-      useCloseMode: true,
+      useCloseMode: { useSwipeMode: true },
+
       // alertStyles: { width: "360px" },
       //   alertResponsiveStyles: {
       //     web: { width: "500px" },
@@ -59,7 +64,7 @@ export default function AlertTestPage() {
         <option value="error">error</option>
         <option value="success">success</option>
       </select>
-      <div>
+      {/* <div>
         <button
           onClick={() =>
             Modal.open({
@@ -69,10 +74,11 @@ export default function AlertTestPage() {
         >
           모달 실행하기
         </button>
-      </div>
+      </div> */}
       <div>
         <button onClick={openAlert1}>alert 실행하기1</button>
       </div>
+      {/* 
       <div>
         <button onClick={openAlert2}>alert 실행하기2</button>
       </div>
@@ -88,7 +94,7 @@ export default function AlertTestPage() {
       </div>
       <div>
         <button onClick={Alert.clearAlert}>초기화</button>
-      </div>
+      </div> */}
     </Wrapper>
   );
 }

@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { breakPoints } from "mcm-js-commons/dist/responsive";
 
 export default function AlertAreaPage() {
   return <AlertMainWrapper id="mcm-alert-area"></AlertMainWrapper>;
@@ -99,5 +100,9 @@ export const AlertMainWrapper = styled.div`
       transform: translate(20px, 10px);
       opacity: 0;
     }
+  }
+
+  @media ${breakPoints.mobileLarge} {
+    width: 100%;
   }
 `;
