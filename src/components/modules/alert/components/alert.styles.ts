@@ -148,7 +148,7 @@ export const AlertConcept = styled(_SpanText)`
     }
 
     if (currentConcept) {
-      if (iconColor !== null) styles.color = "transparent";
+      if (iconColor === "unset") styles.color = "unset";
       styles.borderColor = currentConcept.color;
       styles.textShadow = `0 0 0 ${iconColor || currentConcept.color}`;
     }

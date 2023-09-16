@@ -22,7 +22,7 @@ export default function AlertTestPage() {
         custom: {
           color: "#6527BE",
           icon: {
-            color: "red",
+            color: "",
             size: 30,
           },
           text: {

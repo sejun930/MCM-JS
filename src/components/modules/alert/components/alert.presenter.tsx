@@ -91,7 +91,7 @@ export default function AlertUIPage(
             <AlertConcept
               className={alertClassList.concept}
               currentConcept={currentConcept}
-              iconColor={alertConcept?.custom?.icon?.color || null}
+              iconColor={alertConcept?.custom?.icon?.color || "unset"}
             >
               {currentConcept.icon}
             </AlertConcept>
