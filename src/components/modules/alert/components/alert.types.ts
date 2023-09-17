@@ -2,7 +2,7 @@ import { CSSProperties, MouseEvent, MutableRefObject } from "react";
 import { CommonsSelectorTypes } from "../../../../commons/types/commons.types";
 import _Alert from "./alert.container";
 
-type AlertConceptTypes = "success" | "error" | "warning" | "info" | "custom";
+// type AlertConceptTypes = "success" | "error" | "warning" | "info" | "custom";
 export type AlertPropsType = CommonsSelectorTypes & {
   // 알럿 메세지
   children: string;
@@ -17,7 +17,7 @@ export type AlertPropsType = CommonsSelectorTypes & {
   };
   // Alert 메세지의 콘셉 (success : 성공, error : 에러, warning : 경고, info : 정보)
   alertConcept?: {
-    type: AlertConceptTypes;
+    type: "success" | "error" | "warning" | "info" | "custom";
     custom?: {
       // 컨셉에 관한 커스텀 스타일
       color?: string; // 컨셉의 색상
