@@ -17,11 +17,11 @@ export default function AlertTestPage() {
       closeDelayTime: "infinite",
       children: "Hello12312312312312312312",
       alertConcept: {
-        type: concept,
+        type: "info",
         custom: {
           color: "#6527BE",
           icon: {
-            color: "blue",
+            color: "red",
             size: 30,
           },
           text: {
