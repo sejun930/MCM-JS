@@ -10,28 +10,29 @@ import { SplitUIPageTypes } from "./split.types";
 
 export default function SplitUIPage({
   list,
-  toggleDisAction,
+  toggleActive,
   uid,
-  disActive,
+  active,
 }: SplitUIPageTypes) {
   return (
     <Wrapper
       className={getAllComponentsClassName(
         splitClassList.wrapper || "mcm-split-wrapper"
       )}
-      onClick={() => toggleDisAction(true)}
+      onClick={() => toggleActive(false)}
     >
       <Items className={splitClassList.items || "mcm-split-items"}>
-        <SplitContentsPage uid={uid} list={list} />
-        {Array.from(new Array(list.length - 1), () => 1).map((_, idx) => (
+        {/* 컴포넌트 리스트 페이지 */}
+        <SplitContentsPage list={list} uid={uid} />
+        {/* {Array.from(new Array(list.length - 1), () => 1).map((_, idx) => (
           <SplitBarPage
             orderNum={idx * 2 + 1}
             key={v4()}
             uid={uid}
-            disActive={disActive}
-            toggleDisAction={toggleDisAction}
+            active={active}
+            toggleActive={toggleActive}
           />
-        ))}
+        ))} */}
       </Items>
     </Wrapper>
   );

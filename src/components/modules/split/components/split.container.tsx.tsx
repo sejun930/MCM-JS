@@ -15,8 +15,8 @@ export default function _RenderSplit(props: SplitPropsTypes) {
 function _Split(props: SplitPropsTypes & { _uid: string }) {
   const { _uid } = props;
 
-  // action 종료하기
-  const [disActive, setDisActive] = useState(false);
+  // bar 이동 가능 여부
+  const [active, setActive] = useState(false);
   const [uid, setUid] = useState("");
 
   useEffect(() => {
@@ -25,8 +25,8 @@ function _Split(props: SplitPropsTypes & { _uid: string }) {
   }, [_uid]);
 
   // disable toggle
-  const toggleDisAction = (bool: boolean) => {
-    setDisActive(bool);
+  const toggleActive = (bool: boolean) => {
+    setActive(bool);
   };
 
   return (
@@ -34,9 +34,9 @@ function _Split(props: SplitPropsTypes & { _uid: string }) {
       {uid && (
         <SplitUIPage
           {...props}
-          disActive={disActive}
+          active={active}
           uid={uid}
-          toggleDisAction={toggleDisAction}
+          toggleActive={toggleActive}
         />
       )}
     </_Error>
