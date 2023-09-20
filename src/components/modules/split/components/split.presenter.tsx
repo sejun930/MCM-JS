@@ -1,18 +1,18 @@
-import { Wrapper, Items } from "./split.styles";
+import { Wrapper, Items, Contents } from "./split.styles";
 
 import { getAllComponentsClassName } from "mcm-js-commons/dist/hooks";
-import { v4 } from "uuid";
 import { splitClassList } from "./split.class";
 
 import SplitBarPage from "./bar";
-import SplitContentsPage from "./contents";
 import { SplitUIPageTypes } from "./split.types";
+import { CSSProperties } from "react";
 
 export default function SplitUIPage({
   list,
   toggleActive,
   uid,
   active,
+  widthList,
 }: SplitUIPageTypes) {
   return (
     <Wrapper
@@ -20,19 +20,48 @@ export default function SplitUIPage({
         splitClassList.wrapper || "mcm-split-wrapper"
       )}
       onClick={() => toggleActive(false)}
+      onMouseLeave={() => toggleActive(false)}
     >
       <Items className={splitClassList.items || "mcm-split-items"}>
-        {/* 컴포넌트 리스트 페이지 */}
-        <SplitContentsPage list={list} uid={uid} />
-        {/* {Array.from(new Array(list.length - 1), () => 1).map((_, idx) => (
-          <SplitBarPage
-            orderNum={idx * 2 + 1}
-            key={v4()}
-            uid={uid}
-            active={active}
-            toggleActive={toggleActive}
-          />
-        ))} */}
+        {list.map((el, idx) => {
+          // 순서 지정
+          const orderNum = idx * 2;
+          const styles: CSSProperties = { order: idx * 2 };
+          // 마지막 컴포넌트 체크
+          const isLast = idx + 1 === list.length;
+          // 최소 넓이값 지정
+          if (widthList[idx])
+            styles.flexBasis = `calc(${widthList[idx]}% + 0px)`;
+
+          let className = splitClassList.contents || "mcm-split-contents";
+          //   if (active) className += " offDrag";
+
+          return (
+            <Contents
+              key={`split-contents-${uid}-${orderNum}`}
+              id={`split-contents-${uid}-${orderNum}`}
+              className={className}
+              style={styles}
+              isLast={isLast}
+            >
+              {el.children}
+            </Contents>
+          );
+        })}
+        {list.length > 1 &&
+          Array.from(new Array(list.length - 1), (_, idx) => 1 + idx * 2).map(
+            (num) => {
+              return (
+                <SplitBarPage
+                  key={`split-bar-${uid}-${num}`}
+                  orderNum={num}
+                  toggleActive={toggleActive}
+                  active={active}
+                  uid={uid}
+                />
+              );
+            }
+          )}
       </Items>
     </Wrapper>
   );

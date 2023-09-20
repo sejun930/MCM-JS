@@ -1,11 +1,10 @@
 import { CommonsSelectorTypes } from "../../../../commons/types/commons.types";
-import _Split from "./split.container.tsx";
+import _Split from "./split.container";
 
 export interface ListInfoType {
   children: React.ReactNode; // 노출될 컴포넌트
   startWidth?: number; // 시작 최소 %
 }
-
 interface ListType {
   list: Array<ListInfoType>;
 }
@@ -14,6 +13,9 @@ interface UidType {
 }
 interface ActiveType {
   active: boolean;
+}
+interface WidthListType {
+  widthList: { [key: number]: number };
 }
 
 export type ListTypeWithIdx = ListInfoType & { idx: number };
@@ -26,16 +28,22 @@ export type SplitUIPageTypes = ListType &
   UidType &
   ActiveType & {
     toggleActive: (bool: boolean) => void;
-  };
+  } & WidthListType;
 
 // bar 페이지 props types
-export type SplitBarPropsTypes = UidType &
-  ActiveType & {
-    orderNum: number;
-    toggleActive: (bool: boolean) => void;
-  };
+export interface SplitBarPropsTypes {
+  toggleActive: (bool: boolean) => void;
+  orderNum: number;
+  active: boolean;
+  uid: string;
+}
 
 // contents 페이지 props types
-export type SplitContentsPropsTypes = ListType & UidType;
+export interface SplitContentsPropsTypes {
+  children: React.ReactNode;
+  width: number;
+  isLast: boolean;
+  active: boolean;
+}
 
 export type SplitType = typeof _Split;
