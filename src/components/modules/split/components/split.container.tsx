@@ -5,6 +5,9 @@ import SplitUIPage from "./split.presenter";
 import { SplitPropsTypes } from "./split.types";
 import { _Error } from "mcm-js-commons";
 
+import { getAllWidthList } from "./split.data";
+import { initInfo, InitInfoTypes } from "./split.data";
+
 export default function _RenderSplit(props: SplitPropsTypes) {
   let uid = v4();
   uid = `${uid.split("-")[0]}-${uid.split("-").at(-1)}`;
@@ -13,30 +16,37 @@ export default function _RenderSplit(props: SplitPropsTypes) {
 }
 
 function _Split(props: SplitPropsTypes & { _uid: string }) {
-  const { _uid } = props;
+  const { _uid, list } = props;
 
-  // bar 이동 가능 여부
-  const [active, setActive] = useState(false);
-  const [uid, setUid] = useState("");
+  const [info, setInfo] = useState<InitInfoTypes>(initInfo);
 
   useEffect(() => {
-    // uid 고정하기
-    setUid(_uid);
-  }, [_uid]);
+    const _initInfo = { ...initInfo };
+    if (!info.uid) {
+      _initInfo.uid = _uid;
+    }
+
+    // 현재 컴포넌트들의 최소 크기값 가져오기
+    const widthList = getAllWidthList(list);
+    _initInfo.widthList = widthList;
+
+    setInfo(_initInfo);
+  }, [_uid, list]);
 
   // disable toggle
   const toggleActive = (bool: boolean) => {
-    setActive(bool);
+    setInfo({ ...info, active: bool });
   };
 
   return (
     <_Error propsList={{ ...props }} requiredList={["list"]}>
-      {uid && (
+      {info.uid && (
         <SplitUIPage
           {...props}
-          active={active}
-          uid={uid}
+          active={info.active}
+          uid={info.uid}
           toggleActive={toggleActive}
+          widthList={info.widthList}
         />
       )}
     </_Error>

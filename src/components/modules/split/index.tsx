@@ -1,4 +1,4 @@
-import _Split from "./components/split.container.tsx";
+import _Split from "./components/split.container";
 import { SplitType } from "./components/split.types";
 
 const Split = _Split as SplitType;
