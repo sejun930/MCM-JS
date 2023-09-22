@@ -81,3 +81,18 @@ export const getAllWidthList = (list: Array<ListInfoType>) => {
   }
   return _minWidthList;
 };
+
+export interface SplitBarInfosTypes {
+  isStart: boolean;
+  leftNode: null | HTMLElement;
+  rightNode: null | HTMLElement;
+  maxWidth: number;
+}
+
+// Bar 이동을 위한 여러 정보 저장
+export const splitBarInitInfos: SplitBarInfosTypes = {
+  isStart: false, // 드래그 시작 여부
+  leftNode: null, // 왼쪽 컴포넌트 node;
+  rightNode: null, // 오른쪽 컴포넌트 node;
+  maxWidth: 0,
+};

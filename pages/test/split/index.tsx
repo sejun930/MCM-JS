@@ -13,6 +13,14 @@ export default function SplitTestPage() {
           //   { children: <div>444</div> },
         ]}
       />
+      {/* <Split
+        list={[
+          { children: <div>111</div> },
+          { children: <div>222</div> },
+          { children: <div>333</div> },
+          //   { children: <div>444</div> },
+        ]}
+      /> */}
     </Wrapper>
   );
 }
