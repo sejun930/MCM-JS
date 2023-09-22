@@ -20,7 +20,7 @@ export default function SplitUIPage({
         splitClassList.wrapper || "mcm-split-wrapper"
       )}
       onClick={() => toggleActive(false)}
-      onMouseLeave={() => toggleActive(false)}
+      //   onMouseLeave={() => toggleActive(false)}
     >
       <Items className={splitClassList.items || "mcm-split-items"}>
         {list.map((el, idx) => {
