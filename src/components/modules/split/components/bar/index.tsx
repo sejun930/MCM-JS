@@ -5,19 +5,16 @@ import { SplitBarPropsTypes } from "../split.types";
 
 let startLocation = 0; // 시작 위치 거리값
 let maxWidth = 0; // 왼쪽 영역의 전체 크기값
-const distance = 10; // 이동 거리
+const distance = 6; // 이동 거리
+let delay = null; // 이동 딜레이 적용
 
 // Split 거리 조정바 페이지
 const SplitBarPage = (props: SplitBarPropsTypes) => {
   const barRef = useRef() as MutableRefObject<HTMLLIElement>;
-  const { toggleActive, orderNum, active, uid } = props;
+  const { orderNum, uid } = props;
 
   // 이동한 위치
   let moveLocation = 0;
-
-  useEffect(() => {
-    // if (!active) setBarInfo({ ...barInfo, action: false });
-  }, [active]);
 
   // 현재 적용되어 있는 스타일 정보 가져오기
   const setWidth = ({ node, move }: { node: HTMLElement; move: number }) => {
@@ -35,7 +32,6 @@ const SplitBarPage = (props: SplitBarPropsTypes) => {
   // 드래그 시작
   const startDarg = (e: MouseEvent) => {
     const { pageX } = e;
-    toggleActive(true);
 
     if (barRef && barRef.current) {
       barRef.current.classList?.add("action");
@@ -74,16 +70,14 @@ const SplitBarPage = (props: SplitBarPropsTypes) => {
         if (leftNode && rightNode) {
           if (moveDirection === "left") {
             // 왼쪽으로 이동한 경우 (왼쪽은 -  오른쪽은 +)
-            setWidth({ node: leftNode, move: -distance });
-            setWidth({ node: rightNode, move: distance });
-
-            startLocation -= distance;
+            // setWidth({ node: leftNode, move: -distance });
+            // setWidth({ node: rightNode, move: distance });
+            // startLocation -= distance;
           } else {
             // 오른쪽으로 이동한 경우
-            setWidth({ node: leftNode, move: distance });
-            setWidth({ node: rightNode, move: -distance });
-
-            startLocation += distance;
+            // setWidth({ node: leftNode, move: distance });
+            // setWidth({ node: rightNode, move: -distance });
+            // startLocation += distance;
           }
         }
       }

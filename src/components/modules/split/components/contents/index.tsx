@@ -12,9 +12,12 @@ const SplitContentsPage = ({
 }: SplitContentsPropsTypes) => {
   const styles: CSSProperties = { flexBasis: `calc(${width}% + 0px)` };
 
+  // 최소 넓이값 구하기
+  const getMinWidth = () => {};
+
   return (
     <Contents
-      style={styles}
+      //   style={styles}
       isLast={isLast}
       className={splitClassList.contents || "mcm-split-contents"}
     >
@@ -45,11 +48,11 @@ export const Contents = styled.li`
   order: 0;
   justify-content: center;
 
-  ${(props: StyleTypes) => {
+  /* ${(props: StyleTypes) => {
     let styles: CSSProperties & { [key: string]: string } = {};
     // 마지막 컴포넌트는 자동 조절
     if (props.isLast) styles.flex = `1 1 auto`;
 
     return styles;
-  }}
+  }} */
 `;

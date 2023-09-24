@@ -14,7 +14,7 @@ export default function AlertTestPage() {
     // Alert.closeAlert({ className: "test" });
 
     Alert.openAlert({
-      closeDelayTime: "infinite",
+      // closeDelayTime: "infinite",
       children: "Hello12312312312312312312",
       alertConcept: {
         type: "info",
@@ -33,6 +33,16 @@ export default function AlertTestPage() {
       },
       className: "test",
       useCloseMode: { useSwipeMode: true },
+      onEventOpenAfter: () => {
+        Alert.openAlert({
+          children: "알럿 실행",
+        });
+      },
+      onEventCloseAfter: () => {
+        Alert.openAlert({
+          children: "알럿 종료",
+        });
+      },
 
       // alertStyles: { width: "360px" },
       //   alertResponsiveStyles: {

@@ -1,13 +1,11 @@
 import { ListInfoType, ListTypeWithIdx } from "./split.types";
 
 export interface InitInfoTypes {
-  active: boolean;
   widthList: { [key: number]: number };
   uid: string;
 }
 
 export const initInfo: InitInfoTypes = {
-  active: false, // bar 이동 가능 여부
   widthList: {}, // Contents 최소 넓이값 지정
   uid: "", // uid 고정
 };
