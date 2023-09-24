@@ -33,12 +33,12 @@ export default function AlertTestPage() {
       },
       className: "test",
       useCloseMode: { useSwipeMode: true },
-      onEventOpenAfter: () => {
+      onAfterAlertOpen: () => {
         Alert.openAlert({
           children: "알럿 실행",
         });
       },
-      onEventCloseAfter: () => {
+      onAfterAlertClose: () => {
         Alert.openAlert({
           children: "알럿 종료",
         });

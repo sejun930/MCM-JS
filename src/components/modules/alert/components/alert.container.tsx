@@ -2,10 +2,10 @@ import AlertUIPage from "./alert.presenter";
 
 import { AlertAddIProps, AlertPropsType } from "./alert.types";
 import { _Error, _SpanText } from "mcm-js-commons";
-import { MouseEvent, MutableRefObject, useRef } from "react";
+import { MutableRefObject, useRef } from "react";
 
 export default function _Alert(props: AlertPropsType & AlertAddIProps) {
-  const { useCloseMode, sequence, closeAlert, onEventCloseAfter } = props;
+  const { useCloseMode, sequence, closeAlert, onAfterAlertClose } = props;
   const wrapperRef = useRef() as MutableRefObject<HTMLDivElement>;
 
   // 스와이프 모드를 사용중인지
@@ -26,7 +26,7 @@ export default function _Alert(props: AlertPropsType & AlertAddIProps) {
   // 알럿 닫기 이벤트
   const closeAlertEvent = () => {
     if (useCloseMode) {
-      closeAlert(sequence, null, onEventCloseAfter);
+      closeAlert(sequence, null, onAfterAlertClose);
     }
   };
 
@@ -59,7 +59,7 @@ export default function _Alert(props: AlertPropsType & AlertAddIProps) {
         if (isOver) {
           // 좌, 우로 10px 이상 이동할 경우 자동 종료
           isStartSwipe = false;
-          closeAlert(sequence, move < 0 ? "left" : "right", onEventCloseAfter);
+          closeAlert(sequence, move < 0 ? "left" : "right", onAfterAlertClose);
         }
       }
     }

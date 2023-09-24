@@ -46,7 +46,7 @@ const searchSequence = (target: HTMLElement) => {
 const openAlert = (props: AlertPropsType) => {
   if (!hasAlertArea) initAlertArea(); // 초기 셋팅 확인하기
 
-  const { closeDelayTime, id, onEventOpenAfter, onEventCloseAfter } = props;
+  const { closeDelayTime, id, onAfterAlertOpen, onAfterAlertClose } = props;
 
   if (id) {
     // 해당 아이디 값으로 이미 실행되고 있는 alert이 있는지 검증
@@ -63,13 +63,13 @@ const openAlert = (props: AlertPropsType) => {
   // 삭제 타이머 이벤트 저장
   if (closeDelayTime !== "infinite")
     openList[sequence] = setTimeout(() => {
-      closeAlert(sequence, null, onEventCloseAfter);
+      closeAlert(sequence, null, onAfterAlertClose);
     }, closeDelayTime || 3000);
   else openList[sequence] = null;
 
   // 실행 이벤트가 있을 경우
-  if (onEventOpenAfter) {
-    onEventOpenAfter();
+  if (onAfterAlertOpen) {
+    onAfterAlertOpen();
   }
 
   window.setTimeout(() => {

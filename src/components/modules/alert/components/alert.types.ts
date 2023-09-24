@@ -37,9 +37,9 @@ export type AlertPropsType = CommonsSelectorTypes & {
   // 알럿 닫기 모드 사용 여부 (마우스 호버시 닫기 노출)
   useCloseMode?: boolean | { useSwipeMode: boolean };
   // 알럿 실행 후 실행될 이벤트
-  onEventOpenAfter?: () => void;
+  onAfterAlertOpen?: () => void;
   // 알럿 종료 후 실행될 이벤트
-  onEventCloseAfter?: () => void;
+  onAfterAlertClose?: () => void;
 };
 
 // func로 부터 받아오는 props
