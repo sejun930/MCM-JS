@@ -46,7 +46,7 @@ const searchSequence = (target: HTMLElement) => {
 const openAlert = (props: AlertPropsType) => {
   if (!hasAlertArea) initAlertArea(); // 초기 셋팅 확인하기
 
-  const { closeDelayTime, id } = props;
+  const { closeDelayTime, id, onAfterAlertOpen, onAfterAlertClose } = props;
 
   if (id) {
     // 해당 아이디 값으로 이미 실행되고 있는 alert이 있는지 검증
@@ -63,13 +63,19 @@ const openAlert = (props: AlertPropsType) => {
   // 삭제 타이머 이벤트 저장
   if (closeDelayTime !== "infinite")
     openList[sequence] = setTimeout(() => {
-      closeAlert(sequence);
+      closeAlert(sequence, null, onAfterAlertClose);
     }, closeDelayTime || 3000);
   else openList[sequence] = null;
+
+  // 실행 이벤트가 있을 경우
+  if (onAfterAlertOpen) {
+    onAfterAlertOpen();
+  }
 
   window.setTimeout(() => {
     // 설정된 alert 추가하기
     const area = document.getElementById(`mcm-alert-area`);
+
     if (area) {
       area.append(_div);
 
@@ -84,7 +90,8 @@ const openAlert = (props: AlertPropsType) => {
 // alert 삭제하기
 const closeAlert = (
   props: number | { id?: string; className?: string },
-  sideCloseAnimation?: "left" | "right"
+  sideCloseAnimation?: null | ("left" | "right"),
+  closeEvent?: () => void
 ) => {
   // alert 순서 또는 id 값을 통해 현재 alert 제거
   let target: null | HTMLDivElement | HTMLElement = null;
@@ -108,6 +115,12 @@ const closeAlert = (
       }, 340);
       // 삭제 후 비워두기
       clearTimeout(openList[sequence]);
+
+      // 종료 이벤트가 있을 경우 실행
+      if (closeEvent && openList[sequence]) {
+        closeEvent();
+      }
+
       openList[sequence] = null;
     }
   };

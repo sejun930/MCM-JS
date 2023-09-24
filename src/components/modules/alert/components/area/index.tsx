@@ -103,6 +103,6 @@ export const AlertMainWrapper = styled.div`
   }
 
   @media ${breakPoints.mobileLarge} {
-    width: 100%;
+    width: max-content;
   }
 `;

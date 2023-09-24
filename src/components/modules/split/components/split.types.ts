@@ -24,17 +24,11 @@ export type ListTypeWithIdx = ListInfoType & { idx: number };
 export type SplitPropsTypes = CommonsSelectorTypes & ListType;
 
 // Split.presenter props
-export type SplitUIPageTypes = ListType &
-  UidType &
-  ActiveType & {
-    toggleActive: (bool: boolean) => void;
-  } & WidthListType;
+export type SplitUIPageTypes = ListType & UidType & WidthListType;
 
 // bar 페이지 props types
 export interface SplitBarPropsTypes {
-  toggleActive: (bool: boolean) => void;
   orderNum: number;
-  active: boolean;
   uid: string;
 }
 

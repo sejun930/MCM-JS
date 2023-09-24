@@ -33,21 +33,10 @@ function _Split(props: SplitPropsTypes & { _uid: string }) {
     setInfo(_initInfo);
   }, [_uid, list]);
 
-  // disable toggle
-  const toggleActive = (bool: boolean) => {
-    setInfo({ ...info, active: bool });
-  };
-
   return (
     <_Error propsList={{ ...props }} requiredList={["list"]}>
       {info.uid && (
-        <SplitUIPage
-          {...props}
-          active={info.active}
-          uid={info.uid}
-          toggleActive={toggleActive}
-          widthList={info.widthList}
-        />
+        <SplitUIPage {...props} uid={info.uid} widthList={info.widthList} />
       )}
     </_Error>
   );

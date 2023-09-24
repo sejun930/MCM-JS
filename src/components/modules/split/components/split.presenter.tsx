@@ -9,9 +9,7 @@ import { CSSProperties } from "react";
 
 export default function SplitUIPage({
   list,
-  toggleActive,
   uid,
-  active,
   widthList,
 }: SplitUIPageTypes) {
   return (
@@ -19,8 +17,6 @@ export default function SplitUIPage({
       className={getAllComponentsClassName(
         splitClassList.wrapper || "mcm-split-wrapper"
       )}
-      onClick={() => toggleActive(false)}
-      //   onMouseLeave={() => toggleActive(false)}
     >
       <Items className={splitClassList.items || "mcm-split-items"}>
         {list.map((el, idx) => {
@@ -30,8 +26,7 @@ export default function SplitUIPage({
           // 마지막 컴포넌트 체크
           const isLast = idx + 1 === list.length;
           // 최소 넓이값 지정
-          if (widthList[idx])
-            styles.flexBasis = `calc(${widthList[idx]}% + 0px)`;
+          if (widthList[idx]) styles.minWidth = `${widthList[idx]}%`;
 
           let className = splitClassList.contents || "mcm-split-contents";
           //   if (active) className += " offDrag";
@@ -55,8 +50,6 @@ export default function SplitUIPage({
                 <SplitBarPage
                   key={`split-bar-${uid}-${num}`}
                   orderNum={num}
-                  toggleActive={toggleActive}
-                  active={active}
                   uid={uid}
                 />
               );
