@@ -1,25 +1,47 @@
 import { BaseSyntheticEvent, MutableRefObject, useEffect, useRef } from "react";
 import _ModalUIPage from "./modal.presenter";
+import { _Error } from "mcm-js-commons";
 
-import { ModalPropsType, ModalPropsUITypes } from "./modal.types";
+import {
+  ModalPropsType,
+  ModalPropsUITypes,
+  ModalOmitOpenWindowType,
+} from "./modal.types";
 import { modalClassList, modalFuncClass } from "./modal.class";
 import { closeModalFn } from "../func";
+
+import { v4 } from "uuid";
 
 // 모달을 닫을 수 있는 시점 계산
 let ableClose = false;
 
+// 각각의 모달의 타이머 이벤트 저장
+const timerList: { [key: string]: number } = {};
+
 // 1. 1차 모달 렌더 컴포넌트
-export default function _Modal(
-  props: Omit<ModalPropsType, "openIdx" | "_wmo">
-) {
-  return <_RenderModal {...props} />;
+export default function _RenderModal(props: ModalOmitOpenWindowType) {
+  const uuid = v4();
+
+  return <_WithErrorModal {...props} _uuid={uuid} />;
 }
 
-// 자동 종료 변수
-// let autoCloseTimer: number | ReturnType<typeof setTimeout>;
+// 2. 2차 모달 렌더 컴포넌트 (Error 체크)
+function _WithErrorModal(props: ModalPropsType) {
+  const { _wmo } = props;
+  return (
+    <_Error
+      propsList={{ ...props }}
+      requiredList={["show", "onCloseModal"].slice(0, _wmo ? 1 : 2)}
+      mouduleName="Modal"
+    >
+      <_Modal {...props} />
+    </_Error>
+  );
+}
 
-// 2. 최종 모달 렌더 컴포넌트
-export function _RenderModal(props: ModalPropsType) {
+// 3. 최종 모달 렌더 컴포넌트
+function _Modal(props: ModalPropsType) {
+  console.log(props);
   const {
     show,
     offAutoClose,
@@ -31,6 +53,7 @@ export function _RenderModal(props: ModalPropsType) {
     autoCloseTimer,
     openIdx,
     _wmo,
+    _uuid,
   } = props;
   // 페이지 전환을 체크하기 위해 현재 모달이 실행되어 있는 페이지 주소 저장
   let originPathName = "";
@@ -43,6 +66,7 @@ export function _RenderModal(props: ModalPropsType) {
   const _itemRef = useRef() as MutableRefObject<HTMLDivElement>;
   const _contentsRef = useRef() as MutableRefObject<HTMLDivElement>;
 
+  // const [uuid] = useState(_uuid || "");
   const hasAnimation = showBGAnimation || showModalOpenAnimation;
 
   useEffect(() => {
@@ -78,8 +102,8 @@ export function _RenderModal(props: ModalPropsType) {
         }
 
         if (autoCloseTimer && autoCloseTimer >= 1000) {
-          // 최소 1초 이상일 때만 자동종료 실행
-          window.setTimeout(() => {
+          // 최소 1초 이상일 때만 자동종료 실행, 타이머 이벤트 저장하기
+          timerList[_uuid] = window.setTimeout(() => {
             _onCloseModal(true);
           }, autoCloseTimer);
         }
@@ -149,6 +173,12 @@ export function _RenderModal(props: ModalPropsType) {
     // forc : 강제 실행
     if (!ableClose && !forc) return;
     ableClose = false;
+
+    // 자동 종료 타이머 삭제하기
+    if (timerList[_uuid]) {
+      clearTimeout(timerList[_uuid]);
+      delete timerList[_uuid];
+    }
 
     // 1. 현재 실행중인 모달은 우선 제거
     await closeModalFn({

@@ -57,6 +57,8 @@ export type ModalPropsType = CommonsSelectorTypes &
     _wmo?: boolean;
     // (window modal open) window 형식의 오픈 여부
     openIdx?: number;
+    // 모달 각각의 uuid (autoCloseTimer 타이머 이벤트 처리용)
+    _uuid?: string;
     // state 렌더가 아닌 window 형식의 오픈시 제거할 id 값
     onAfterCloseEvent?: () => void;
     // 모달이 종료된 다음 시점에 실행될 이벤트
@@ -75,7 +77,7 @@ export interface ModalPropsUITypes {
   _onCloseModal: () => void;
 }
 
-type ModalOmitOpenWindowType = Omit<ModalPropsType, "openIdx" | "_mwo">;
+export type ModalOmitOpenWindowType = Omit<ModalPropsType, "openIdx" | "_mwo">;
 export type ModalPartialWithToggleType = Partial<ModalOmitOpenWindowType>;
 
 export type ModalType = typeof OriginModal & {

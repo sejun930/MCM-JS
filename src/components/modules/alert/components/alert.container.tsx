@@ -4,7 +4,15 @@ import { AlertAddIProps, AlertPropsType } from "./alert.types";
 import { _Error, _SpanText } from "mcm-js-commons";
 import { MutableRefObject, useRef } from "react";
 
-export default function _Alert(props: AlertPropsType & AlertAddIProps) {
+export default function _RenderAlert(props: AlertPropsType & AlertAddIProps) {
+  return (
+    <_Error propsList={{ ...props }} requiredList={["children"]}>
+      <_Alert {...props} />
+    </_Error>
+  );
+}
+
+function _Alert(props: AlertPropsType & AlertAddIProps) {
   const { useCloseMode, sequence, closeAlert, onAfterAlertClose } = props;
   const wrapperRef = useRef() as MutableRefObject<HTMLDivElement>;
 

@@ -12,8 +12,18 @@ const timerList: {
 } = {};
 
 const _RenderSlider = (props: SliderPropsTypes) => {
+  const { children } = props;
+
   const uid = v4();
-  return <_Slider {...props} _uid={uid} />;
+  return (
+    <_Error
+      propsList={{ children }}
+      requiredList={["children"]}
+      mouduleName="Slider"
+    >
+      <_Slider {...props} _uid={uid} />
+    </_Error>
+  );
 };
 
 const _Slider = (props: SliderPropsTypes & SliderAddProps) => {
@@ -196,21 +206,15 @@ const _Slider = (props: SliderPropsTypes & SliderAddProps) => {
   };
 
   return (
-    <_Error
-      propsList={{ children }}
-      requiredList={["children"]}
-      mouduleName="Slider"
-    >
-      <SliderUIPage
-        {...props}
-        moveSlider={moveSlider}
-        listRef={listRef}
-        timerRef={timerRef}
-        selector={selector}
-        uid={uid}
-        timerList={timerList}
-      />
-    </_Error>
+    <SliderUIPage
+      {...props}
+      moveSlider={moveSlider}
+      listRef={listRef}
+      timerRef={timerRef}
+      selector={selector}
+      uid={uid}
+      timerList={timerList}
+    />
   );
 };
 

@@ -46,7 +46,8 @@ const searchSequence = (target: HTMLElement) => {
 const openAlert = (props: AlertPropsType) => {
   if (!hasAlertArea) initAlertArea(); // 초기 셋팅 확인하기
 
-  const { closeDelayTime, id, onAfterAlertOpen, onAfterAlertClose } = props;
+  const { children, closeDelayTime, id, onAfterAlertOpen, onAfterAlertClose } =
+    props;
 
   if (id) {
     // 해당 아이디 값으로 이미 실행되고 있는 alert이 있는지 검증
@@ -68,7 +69,7 @@ const openAlert = (props: AlertPropsType) => {
   else openList[sequence] = null;
 
   // 실행 이벤트가 있을 경우
-  if (onAfterAlertOpen) {
+  if (onAfterAlertOpen && children) {
     onAfterAlertOpen();
   }
 
