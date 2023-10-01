@@ -7,7 +7,7 @@ import {
 } from "./alert.styles";
 import { alertClassList } from "./alert.class";
 
-import { _Error, _SpanText } from "mcm-js-commons";
+import { _SpanText } from "mcm-js-commons";
 import { getAllComponentsClassName } from "mcm-js-commons/dist/hooks";
 import { AlertPropsType, AlertAddIProps, AlertUIProps } from "./alert.types";
 
@@ -62,63 +62,58 @@ export default function AlertUIPage(
   }
 
   return (
-    <_Error propsList={{ ...props }} requiredList={["children"]}>
-      <Wrapper
-        className={getAllComponentsClassName(alertClassList.wrapper, className)}
-        id={id}
-        ref={wrapperRef}
-        alertStyles={alertStyles}
-        alertResponsiveStyles={alertResponsiveStyles}
-        conceptColor={currentConcept.color}
-        useCloseMode={useCloseMode !== undefined}
-        onMouseDown={(e) => hasSwipeMode && startSwipe(e.pageX || 0)}
-        onMouseMove={(e) => hasSwipeMode && moveSwipe(e.pageX || 0)}
-        onClick={(hasSwipeMode && endSwipe) || undefined}
-        onMouseOut={(hasSwipeMode && endSwipe) || undefined}
-        onTouchStart={(e) =>
-          hasSwipeMode && startSwipe(e.targetTouches[0].pageX || 0)
-        }
-        onTouchMove={(e) =>
-          hasSwipeMode && moveSwipe(e.targetTouches[0].pageX || 0, true)
-        }
-        onTouchEnd={(hasSwipeMode && endSwipe) || undefined}
-      >
-        <Items
-          className={alertClassList.items}
-          alertConcept={alertConcept?.type}
-        >
-          {alertConcept && currentConcept.icon && (
-            <AlertConcept
-              className={alertClassList.concept}
-              currentConcept={currentConcept}
-              iconColor={
-                alertConcept?.custom?.icon?.color ||
-                currentConcept.color ||
-                "unset"
-              }
-            >
-              {currentConcept.icon}
-            </AlertConcept>
-          )}
-          {children && (
-            <AlertMessage
-              className={alertClassList.text}
-              textStyles={alertConcept?.custom?.text || {}}
-            >
-              {children}
-            </AlertMessage>
-          )}
-        </Items>
-
-        {useCloseMode && (
-          <CloseMode
-            className={alertClassList.close}
-            onClickEvent={closeAlertEvent}
+    <Wrapper
+      className={getAllComponentsClassName(alertClassList.wrapper, className)}
+      id={id}
+      ref={wrapperRef}
+      alertStyles={alertStyles}
+      alertResponsiveStyles={alertResponsiveStyles}
+      conceptColor={currentConcept.color}
+      useCloseMode={useCloseMode !== undefined}
+      onMouseDown={(e) => hasSwipeMode && startSwipe(e.pageX || 0)}
+      onMouseMove={(e) => hasSwipeMode && moveSwipe(e.pageX || 0)}
+      onClick={(hasSwipeMode && endSwipe) || undefined}
+      onMouseOut={(hasSwipeMode && endSwipe) || undefined}
+      onTouchStart={(e) =>
+        hasSwipeMode && startSwipe(e.targetTouches[0].pageX || 0)
+      }
+      onTouchMove={(e) =>
+        hasSwipeMode && moveSwipe(e.targetTouches[0].pageX || 0, true)
+      }
+      onTouchEnd={(hasSwipeMode && endSwipe) || undefined}
+    >
+      <Items className={alertClassList.items} alertConcept={alertConcept?.type}>
+        {alertConcept && currentConcept.icon && (
+          <AlertConcept
+            className={alertClassList.concept}
+            currentConcept={currentConcept}
+            iconColor={
+              alertConcept?.custom?.icon?.color ||
+              currentConcept.color ||
+              "unset"
+            }
           >
-            Close
-          </CloseMode>
+            {currentConcept.icon}
+          </AlertConcept>
         )}
-      </Wrapper>
-    </_Error>
+        {children && (
+          <AlertMessage
+            className={alertClassList.text}
+            textStyles={alertConcept?.custom?.text || {}}
+          >
+            {children}
+          </AlertMessage>
+        )}
+      </Items>
+
+      {useCloseMode && (
+        <CloseMode
+          className={alertClassList.close}
+          onClickEvent={closeAlertEvent}
+        >
+          Close
+        </CloseMode>
+      )}
+    </Wrapper>
   );
 }

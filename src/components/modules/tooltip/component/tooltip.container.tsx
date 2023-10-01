@@ -6,8 +6,16 @@ import { TooltipPropsType } from "./tooltip.types";
 
 // position의 종류가 아래의 4가지에 일치하는지 검증
 const filterPosition = ["top", "bottom", "left", "right"];
-// 추가 설명을 위한 말풍선 모듈
-export default function _Tooltip(props: TooltipPropsType) {
+
+export default function _RenderTooltip(props: TooltipPropsType) {
+  return (
+    <_Error propsList={{ ...props }} requiredList={["children", "tooltipText"]}>
+      <_Tooltip {...props} />
+    </_Error>
+  );
+}
+
+function _Tooltip(props: TooltipPropsType) {
   // 중복 실행 방지 변수
   let loading = false;
 
@@ -18,7 +26,6 @@ export default function _Tooltip(props: TooltipPropsType) {
 
   const {
     children,
-    tooltipText,
     useShowAnimation,
     isDisable,
     position,
@@ -143,19 +150,14 @@ export default function _Tooltip(props: TooltipPropsType) {
   };
 
   return (
-    <_Error
-      propsList={{ children, tooltipText }}
-      requiredList={["children", "tooltipText"]}
-    >
-      <_TooltipUIPage
-        {...props}
-        tooltipOpen={tooltipOpen}
-        toggleTail={toggleTail}
-        textRef={textRef}
-        render={render}
-        position={_position}
-        wrapperRef={wrapperRef}
-      />
-    </_Error>
+    <_TooltipUIPage
+      {...props}
+      tooltipOpen={tooltipOpen}
+      toggleTail={toggleTail}
+      textRef={textRef}
+      render={render}
+      position={_position}
+      wrapperRef={wrapperRef}
+    />
   );
 }

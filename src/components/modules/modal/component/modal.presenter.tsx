@@ -7,7 +7,7 @@ import {
 } from "./modal.styles";
 
 import { ModalPropsType, ModalPropsUITypes } from "./modal.types";
-import { _Button, _Text, _CloseButton, _Error } from "mcm-js-commons";
+import { _Button, _Text, _CloseButton } from "mcm-js-commons";
 import { getAllComponentsClassName } from "mcm-js-commons/dist/hooks";
 
 import { getPXForm } from "mcm-js-commons/dist/hooks";
@@ -37,7 +37,6 @@ const ModalUIPage = (props: {
     closeMent,
     closeButtonInfo,
     handleClickEvent,
-    _wmo,
   } = _props;
 
   const _closeButtonSize = getPXForm(
@@ -51,77 +50,71 @@ const ModalUIPage = (props: {
   buttonWrapperStyles.top = closeBtnTop;
 
   return (
-    <_Error
-      propsList={_props}
-      requiredList={["show", "onCloseModal"].slice(0, _wmo ? 1 : 2)}
-      mouduleName="Modal"
-    >
-      {(show && (
-        <ModalWrapper ref={_modalWrapperRef}>
-          <Wrapper
-            className={getAllComponentsClassName(
-              modalClassList.wrapper,
-              className
-            )}
-            id={id}
-            data-name={name}
-            onMouseDown={handleClickEvent}
-            ref={_wrapperRef}
-            modalStyle={modalStyles?.wrapper || {}}
-            mobileModalStyles={mobileModalStyles?.wrapper || {}}
+    (show && (
+      <ModalWrapper ref={_modalWrapperRef}>
+        <Wrapper
+          className={getAllComponentsClassName(
+            modalClassList.wrapper,
+            className
+          )}
+          id={id}
+          data-name={name}
+          onMouseDown={handleClickEvent}
+          ref={_wrapperRef}
+          modalStyle={modalStyles?.wrapper || {}}
+          mobileModalStyles={mobileModalStyles?.wrapper || {}}
+        >
+          <Items
+            className={modalClassList.items}
+            modalSize={modalSize || {}}
+            mobileModalSize={mobileModalSize || {}}
+            showModalOpenAnimation={showModalOpenAnimation}
+            isOpen={show}
+            ref={_itemRef}
+            modalStyle={modalStyles?.items || {}}
+            mobileModalStyles={mobileModalStyles?.items || {}}
           >
-            <Items
-              className={modalClassList.items}
-              modalSize={modalSize || {}}
-              mobileModalSize={mobileModalSize || {}}
-              showModalOpenAnimation={showModalOpenAnimation}
+            <CloseButtonWrapper
+              className={modalClassList.closeButtonWrapper}
               isOpen={show}
-              ref={_itemRef}
-              modalStyle={modalStyles?.items || {}}
-              mobileModalStyles={mobileModalStyles?.items || {}}
+              modalStyle={buttonWrapperStyles}
+              mobileModalStyles={mobileModalStyles?.closeButton || {}}
+              closeMent={closeMent}
             >
-              <CloseButtonWrapper
-                className={modalClassList.closeButtonWrapper}
-                isOpen={show}
-                modalStyle={buttonWrapperStyles}
-                mobileModalStyles={mobileModalStyles?.closeButton || {}}
-                closeMent={closeMent}
+              <_Button
+                onClickEvent={_onCloseModal}
+                className={modalClassList.closeButtonMentButton}
+                buttonType="button"
               >
-                <_Button
-                  onClickEvent={_onCloseModal}
-                  className={modalClassList.closeButtonMentButton}
-                  buttonType="button"
-                >
-                  <_Text className={modalClassList.closeButtonMent}>
-                    {closeMent}
-                  </_Text>
-                </_Button>
-                <_CloseButton
-                  className={modalClassList.closeButton}
-                  buttonColor={closeButtonInfo?.buttonColor || "white"}
-                  buttonSize={_closeButtonSize}
-                  buttonWeight={getPXForm(
-                    closeButtonInfo?.buttonWeight || "1px",
-                    "1px"
-                  )}
-                  styles={{ display: hideCloseButton ? "none" : "flex" }}
-                  onClickEvent={_onCloseModal}
-                  buttonType="button"
-                />
-              </CloseButtonWrapper>
-              <ContentsWrapper
-                className={modalClassList.contents}
-                ref={_contentsRef}
-                modalStyle={modalStyles?.contents || {}}
-                mobileModalStyles={mobileModalStyles?.contents || {}}
-              >
-                {show ? children : undefined}
-              </ContentsWrapper>
-            </Items>
-          </Wrapper>
-        </ModalWrapper>
-      )) || <></>}
-    </_Error>
+                <_Text className={modalClassList.closeButtonMent}>
+                  {closeMent}
+                </_Text>
+              </_Button>
+              <_CloseButton
+                className={modalClassList.closeButton}
+                buttonColor={closeButtonInfo?.buttonColor || "white"}
+                buttonSize={_closeButtonSize}
+                buttonWeight={getPXForm(
+                  closeButtonInfo?.buttonWeight || "1px",
+                  "1px"
+                )}
+                styles={{ display: hideCloseButton ? "none" : "flex" }}
+                onClickEvent={_onCloseModal}
+                buttonType="button"
+              />
+            </CloseButtonWrapper>
+            <ContentsWrapper
+              className={modalClassList.contents}
+              ref={_contentsRef}
+              modalStyle={modalStyles?.contents || {}}
+              mobileModalStyles={mobileModalStyles?.contents || {}}
+            >
+              {show ? children : undefined}
+            </ContentsWrapper>
+          </Items>
+        </Wrapper>
+      </ModalWrapper>
+    )) || <></>
   );
 };
 export default ModalUIPage;

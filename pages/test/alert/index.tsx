@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Alert from "../../../src/components/modules/alert";
+import Modal from "../../../src/components/modules/modal";
 
 import styled from "@emotion/styled";
 
@@ -33,16 +34,12 @@ export default function AlertTestPage() {
       },
       className: "test",
       useCloseMode: { useSwipeMode: true },
-      onAfterAlertOpen: () => {
-        Alert.openAlert({
-          children: "알럿 실행",
-        });
-      },
-      onAfterAlertClose: () => {
-        Alert.openAlert({
-          children: "알럿 종료",
-        });
-      },
+      onAfterAlertOpen: () => Modal.open(),
+      // onAfterAlertClose: () => {
+      //   Alert.openAlert({
+      //     children: "알럿 종료",
+      //   });
+      // },
 
       // alertStyles: { width: "360px" },
       //   alertResponsiveStyles: {
