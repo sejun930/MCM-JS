@@ -1,80 +1,75 @@
-import styled from "@emotion/styled";
-import { _Error } from "mcm-js-commons";
-import { memo, useEffect, useState } from "react";
+import {
+  List,
+  ListWrapper,
+  MainWrapper,
+  Opener,
+  Wrapper,
+  ListItems,
+  AllListWrapper,
+} from "./popular.styles";
 
-import { PopularPropsTypes } from "./popular.types";
+import { _Error, _Button } from "mcm-js-commons";
+import { useState } from "react";
+
+import { PopularRenderPropsTypes } from "./popular.types";
 import { popularClassList } from "./popular.class";
 import { getAllComponentsClassName } from "mcm-js-commons/dist/hooks";
 
 import { initPopularInfo } from "./popular.data";
-import { v4 } from "uuid";
 
-const _RenderPopular = (props: PopularPropsTypes) => {
-  const uuid = v4(); // uuid 지정
-
-  return (
-    <_Error propsList={{ ...props }} requiredList={["children"]}>
-      <_Popular {...props} uuid={uuid} />
-    </_Error>
-  );
-};
-
-const _Popular = (props: PopularPropsTypes & { uuid: string }) => {
-  const { children, className, id, uuid } = props;
+export default function _Popular(props: PopularRenderPropsTypes) {
+  const { children, className, id, maxHeight, componentIdx } = props;
 
   const [info, setInfo] = useState(initPopularInfo);
 
-  useEffect(() => {}, [children]);
+  // 전체 리스트 보기 토글 함수
+  const toggleAllShow = () => {
+    setInfo({ ...info, ["showAll"]: !info.showAll });
+  };
+
+  // 상위에 노출될 리스트 (앞 뒤로 2개의 추가 데이터 삽입)
+  const mainList = [
+    ...children.slice(-2),
+    ...children,
+    ...children.slice(0, 2),
+  ];
 
   return (
     <Wrapper
       className={getAllComponentsClassName(popularClassList.wrapper, className)}
       id={id}
+      maxHeight={maxHeight}
     >
-      <ListWrapper>
-        {/* {(list.length &&
-          list.map((el, key) => <List key={`${uuid}-${key}`}>{el}</List>)) || (
-          <></>
-        )} */}
-      </ListWrapper>
-      <Opener>33</Opener>
+      <MainWrapper className={popularClassList.mainWrapper}>
+        <ListWrapper
+          className={popularClassList.mainListWrapper}
+          current={info.current || 2}
+          maxHeight={maxHeight}
+        >
+          {mainList.map((el, idx) => (
+            <List
+              key={`mcm-popular-${componentIdx}-main-list-${idx}`}
+              className={popularClassList.mainList}
+            >
+              {el}
+            </List>
+          ))}
+        </ListWrapper>
+        <Opener
+          className={popularClassList.opener}
+          onClickEvent={toggleAllShow}
+          isShowAll={info.showAll}
+        />
+      </MainWrapper>
+      {info.showAll && (
+        <ListItems maxHeight={maxHeight}>
+          <AllListWrapper>
+            {children.map((el, idx) => (
+              <List key={`mcm-popular-${componentIdx}-list-${idx}`}>{el}</List>
+            ))}
+          </AllListWrapper>
+        </ListItems>
+      )}
     </Wrapper>
   );
-};
-
-export const Wrapper = styled.div`
-  width: 100%;
-  position: relative;
-  display: flex;
-`;
-
-export const Items = styled.div`
-  width: 100%;
-`;
-
-export const ListWrapper = styled.ul`
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  transition: all 0.25s ease;
-  transform: translateY(0px);
-`;
-
-export const List = styled.li`
-  list-style: none;
-
-  // 하위 모든 태그의 마진, 패딩값 제거
-  * {
-    margin: 0;
-    padding: 0;
-    white-space: pre;
-  }
-`;
-
-export const Opener = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-export default memo(_RenderPopular);
+}
