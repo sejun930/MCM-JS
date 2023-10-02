@@ -8,5 +8,5 @@ interface InitPouplarInfoTypes {
 export const initPopularInfo: InitPouplarInfoTypes = {
   list: [],
   showAll: false,
-  current: 2,
+  current: 0,
 };

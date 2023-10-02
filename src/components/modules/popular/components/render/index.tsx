@@ -25,14 +25,14 @@ const _RenderPopular = (props: PopularPropsTypes) => {
   // 모듈 개별의 최대 높이값
   const [maxHeight, setMaxHeight] = useState(0);
 
+  // children이 배열 형태로 (2개 이상)구성되어 있는지 체크
+  const ableChildren =
+    children && Array.isArray(children) && children.length > 1;
+
   // 초기 및 children 변경시 리스트의 최대 높이값 구하기
   useEffect(() => {
     // 최초 중복 실행 방지
     const checkOverlap = document.getElementById(`mcm-popular-${uuid}`);
-
-    // children이 배열 형태로 (2개 이상)구성되어 있는지 체크
-    const ableChildren =
-      children && Array.isArray(children) && children.length > 1;
 
     if (ableChildren && !checkOverlap) {
       const wrapper = document.createElement("ul");
@@ -41,7 +41,6 @@ const _RenderPopular = (props: PopularPropsTypes) => {
       wrapper.style.overflow = "hidden";
       wrapper.style.top = "0";
 
-      wrapper.setAttribute("class", "mcm-popular-temp-wrapper");
       wrapper.setAttribute("id", `mcm-popular-${uuid}`);
 
       children.forEach((node) => {
@@ -59,10 +58,11 @@ const _RenderPopular = (props: PopularPropsTypes) => {
         );
         let zIdx = allNodes.length - 1;
 
+        // 순서 정하기 (먼저 렌더되는 Popular에 더 큰 우선순위 지정)
         if (allNodes.length > 1) {
           allNodes.forEach((node: HTMLElement) => {
             node.style.zIndex = String(zIdx);
-            zIdx--;
+            zIdx--; // 우선순위 1개씩 감소
           });
         }
 
@@ -87,7 +87,7 @@ const _RenderPopular = (props: PopularPropsTypes) => {
   }, [children]);
 
   const _props = { ...props, maxHeight, uuid };
-  return <_Popular {..._props} />;
+  return (ableChildren && maxHeight && <_Popular {..._props} />) || <></>;
 };
 
 export default memo(_WithErrorPopular);

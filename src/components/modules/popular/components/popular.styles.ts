@@ -6,6 +6,7 @@ interface StyleTypes {
   maxHeight?: number;
   isShowAll?: boolean;
   current?: number;
+  render?: boolean;
 }
 
 export const Wrapper = styled.div`
@@ -14,10 +15,19 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   min-width: 200px;
+  min-height: 20px;
+
+  ${(props: StyleTypes) => {
+    const styles: CSSProperties & { [key: string]: string } = {};
+
+    if (props.maxHeight) {
+      styles.minHeight = props.maxHeight;
+    }
+    return styles;
+  }}
 
   .mcm-popular-main-wrapper {
     overflow: hidden;
-    max-height: 20px;
 
     ${(props: StyleTypes) => {
       const styles: CSSProperties & { [key: string]: string } = {};
@@ -41,6 +51,7 @@ export const Wrapper = styled.div`
 
 export const MainWrapper = styled.div`
   width: 100%;
+  /* min-height: 36px; */
   display: flex;
   justify-content: space-between;
   padding-left: 10px;
@@ -56,7 +67,7 @@ export const ListWrapper = styled.ul`
   ${(props: StyleTypes) =>
     props.current && {
       transform: `translateY(-${props.current * props.maxHeight}px)`,
-    }}
+    }};
 `;
 
 export const List = styled.li`
@@ -86,7 +97,7 @@ export const Opener = styled(_Button)`
     height: 3px;
     border-radius: 999px;
     background-color: black;
-    transition: all 0.35s ease;
+    transition: all 0.25s ease;
   }
 
   ::before {

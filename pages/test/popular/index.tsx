@@ -31,9 +31,8 @@ export default function PopularTestPage() {
   return (
     <Wrapper>
       <Popular children={list} />
-      <Popular children={[<div>a</div>, <div>b</div>, <div>c</div>]} />
-      <Popular children={[<div>a</div>, <div>b</div>, <div>c</div>]} />
-
+      {/* <Popular children={["a", "b"]} /> */}
+      {/* <Popular children={[<div>A</div>, <div>B</div>, <div>C</div>]} /> */}
       <div style={{ marginTop: "200px" }}>
         <button onClick={addList}>추가</button>
         <button onClick={removeList}>삭제</button>
