@@ -13,9 +13,12 @@ export const Wrapper = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
+  min-width: 200px;
 
   .mcm-popular-main-wrapper {
     overflow: hidden;
+    max-height: 20px;
+
     ${(props: StyleTypes) => {
       const styles: CSSProperties & { [key: string]: string } = {};
 
@@ -68,17 +71,8 @@ export const List = styled.li`
   }
 `;
 
-export const GetHeightWrapper = styled.div`
-  max-height: 0px;
-  overflow: hidden;
-`;
-
-export const GetHeightList = styled.div`
-  opacity: 0;
-`;
-
 export const Opener = styled(_Button)`
-  min-width: 30px;
+  min-width: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -89,14 +83,17 @@ export const Opener = styled(_Button)`
     position: absolute;
     content: "";
     width: 10px;
-    height: 2px;
+    height: 3px;
+    border-radius: 999px;
     background-color: black;
     transition: all 0.35s ease;
   }
 
   ::before {
+    position: relative;
     transform: rotate(30deg);
-    left: 6px;
+    left: 4px;
+    /* left: 6px; */
 
     ${(props: StyleTypes) =>
       props.isShowAll && {
@@ -105,8 +102,9 @@ export const Opener = styled(_Button)`
   }
 
   ::after {
+    position: relative;
     transform: rotate(-30deg);
-    right: 6px;
+    /* right: 6px; */
 
     ${(props: StyleTypes) =>
       props.isShowAll && {
@@ -120,12 +118,14 @@ export const ListItems = styled.div`
   height: 100%;
   position: absolute;
   top: ${(props: StyleTypes) => `${props.maxHeight}px`};
+  /* z-index: 11; */
 `;
 
-export const AllListWrapper = styled.div`
+export const AllListWrapper = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 6px 0px;
+  margin: 0;
   padding: 10px;
   border: solid 2px gray;
   border-top: 0px;

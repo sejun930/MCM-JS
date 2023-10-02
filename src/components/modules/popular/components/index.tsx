@@ -18,7 +18,7 @@ import { getAllComponentsClassName } from "mcm-js-commons/dist/hooks";
 import { initPopularInfo } from "./popular.data";
 
 export default function _Popular(props: PopularRenderPropsTypes) {
-  const { children, className, id, maxHeight, componentIdx } = props;
+  const { children, className, id, maxHeight, uuid } = props;
 
   const [info, setInfo] = useState(initPopularInfo);
 
@@ -48,7 +48,7 @@ export default function _Popular(props: PopularRenderPropsTypes) {
         >
           {mainList.map((el, idx) => (
             <List
-              key={`mcm-popular-${componentIdx}-main-list-${idx}`}
+              key={`mcm-popular-${uuid}-main-list-${idx}`}
               className={popularClassList.mainList}
             >
               {el}
@@ -65,7 +65,7 @@ export default function _Popular(props: PopularRenderPropsTypes) {
         <ListItems maxHeight={maxHeight}>
           <AllListWrapper>
             {children.map((el, idx) => (
-              <List key={`mcm-popular-${componentIdx}-list-${idx}`}>{el}</List>
+              <List key={`mcm-popular-${uuid}-list-${idx}`}>{el}</List>
             ))}
           </AllListWrapper>
         </ListItems>
