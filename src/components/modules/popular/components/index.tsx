@@ -1,115 +1,77 @@
-import {
-  List,
-  ListWrapper,
-  MainWrapper,
-  Opener,
-  Wrapper,
-  ListItems,
-  AllListWrapper,
-} from "./popular.styles";
+import { List, Wrapper, ListItems, AllListWrapper } from "./popular.styles";
+import PopularMainPage from "./main/popular.main.container";
 
 import { _Error, _Button } from "mcm-js-commons";
-import { MutableRefObject, useEffect, useRef, useState } from "react";
+import { useState } from "react";
 
-import { PopularRenderPropsTypes } from "./popular.types";
+import { PopularPropsTypes, PopularRenderPropsTypes } from "./popular.types";
 import { popularClassList } from "./popular.class";
 import { getAllComponentsClassName } from "mcm-js-commons/dist/hooks";
 
 import { initPopularInfo } from "./popular.data";
+import { v4 } from "uuid";
 
-let timerEvent = null;
-let current = 0;
+// 1. Error 처리하기
+export default function _RenderPopular(props: PopularPropsTypes) {
+  const uuid = v4();
 
-export default function _Popular(props: PopularRenderPropsTypes) {
-  const { children, className, id, maxHeight, uuid } = props;
+  return (
+    <_Error propsList={{ ...props }} requiredList={["children", "minHeight"]}>
+      <_Popular {...props} _uuid={uuid} />
+    </_Error>
+  );
+}
+
+// 2. 최종 페이지 렌더
+function _Popular(props: PopularRenderPropsTypes) {
+  const {
+    children,
+    minHeight,
+    className,
+    id,
+    _uuid,
+    hideAllList,
+    delay,
+    useSwipeMode,
+  } = props;
 
   const [info, setInfo] = useState(initPopularInfo);
-  const mainRef = useRef() as MutableRefObject<HTMLUListElement>;
+  const [uuid] = useState(_uuid); // uuid 고정
 
   // 전체 리스트 보기 토글 함수
   const toggleAllShow = () => {
     setInfo({ ...info, ["showAll"]: !info.showAll });
   };
 
-  // 상위에 노출될 리스트 (앞 뒤로 2개의 추가 데이터 삽입)
-  const mainList = [
-    // ...children.slice(-2),
-    ...children,
-    ...children.slice(0, 2),
-  ];
-
-  // 무한 롤링 이벤트
-  const rolling = () => {
-    const len = children.length;
-    let delay = 0;
-
-    if (mainRef.current && mainRef.current?.style) {
-      current++;
-
-      // 맨 마지막 리스트에 도달한 경우
-      if (current >= len) {
-        return reset();
-      }
-      setInfo({ ...info, current });
-    }
-  };
-
-  // 타이머 리셋
-  const reset = () => {
-    window.clearInterval(timerEvent);
-    current = 0;
-
-    if (mainRef.current && mainRef.current?.style) {
-      //   mainRef.current.style.transition = "unset";
-      //   mainRef.current.style.transform = "";
-    }
-
-    setInfo({ ...info, current });
-  };
-
-  useEffect(() => {
-    // 타이머 초기화
-    // if (timerEvent) {
-    //   reset();
-    // }
-    // console.log(disable, timerEvent);
-
-    timerEvent = window.setInterval(rolling, 3000);
-  }, [children]);
-
   return (
     <Wrapper
       className={getAllComponentsClassName(popularClassList.wrapper, className)}
       id={id}
-      maxHeight={maxHeight}
+      minHeight={minHeight}
+      isShowAll={info.showAll}
     >
-      <MainWrapper className={popularClassList.mainWrapper}>
-        <ListWrapper
-          className={popularClassList.mainListWrapper}
-          current={info.current}
-          maxHeight={maxHeight}
-          ref={mainRef}
-        >
-          {mainList.map((el, idx) => (
-            <List
-              key={`mcm-popular-${uuid}-main-list-${idx}`}
-              className={popularClassList.mainList}
-            >
-              {el}
-            </List>
-          ))}
-        </ListWrapper>
-        <Opener
-          className={popularClassList.opener}
-          onClickEvent={toggleAllShow}
-          isShowAll={info.showAll}
+      {/* 롤링이 진행되는 메인 페이지 */}
+      {uuid && (
+        <PopularMainPage
+          children={children}
+          info={info}
+          toggleAllShow={toggleAllShow}
+          minHeight={minHeight}
+          uuid={uuid}
+          delay={delay}
+          useSwipeMode={useSwipeMode || false}
         />
-      </MainWrapper>
-      {info.showAll && (
-        <ListItems maxHeight={maxHeight}>
+      )}
+      {info.showAll && !hideAllList && uuid && (
+        <ListItems minHeight={minHeight}>
           <AllListWrapper>
             {children.map((el, idx) => (
-              <List key={`mcm-popular-${uuid}-list-${idx}`}>{el}</List>
+              <List
+                key={`mcm-popular-${uuid}-list-${idx}`}
+                id={`mcm-popular-list-${uuid}-${idx}`}
+              >
+                {el}
+              </List>
             ))}
           </AllListWrapper>
         </ListItems>
