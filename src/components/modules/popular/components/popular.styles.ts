@@ -2,8 +2,16 @@ import { CSSProperties } from "react";
 import styled from "@emotion/styled";
 import { _Button } from "mcm-js-commons";
 
+// px 문자열 완성하기
+const getPx = (px: number) => {
+  return `${px}px`;
+};
+
 interface StyleTypes {
-  maxHeight?: number;
+  minHeight?: {
+    web: number;
+    mobile?: number;
+  };
   isShowAll?: boolean;
   current?: number;
   render?: boolean;
@@ -15,65 +23,47 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   min-width: 200px;
-  min-height: 20px;
+  overflow: hidden;
 
   ${(props: StyleTypes) => {
     const styles: CSSProperties & { [key: string]: string } = {};
 
-    if (props.maxHeight) {
-      styles.minHeight = props.maxHeight;
-    }
+    // 최소 높이값 설정
+    if (!props.isShowAll && props.minHeight)
+      styles.height = getPx(props.minHeight.web);
+    // 전체 보기시 hidden 제거
+    if (props.isShowAll) styles.overflow = "unset";
+
     return styles;
   }}
-
-  .mcm-popular-main-wrapper {
-    overflow: hidden;
-
-    ${(props: StyleTypes) => {
-      const styles: CSSProperties & { [key: string]: string } = {};
-
-      if (props.maxHeight) styles.maxHeight = props.maxHeight;
-
-      return styles;
-    }}
-  }
-
-  .mcm-popular-main-list {
-    ${(props) => {
-      const styles: CSSProperties & { [key: string]: string } = {};
-
-      if (props.maxHeight) styles.height = props.maxHeight;
-
-      return styles;
-    }}
-  }
 `;
 
 export const MainWrapper = styled.div`
   width: 100%;
-  /* min-height: 36px; */
   display: flex;
   justify-content: space-between;
   padding-left: 10px;
   border: solid 2px black;
+  overflow: hidden;
+
+  ${(props: StyleTypes) =>
+    props.minHeight && {
+      height: getPx(props.minHeight.web),
+    }}
 `;
 
 export const ListWrapper = styled.ul`
   width: 100%;
   margin: 0;
   padding: 0;
-  transition: all 0.25s ease;
-
-  ${(props: StyleTypes) =>
-    props.current && {
-      transform: `translateY(-${props.current * props.maxHeight}px)`,
-    }};
+  position: relative;
 `;
 
 export const List = styled.li`
   list-style: none;
   display: flex;
   align-items: center;
+  height: 100%;
 
   // 하위 모든 태그의 마진, 패딩값 제거
   * {
@@ -128,7 +118,7 @@ export const ListItems = styled.div`
   width: 100%;
   height: 100%;
   position: absolute;
-  top: ${(props: StyleTypes) => `${props.maxHeight}px`};
+  top: ${(props: StyleTypes) => getPx(props.minHeight.web)};
   /* z-index: 11; */
 `;
 
