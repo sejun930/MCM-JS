@@ -1,16 +1,15 @@
 import { MutableRefObject } from "react";
-import { MinHeightType, ChildrenType, InfoTypes } from "../popular.types";
+import { PopularPropsTypes } from "../popular.types";
 
 export type MainRefTypes = MutableRefObject<HTMLUListElement>;
 
 // Main 페이지 props 타입
-export type PopularMainPropsTypes = MinHeightType & {
-  children: ChildrenType;
-  info: InfoTypes;
+export type PopularMainPropsTypes = PopularPropsTypes & {
+  showAll: boolean;
   toggleAllShow: () => void;
   uuid: string;
-  delay?: number;
-  useSwipeMode: boolean;
+  changeCurrent: (num: number) => void;
+  hasChildren: boolean;
 };
 
 // Main 페이지 UI props 타입
