@@ -1,4 +1,10 @@
-import { List, Wrapper, ListItems, AllListWrapper } from "./popular.styles";
+import {
+  List,
+  Wrapper,
+  ListWrapper,
+  ListItems,
+  Rating,
+} from "./popular.styles";
 import PopularMainPage from "./main/popular.main.container";
 
 import { _Error, _Button } from "mcm-js-commons";
@@ -8,7 +14,6 @@ import { PopularPropsTypes, PopularRenderPropsTypes } from "./popular.types";
 import { popularClassList } from "./popular.class";
 import { getAllComponentsClassName } from "mcm-js-commons/dist/hooks";
 
-import { initPopularInfo } from "./popular.data";
 import { v4 } from "uuid";
 
 // 1. Error 처리하기
@@ -24,57 +29,76 @@ export default function _RenderPopular(props: PopularPropsTypes) {
 
 // 2. 최종 페이지 렌더
 function _Popular(props: PopularRenderPropsTypes) {
-  const {
-    children,
-    minHeight,
-    className,
-    id,
-    _uuid,
-    hideAllList,
-    delay,
-    useSwipeMode,
-  } = props;
+  const { children, minHeight, className, id, _uuid, setList, useSwipeMode } =
+    props;
 
-  const [info, setInfo] = useState(initPopularInfo);
+  const hide = setList?.hide || false;
+
+  // 전체 리스트 보기 여부
+  const [showAll, setShowAll] = useState(false);
+  // 현재 선택된 리스트 번호
+  const [current, setCurrent] = useState(0);
   const [uuid] = useState(_uuid); // uuid 고정
 
   // 전체 리스트 보기 토글 함수
   const toggleAllShow = () => {
-    setInfo({ ...info, ["showAll"]: !info.showAll });
+    setShowAll((prev) => !prev);
   };
+
+  // 현재 리스트 저장하기
+  const changeCurrent = (num: number) => {
+    if (!hide) setCurrent(num);
+  };
+
+  // 실제로 현재 선택되어 있는 리스트
+  let realCur = current;
+  if (useSwipeMode) realCur -= children.length;
+
+  // 리스트가 2개 이상인지 검증
+  const hasChildren = children.length > 1;
 
   return (
     <Wrapper
       className={getAllComponentsClassName(popularClassList.wrapper, className)}
       id={id}
       minHeight={minHeight}
-      isShowAll={info.showAll}
+      isShowAll={showAll}
     >
       {/* 롤링이 진행되는 메인 페이지 */}
       {uuid && (
         <PopularMainPage
-          children={children}
-          info={info}
+          showAll={showAll}
           toggleAllShow={toggleAllShow}
-          minHeight={minHeight}
           uuid={uuid}
-          delay={delay}
-          useSwipeMode={useSwipeMode || false}
+          changeCurrent={changeCurrent}
+          hasChildren={hasChildren}
+          {...props}
         />
       )}
-      {info.showAll && !hideAllList && uuid && (
-        <ListItems minHeight={minHeight}>
-          <AllListWrapper>
+      {hasChildren && showAll && !hide && uuid && (
+        <ListWrapper
+          minHeight={minHeight}
+          className={popularClassList.listWrapper}
+        >
+          <ListItems className={popularClassList.listItems}>
             {children.map((el, idx) => (
               <List
                 key={`mcm-popular-${uuid}-list-${idx}`}
-                id={`mcm-popular-list-${uuid}-${idx}`}
+                className={popularClassList.list}
+                isSelected={realCur === idx}
+                hoverStyles={setList?.hoverStyles}
+                isList={true}
               >
+                {setList?.showRating && (
+                  <Rating className={popularClassList.rating}>
+                    {String(idx + 1).padStart(2, "0")}.
+                  </Rating>
+                )}
                 {el}
               </List>
             ))}
-          </AllListWrapper>
-        </ListItems>
+          </ListItems>
+        </ListWrapper>
       )}
     </Wrapper>
   );

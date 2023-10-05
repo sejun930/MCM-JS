@@ -1,14 +1,24 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, memo } from "react";
 import { PopularMainPropsTypes, MainRefTypes } from "./popular.main.types";
 
 import PopuplarMainUIPage from "./popular.main.presenter";
 
 let current = 0; // 현재 선택되어 있는 리스트
 const timerEvent: { [key: string]: ReturnType<typeof setInterval> } = {}; // 타이머 이벤트 리스트
-export default function PopularMainPage(props: PopularMainPropsTypes) {
+
+const PopularMainPage = (props: PopularMainPropsTypes) => {
   const mainRef = useRef() as MainRefTypes;
 
-  const { children, uuid, delay, useSwipeMode } = props;
+  const {
+    children,
+    uuid,
+    delay,
+    useSwipeMode,
+    changeCurrent,
+    setList,
+    hasChildren,
+  } = props;
+  const hide = setList?.hide || false;
 
   // 타이머 제어 함수
   const handler = () => {
@@ -35,6 +45,7 @@ export default function PopularMainPage(props: PopularMainPropsTypes) {
       init: () => {
         if (mainRef.current && mainRef.current.style) {
           current = useSwipeMode ? children.length : 0;
+          if (!hide) changeCurrent(current);
 
           mainRef.current.style.transition = "unset";
           mainRef.current.style.transform = `translateY(-${current * 100}%)`;
@@ -58,14 +69,17 @@ export default function PopularMainPage(props: PopularMainPropsTypes) {
     move(); // 아래로 1칸 이동
 
     // 마지막 리스트에서 첫번째 리스트로 이동할 때
-    if (current >= children.length * (Number(useSwipeMode) + 1)) {
+    if (current >= children.length * (Number(useSwipeMode || false) + 1)) {
+      current = useSwipeMode ? children.length : 0;
       stop(); // 타이머 중지 후
+
       setTimeout(() => {
         init(); // 첫 위치로 이동
 
         running(); // 타이머 재시작
       }, 200);
     }
+    if (!hide) changeCurrent(current);
   };
 
   useEffect(() => {
@@ -73,11 +87,13 @@ export default function PopularMainPage(props: PopularMainPropsTypes) {
     if (timerEvent[uuid]) stop();
     if (mainRef.current && mainRef.current.style) {
       init(); // 첫 리스트로 이동
-      window.setTimeout(running, 50); // 타이머 가동
+      if (hasChildren) window.setTimeout(running, 50); // 타이머 가동
     }
   }, [children]);
 
   // presenter 전달용 props 객체
   const UIProps = { ...props, mainRef };
   return <PopuplarMainUIPage {...UIProps} />;
-}
+};
+
+export default memo(PopularMainPage);

@@ -1,6 +1,8 @@
 import { CSSProperties } from "react";
+import { breakPoints } from "mcm-js-commons/dist/responsive";
+
 import styled from "@emotion/styled";
-import { _Button } from "mcm-js-commons";
+import { _Button, _SpanText } from "mcm-js-commons";
 
 // px 문자열 완성하기
 const getPx = (px: number) => {
@@ -15,6 +17,12 @@ interface StyleTypes {
   isShowAll?: boolean;
   current?: number;
   render?: boolean;
+  isSelected?: boolean;
+  hoverStyles?: CSSProperties;
+  isList?: boolean;
+  useSwipeMode?: boolean;
+  hasChildren?: boolean;
+  isEmpty?: boolean;
 }
 
 export const Wrapper = styled.div`
@@ -36,6 +44,15 @@ export const Wrapper = styled.div`
 
     return styles;
   }}
+
+  @media ${breakPoints.mobileLarge} {
+    ${(props) =>
+      !props.isShowAll &&
+      props.minHeight &&
+      props.minHeight?.mobile && {
+        height: getPx(props.minHeight.mobile),
+      }}
+  }
 `;
 
 export const MainWrapper = styled.div`
@@ -45,14 +62,34 @@ export const MainWrapper = styled.div`
   padding-left: 10px;
   border: solid 2px black;
   overflow: hidden;
+  height: 100%;
 
-  ${(props: StyleTypes) =>
-    props.minHeight && {
-      height: getPx(props.minHeight.web),
-    }}
+  ${(props: StyleTypes) => {
+    const styles: CSSProperties & { [key: string]: string } = {};
+
+    // 높이값 지정
+    if (props.minHeight.web) styles.height = getPx(props.minHeight.web);
+
+    // 리스트가 비어있는 경우
+    if (props.isEmpty) styles.cursor = "not-allowed";
+    // 스와이프 모드 사용 중
+    else if (props.useSwipeMode && props.hasChildren) {
+      styles.cursor = "grab";
+    }
+
+    return styles;
+  }}
+
+  @media ${breakPoints.mobileLarge} {
+    ${(props) =>
+      props.minHeight &&
+      props.minHeight?.mobile && {
+        height: getPx(props.minHeight.mobile),
+      }}
+  }
 `;
 
-export const ListWrapper = styled.ul`
+export const MainItems = styled.ul`
   width: 100%;
   margin: 0;
   padding: 0;
@@ -70,6 +107,22 @@ export const List = styled.li`
     margin: 0;
     padding: 0;
   }
+
+  ${(props: StyleTypes) => {
+    let styles: CSSProperties & { [key: string]: string | number } = {};
+
+    if (props.isList) styles.color = "#777777";
+    if (props.isSelected) {
+      if (props.hoverStyles) styles = { ...props.hoverStyles };
+      else
+        styles = {
+          color: "#aa5656 !important",
+          fontWeight: 700,
+        };
+    }
+
+    return styles;
+  }}
 `;
 
 export const Opener = styled(_Button)`
@@ -114,21 +167,39 @@ export const Opener = styled(_Button)`
   }
 `;
 
-export const ListItems = styled.div`
+export const ListWrapper = styled.div`
   width: 100%;
   height: 100%;
   position: absolute;
   top: ${(props: StyleTypes) => getPx(props.minHeight.web)};
-  /* z-index: 11; */
+
+  @media ${breakPoints.mobileLarge} {
+    ${(props) =>
+      props.minHeight?.mobile && {
+        top: getPx(props.minHeight?.mobile),
+      }}
+  }
 `;
 
-export const AllListWrapper = styled.ul`
+export const ListItems = styled.ul`
   display: flex;
   flex-direction: column;
-  gap: 6px 0px;
+  gap: 10px 0px;
   margin: 0;
   padding: 10px;
   border: solid 2px gray;
   border-top: 0px;
   background-color: white;
+`;
+
+export const Rating = styled(_SpanText)`
+  min-width: 36px;
+`;
+
+export const Empty = styled(_SpanText)`
+  display: flex;
+  align-items: center;
+  height: 100%;
+  color: #aa5656;
+  font-weight: 700;
 `;

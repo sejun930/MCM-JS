@@ -30,7 +30,15 @@ export default function PopularTestPage() {
 
   return (
     <Wrapper>
-      <Popular children={list} minHeight={{ web: 40 }} useSwipeMode />
+      <Popular
+        children={list}
+        minHeight={{ web: 40, mobile: 50 }}
+        useSwipeMode
+        setList={{
+          showRating: true,
+          //   hide: true,
+        }}
+      />
       {/* <Popular children={["a", "b"]} minHeight={{ web: 30 }} /> */}
       {/* <Popular children={[<div>A</div>, <div>B</div>, <div>C</div>]} /> */}
       <div style={{ marginTop: "200px" }}>
