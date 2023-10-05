@@ -92,7 +92,7 @@ const PopularMainPage = (props: PopularMainPropsTypes) => {
   }, [children]);
 
   // presenter 전달용 props 객체
-  const UIProps = { ...props, mainRef };
+  const UIProps = { ...props, mainRef, stop, running };
   return <PopuplarMainUIPage {...UIProps} />;
 };
 
