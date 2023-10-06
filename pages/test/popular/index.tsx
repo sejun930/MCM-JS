@@ -37,6 +37,11 @@ export default function PopularTestPage() {
         // delay={2000}
         setList={{
           showRating: true,
+          //   hoverStyles: {
+          //     color: "red",
+          //     fontSize: "40px",
+          //     gap: "0px 50px",
+          //   },
           //   hide: true,
         }}
       />

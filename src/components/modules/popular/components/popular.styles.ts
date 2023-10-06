@@ -102,6 +102,13 @@ export const MainItems = styled.ul`
 
     return styles;
   }}
+
+  @media ${breakPoints.mobileLarge} {
+    ${(props) =>
+      props.minHeight?.mobile && {
+        height: getPx(props.minHeight.mobile),
+      }}
+  }
 `;
 
 export const List = styled.li`

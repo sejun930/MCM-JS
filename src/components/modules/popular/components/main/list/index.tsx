@@ -48,7 +48,7 @@ export default function PopularMainListPage(props: PopularMainListPropsTypes) {
       // 커서 유지하기
       document.body.style.cursor = "grabbing";
       // 종료 함수 생성
-      window.addEventListener("click", handler.end);
+      window.addEventListener(_isMobile ? "touchend" : "click", handler.end);
       // 이동 함수 설정
       window.addEventListener(
         _isMobile ? "touchmove" : "mousemove",
@@ -145,7 +145,7 @@ export default function PopularMainListPage(props: PopularMainListPropsTypes) {
 
       document.body.style.cursor = "auto";
       // 종료 함수 삭제
-      window.removeEventListener("click", handler.end);
+      window.removeEventListener(_isMobile ? "touchend" : "click", handler.end);
 
       // 이동 함수 삭제
       window.removeEventListener(
