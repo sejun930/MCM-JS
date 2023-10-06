@@ -34,8 +34,14 @@ export default function PopularTestPage() {
         children={list}
         minHeight={{ web: 40, mobile: 50 }}
         useSwipeMode
+        // delay={2000}
         setList={{
           showRating: true,
+          //   hoverStyles: {
+          //     color: "red",
+          //     fontSize: "40px",
+          //     gap: "0px 50px",
+          //   },
           //   hide: true,
         }}
       />

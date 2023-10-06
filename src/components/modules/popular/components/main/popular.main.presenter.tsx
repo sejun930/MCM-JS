@@ -1,46 +1,20 @@
 import { popularClassList } from "../popular.class";
-import { List, MainItems, MainWrapper, Opener, Empty } from "../popular.styles";
+import { MainWrapper, Opener } from "../popular.styles";
 import { PopularMainUIPropsTypes } from "./popular.main.types";
 
+import PopularMainListPage from "./list";
+
 export default function PopuplarMainUIPage(props: PopularMainUIPropsTypes) {
-  const {
-    children,
-    minHeight,
-    uuid,
-    mainRef,
-    toggleAllShow,
-    showAll,
-    useSwipeMode,
-    hasChildren,
-  } = props;
+  const { children, minHeight, toggleAllShow, showAll, hasChildren } = props;
   const hide = props?.setList?.hide || false;
 
-  // 상위에 노출될 리스트
-  const mainList = useSwipeMode
-    ? [...children, ...children, ...children] // 스와이프 모드 사용시 앞 뒤로 추가 데이터 삽입
-    : [...children, ...children.slice(0, 1)]; // 사용하지 않을 경우 끝에 첫번째 리스트만 추가
-
-  const isEmpty = mainList.length === 0;
+  // 상위에 노출될 리스트 (맨 뒤에 첫번째 리스트만 추가)
+  const mainList = [...children, ...children.slice(0, 1)];
 
   return (
-    <MainWrapper
-      className={popularClassList.mainWrapper}
-      minHeight={minHeight}
-      useSwipeMode={useSwipeMode}
-      hasChildren={hasChildren}
-      isEmpty={isEmpty}
-    >
-      <MainItems className={popularClassList.mainItems} ref={mainRef}>
-        {(mainList.length &&
-          mainList.map((el, idx) => (
-            <List
-              key={`mcm-popular-${uuid}-main-list-${idx}`}
-              className={popularClassList.mainList}
-            >
-              {el}
-            </List>
-          ))) || <Empty>"children" props가 비어있습니다.</Empty>}
-      </MainItems>
+    <MainWrapper className={popularClassList.mainWrapper} minHeight={minHeight}>
+      {/* Main 롤링 페이지*/}
+      <PopularMainListPage {...props} mainList={mainList} />
       {!hide && hasChildren && (
         <Opener
           className={popularClassList.opener}

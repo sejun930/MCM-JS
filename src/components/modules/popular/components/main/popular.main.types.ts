@@ -1,5 +1,5 @@
 import { MutableRefObject } from "react";
-import { PopularPropsTypes } from "../popular.types";
+import { PopularPropsTypes, ChildrenType } from "../popular.types";
 
 export type MainRefTypes = MutableRefObject<HTMLUListElement>;
 
@@ -10,9 +10,24 @@ export type PopularMainPropsTypes = PopularPropsTypes & {
   uuid: string;
   changeCurrent: (num: number) => void;
   hasChildren: boolean;
+  current: number;
 };
 
 // Main 페이지 UI props 타입
 export type PopularMainUIPropsTypes = PopularMainPropsTypes & {
   mainRef: MainRefTypes;
+  stop: () => void;
+  running: () => void;
+  current: number;
+};
+
+export type PopularMainListPropsTypes = Omit<PopularPropsTypes, "children"> & {
+  mainRef: MainRefTypes;
+  mainList: ChildrenType;
+  uuid: string;
+  hasChildren: boolean;
+  stop: () => void;
+  running: () => void;
+  current: number;
+  changeCurrent: (num: number) => void;
 };

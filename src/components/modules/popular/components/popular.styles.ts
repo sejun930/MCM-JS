@@ -20,9 +20,9 @@ interface StyleTypes {
   isSelected?: boolean;
   hoverStyles?: CSSProperties;
   isList?: boolean;
-  useSwipeMode?: boolean;
-  hasChildren?: boolean;
   isEmpty?: boolean;
+  ableUseSwipe?: boolean; // 스와이프 사용 가능 여부
+  grabbing?: boolean; // 스와이프 사용 중 여부
 }
 
 export const Wrapper = styled.div`
@@ -70,13 +70,6 @@ export const MainWrapper = styled.div`
     // 높이값 지정
     if (props.minHeight.web) styles.height = getPx(props.minHeight.web);
 
-    // 리스트가 비어있는 경우
-    if (props.isEmpty) styles.cursor = "not-allowed";
-    // 스와이프 모드 사용 중
-    else if (props.useSwipeMode && props.hasChildren) {
-      styles.cursor = "grab";
-    }
-
     return styles;
   }}
 
@@ -94,6 +87,28 @@ export const MainItems = styled.ul`
   margin: 0;
   padding: 0;
   position: relative;
+
+  ${(props: StyleTypes) => {
+    const styles: CSSProperties & { [key: string]: string } = {};
+
+    if (props.minHeight) styles.height = getPx(props.minHeight.web);
+
+    // 리스트가 비어있는 경우
+    if (props.isEmpty) styles.cursor = "not-allowed";
+    if (props.ableUseSwipe) {
+      styles.cursor = "grab";
+      if (props.grabbing) styles.cursor = "grabbing";
+    }
+
+    return styles;
+  }}
+
+  @media ${breakPoints.mobileLarge} {
+    ${(props) =>
+      props.minHeight?.mobile && {
+        height: getPx(props.minHeight.mobile),
+      }}
+  }
 `;
 
 export const List = styled.li`
