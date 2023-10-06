@@ -34,6 +34,7 @@ export default function PopularTestPage() {
         children={list}
         minHeight={{ web: 40, mobile: 50 }}
         useSwipeMode
+        // delay={2000}
         setList={{
           showRating: true,
           //   hide: true,

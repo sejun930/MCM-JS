@@ -91,18 +91,14 @@ export const MainItems = styled.ul`
   ${(props: StyleTypes) => {
     const styles: CSSProperties & { [key: string]: string } = {};
 
+    if (props.minHeight) styles.height = getPx(props.minHeight.web);
+
     // 리스트가 비어있는 경우
     if (props.isEmpty) styles.cursor = "not-allowed";
     if (props.ableUseSwipe) {
       styles.cursor = "grab";
       if (props.grabbing) styles.cursor = "grabbing";
     }
-    // if (props.useSwipeMode) {
-    //   // 스와이프 모드를 사용중일 경우
-    //   if (props.hasChildren) {
-    //     styles.cursor = "grab";
-    //   }
-    // }
 
     return styles;
   }}

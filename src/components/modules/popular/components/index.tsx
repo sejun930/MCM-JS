@@ -50,10 +50,6 @@ function _Popular(props: PopularRenderPropsTypes) {
     if (!hide) setCurrent(num);
   };
 
-  // 실제로 현재 선택되어 있는 리스트
-  let realCur = current;
-  if (useSwipeMode) realCur -= children.length;
-
   // 리스트가 2개 이상인지 검증
   const hasChildren = children.length > 1;
 
@@ -72,6 +68,7 @@ function _Popular(props: PopularRenderPropsTypes) {
           uuid={uuid}
           changeCurrent={changeCurrent}
           hasChildren={hasChildren}
+          current={current}
           {...props}
         />
       )}
@@ -85,7 +82,7 @@ function _Popular(props: PopularRenderPropsTypes) {
               <List
                 key={`mcm-popular-${uuid}-list-${idx}`}
                 className={popularClassList.list}
-                isSelected={realCur === idx}
+                isSelected={current === idx}
                 hoverStyles={setList?.hoverStyles}
                 isList={true}
               >

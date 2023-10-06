@@ -3,7 +3,7 @@ import { PopularMainPropsTypes, MainRefTypes } from "./popular.main.types";
 
 import PopuplarMainUIPage from "./popular.main.presenter";
 
-let current = 0; // 현재 선택되어 있는 리스트
+let _current = 0; // 현재 선택되어 있는 리스트
 const timerEvent: { [key: string]: ReturnType<typeof setInterval> } = {}; // 타이머 이벤트 리스트
 
 const PopularMainPage = (props: PopularMainPropsTypes) => {
@@ -13,10 +13,10 @@ const PopularMainPage = (props: PopularMainPropsTypes) => {
     children,
     uuid,
     delay,
-    useSwipeMode,
     changeCurrent,
     setList,
     hasChildren,
+    current,
   } = props;
   const hide = setList?.hide || false;
 
@@ -33,9 +33,9 @@ const PopularMainPage = (props: PopularMainPropsTypes) => {
       // 타이머 이벤트 실행
       running: () => {
         if (mainRef.current && mainRef.current.style) {
-          // 3초 이하일 경우 최소 3초 적용
-          let _delay = delay || 3000;
-          if (_delay < 3000) _delay = 3000;
+          // 2초 이하일 경우 최소 2초 적용
+          let _delay = delay || 2000;
+          if (_delay < 2000 || typeof _delay !== "number") _delay = 2000;
 
           if (!timerEvent[uuid])
             timerEvent[uuid] = setInterval(rollingHandler, _delay);
@@ -44,20 +44,20 @@ const PopularMainPage = (props: PopularMainPropsTypes) => {
       // 첫 위치로 이동
       init: () => {
         if (mainRef.current && mainRef.current.style) {
-          current = useSwipeMode ? children.length : 0;
-          if (!hide) changeCurrent(current);
+          _current = 0;
+          if (!hide) changeCurrent(_current);
 
           mainRef.current.style.transition = "unset";
-          mainRef.current.style.transform = `translateY(-${current * 100}%)`;
+          mainRef.current.style.transform = `translateY(-${_current * 100}%)`;
         }
       },
       // 롤링 이벤트 실행
       move: (moveCurrent?: number) => {
         if (mainRef.current && mainRef.current.style) {
-          current = moveCurrent || current + 1;
+          _current = moveCurrent || _current + 1;
 
           mainRef.current.style.transition = "all 0.25s ease";
-          mainRef.current.style.transform = `translateY(-${current * 100}%)`;
+          mainRef.current.style.transform = `translateY(-${_current * 100}%)`;
         }
       },
     };
@@ -69,8 +69,8 @@ const PopularMainPage = (props: PopularMainPropsTypes) => {
     move(); // 아래로 1칸 이동
 
     // 마지막 리스트에서 첫번째 리스트로 이동할 때
-    if (current >= children.length * (Number(useSwipeMode || false) + 1)) {
-      current = useSwipeMode ? children.length : 0;
+    if (_current > children.length - 1) {
+      _current = 0;
       stop(); // 타이머 중지 후
 
       setTimeout(() => {
@@ -79,7 +79,7 @@ const PopularMainPage = (props: PopularMainPropsTypes) => {
         running(); // 타이머 재시작
       }, 200);
     }
-    if (!hide) changeCurrent(current);
+    if (!hide) changeCurrent(_current);
   };
 
   useEffect(() => {
@@ -91,9 +91,13 @@ const PopularMainPage = (props: PopularMainPropsTypes) => {
     }
   }, [children]);
 
+  useEffect(() => {
+    _current = current;
+  }, [current]);
+
   // presenter 전달용 props 객체
   const UIProps = { ...props, mainRef, stop, running };
-  return <PopuplarMainUIPage {...UIProps} />;
+  return <PopuplarMainUIPage {...UIProps} current={current} />;
 };
 
 export default memo(PopularMainPage);
