@@ -2,6 +2,8 @@ import { CSSProperties } from "react";
 import { CommonsSelectorTypes } from "../../../../commons/types/commons.types";
 
 export type ChildrenType = Array<React.ReactNode>;
+export type StylesTypes = CSSProperties & { [key: string]: string };
+
 export interface MinHeightType {
   minHeight: {
     web: number; // 웹 버전 (768px 이상)
@@ -26,6 +28,18 @@ export type PopularPropsTypes = CommonsSelectorTypes & {
     hide?: boolean; // 전체 리스트 숨기기 여부
     showRating?: boolean; // 순위 표기 여부
     hoverStyles?: CSSProperties; // 현재 리스트 스타일 적용
+    styles?: StylesTypes; // 웹, 모바일 동시 적용 스타일
+    responsiveStyles?: {
+      // 웹, 모바일 개별 적용 스타일
+      web?: StylesTypes; // 웹 (768px 이상) 스타일 적용
+      mobile?: StylesTypes; // 모바일 (767px 이하) 스타일 적용
+    };
+  };
+  popularStyles?: StylesTypes; // 웹, 모바일 동시 적용 스타일
+  popularResponsiveStyles?: {
+    // 웹, 모바일 개별 적용 스타일
+    web?: StylesTypes; // 웹 (768px 이상) 스타일 적용
+    mobile?: StylesTypes; // 모바일 (767px 이하) 스타일 적용
   };
 };
 

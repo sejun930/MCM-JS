@@ -80,7 +80,7 @@ export default function PopularMainListPage(props: PopularMainListPropsTypes) {
         if (minHeight?.mobile && _isMobile) moveAverage = minHeight.mobile;
 
         // 위, 아래 공백 ( 최소 높이값의 3/1 )
-        let bonus = Math.floor(moveAverage / 4);
+        let bonus = Math.floor(moveAverage / 3);
         if (location < 0) bonus *= -1;
 
         // 리스트를 얼마나 건너뛰었는지 체크

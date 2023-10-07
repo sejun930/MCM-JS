@@ -3,9 +3,7 @@ import { PopularMainPropsTypes, MainRefTypes } from "./popular.main.types";
 
 import PopuplarMainUIPage from "./popular.main.presenter";
 
-let _current = 0; // 현재 선택되어 있는 리스트
 const timerEvent: { [key: string]: ReturnType<typeof setInterval> } = {}; // 타이머 이벤트 리스트
-
 const PopularMainPage = (props: PopularMainPropsTypes) => {
   const mainRef = useRef() as MainRefTypes;
 
@@ -19,6 +17,7 @@ const PopularMainPage = (props: PopularMainPropsTypes) => {
     current,
   } = props;
   const hide = setList?.hide || false;
+  let _current = 0; // 현재 선택되어 있는 리스트
 
   // 타이머 제어 함수
   const handler = () => {
@@ -83,6 +82,8 @@ const PopularMainPage = (props: PopularMainPropsTypes) => {
   };
 
   useEffect(() => {
+    _current = current;
+
     // 기존에 실행되고 있는 타이머 이벤트 종료
     if (timerEvent[uuid]) stop();
     if (mainRef.current && mainRef.current.style) {
@@ -90,10 +91,6 @@ const PopularMainPage = (props: PopularMainPropsTypes) => {
       if (hasChildren) window.setTimeout(running, 50); // 타이머 가동
     }
   }, [children]);
-
-  useEffect(() => {
-    _current = current;
-  }, [current]);
 
   // presenter 전달용 props 객체
   const UIProps = { ...props, mainRef, stop, running };
