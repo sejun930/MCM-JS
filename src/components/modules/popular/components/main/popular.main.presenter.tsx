@@ -5,14 +5,27 @@ import { PopularMainUIPropsTypes } from "./popular.main.types";
 import PopularMainListPage from "./list";
 
 export default function PopuplarMainUIPage(props: PopularMainUIPropsTypes) {
-  const { children, minHeight, toggleAllShow, showAll, hasChildren } = props;
+  const {
+    children,
+    minHeight,
+    toggleAllShow,
+    showAll,
+    hasChildren,
+    popularStyles,
+    popularResponsiveStyles,
+  } = props;
   const hide = props?.setList?.hide || false;
 
   // 상위에 노출될 리스트 (맨 뒤에 첫번째 리스트만 추가)
   const mainList = [...children, ...children.slice(0, 1)];
 
   return (
-    <MainWrapper className={popularClassList.mainWrapper} minHeight={minHeight}>
+    <MainWrapper
+      className={popularClassList.mainWrapper}
+      minHeight={minHeight}
+      popularStyles={popularStyles}
+      popularResponsiveStyles={popularResponsiveStyles}
+    >
       {/* Main 롤링 페이지*/}
       <PopularMainListPage {...props} mainList={mainList} />
       {!hide && hasChildren && (

@@ -21,6 +21,7 @@ export type PopularMainUIPropsTypes = PopularMainPropsTypes & {
   current: number;
 };
 
+// Main-List 페이지 props 타입
 export type PopularMainListPropsTypes = Omit<PopularPropsTypes, "children"> & {
   mainRef: MainRefTypes;
   mainList: ChildrenType;
