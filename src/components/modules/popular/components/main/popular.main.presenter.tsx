@@ -6,7 +6,7 @@ import PopularMainListPage from "./list";
 
 export default function PopuplarMainUIPage(props: PopularMainUIPropsTypes) {
   const {
-    children,
+    list,
     minHeight,
     toggleAllShow,
     showAll,
@@ -17,7 +17,7 @@ export default function PopuplarMainUIPage(props: PopularMainUIPropsTypes) {
   const hide = props?.setList?.hide || false;
 
   // 상위에 노출될 리스트 (맨 뒤에 첫번째 리스트만 추가)
-  const mainList = [...children, ...children.slice(0, 1)];
+  const mainList = [...list, ...list.slice(0, 1)];
 
   return (
     <MainWrapper

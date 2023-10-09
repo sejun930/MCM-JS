@@ -8,7 +8,7 @@ import {
 import PopularMainPage from "./main/popular.main.container";
 
 import { _Error, _Button } from "mcm-js-commons";
-import { MutableRefObject, useEffect, useRef, useState } from "react";
+import { MutableRefObject, memo, useEffect, useRef, useState } from "react";
 
 import { PopularPropsTypes, PopularRenderPropsTypes } from "./popular.types";
 import { popularClassList } from "./popular.class";
@@ -17,20 +17,21 @@ import { getAllComponentsClassName } from "mcm-js-commons/dist/hooks";
 import { v4 } from "uuid";
 
 // 1. Error 처리하기
-export default function _RenderPopular(props: PopularPropsTypes) {
+const _RenderPopular = (props: PopularPropsTypes) => {
   const uuid = v4();
 
   return (
-    <_Error propsList={{ ...props }} requiredList={["children", "minHeight"]}>
+    <_Error propsList={{ ...props }} requiredList={["list", "minHeight"]}>
       <_Popular {...props} _uuid={uuid} />
     </_Error>
   );
-}
+};
 
 let len = 0; // 현재 실행된 모듈의 전체 개수
 // 2. 최종 페이지 렌더
 function _Popular(props: PopularRenderPropsTypes) {
-  const { children, minHeight, className, id, _uuid, setList } = props;
+  const { list, minHeight, className, id, _uuid, setList, changeListEvent } =
+    props;
 
   // 전체 리스트 가리기 여부
   const hide = setList?.hide || false;
@@ -44,7 +45,6 @@ function _Popular(props: PopularRenderPropsTypes) {
 
   useEffect(() => {
     // z-index 적용하기
-
     if (wrapperRef.current && wrapperRef.current.style) {
       // 실행되어 있는 전체 Popular 모듈 가져오기
       const nodes = document.getElementsByClassName("mcm-popular-wrapper");
@@ -63,11 +63,14 @@ function _Popular(props: PopularRenderPropsTypes) {
 
   // 현재 리스트 저장하기
   const changeCurrent = (num: number) => {
+    // 변경 감지 이벤트가 있을 경우
+    if (changeListEvent !== undefined) changeListEvent(num);
+
     if (!hide) setCurrent(num);
   };
 
   // 리스트가 2개 이상인지 검증
-  const hasChildren = children.length > 1;
+  const hasChildren = list.length > 1;
 
   return (
     <Wrapper
@@ -99,7 +102,7 @@ function _Popular(props: PopularRenderPropsTypes) {
             liststyles={setList?.styles || {}}
             listResponsiveStyles={setList?.responsiveStyles || {}}
           >
-            {children.map((el, idx) => (
+            {list.map((el, idx) => (
               <List
                 key={`mcm-popular-${uuid}-list-${idx}`}
                 className={popularClassList.list}
@@ -121,3 +124,5 @@ function _Popular(props: PopularRenderPropsTypes) {
     </Wrapper>
   );
 }
+
+export default memo(_RenderPopular);

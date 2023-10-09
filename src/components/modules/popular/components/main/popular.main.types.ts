@@ -2,6 +2,7 @@ import { MutableRefObject } from "react";
 import { PopularPropsTypes, ChildrenType } from "../popular.types";
 
 export type MainRefTypes = MutableRefObject<HTMLUListElement>;
+export type InputRefTypes = MutableRefObject<HTMLInputElement>;
 
 // Main 페이지 props 타입
 export type PopularMainPropsTypes = PopularPropsTypes & {
@@ -18,7 +19,7 @@ export type PopularMainUIPropsTypes = PopularMainPropsTypes & {
   mainRef: MainRefTypes;
   stop: () => void;
   running: () => void;
-  current: number;
+  changeTempCurrent: (num: number) => void;
 };
 
 // Main-List 페이지 props 타입
@@ -31,4 +32,5 @@ export type PopularMainListPropsTypes = Omit<PopularPropsTypes, "children"> & {
   running: () => void;
   current: number;
   changeCurrent: (num: number) => void;
+  changeTempCurrent: (num: number) => void;
 };
