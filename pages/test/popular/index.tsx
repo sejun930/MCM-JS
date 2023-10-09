@@ -24,7 +24,22 @@ export default function PopularTestPage() {
       <img src="https://img.newspim.com/news/2021/10/23/2110232021598600.jpg" />
       노란 사과
     </Spen>,
+    <Spen>1</Spen>,
+    <Spen>2</Spen>,
+    <Spen>3</Spen>,
   ]);
+  const [list2] = useState([<div>A</div>, <div>B</div>, <div>C</div>]);
+  const list3 = [<div>ㄱ</div>, <div>ㄴ</div>, <div>ㄷ</div>];
+  //   const [list3] = useState([<div>ㄱ</div>, <div>ㄴ</div>, <div>ㄷ</div>]);
+  const [test, setTest] = useState(false);
+
+  const [select, setSelect] = useState(0);
+  const [select2, setSelect2] = useState(0);
+  const [select3, setSelect3] = useState(0);
+
+  const changeSelect = (num) => {
+    setSelect(num);
+  };
 
   const addList = () => {
     const _list = [...list];
@@ -44,17 +59,29 @@ export default function PopularTestPage() {
 
   return (
     <Wrapper>
+      <div>{select}</div>
       <Popular
-        children={list}
+        list={list}
         minHeight={{ web: 60, mobile: 50 }}
         useSwipeMode
         // delay={200000000}
         setList={{
           showRating: true,
         }}
+        // changeListEvent={(num) => setSelect(num)}
       />
-      <Popular children={["a", "b"]} minHeight={{ web: 30 }} />
-      {/* <Popular children={[<div>A</div>, <div>B</div>, <div>C</div>]} /> */}
+      <div>{select2}</div>
+      <Popular
+        list={list2}
+        minHeight={{ web: 30 }}
+        // changeListEvent={(num) => setSelect2(num)}
+      />
+      <div>{select3}</div>
+      <Popular
+        list={list3}
+        minHeight={{ web: 30 }}
+        // changeListEvent={(num) => setSelect3(num)}
+      />
       <div style={{ marginTop: "200px" }}>
         <button onClick={addList}>추가</button>
         <button onClick={removeList}>삭제</button>

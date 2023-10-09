@@ -22,6 +22,7 @@ export default function PopularMainListPage(props: PopularMainListPropsTypes) {
     minHeight,
     current,
     changeCurrent,
+    changeTempCurrent,
   } = props;
 
   // 스와이프 사용중 여부
@@ -135,6 +136,7 @@ export default function PopularMainListPage(props: PopularMainListPropsTypes) {
         mainRef.current.style.transform = `translateY(-${100 * moveCurrent}%)`;
 
         changeCurrent(moveCurrent);
+        changeTempCurrent(moveCurrent);
       }
 
       running();

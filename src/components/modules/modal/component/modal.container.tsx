@@ -41,7 +41,6 @@ function _WithErrorModal(props: ModalPropsType) {
 
 // 3. 최종 모달 렌더 컴포넌트
 function _Modal(props: ModalPropsType) {
-  console.log(props);
   const {
     show,
     offAutoClose,

@@ -5,7 +5,6 @@ import { _Title } from "mcm-js-commons";
 
 export default function Test() {
   const [open, setOpen] = useState(false);
-  console.log(open);
 
   return (
     <>

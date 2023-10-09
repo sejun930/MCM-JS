@@ -13,7 +13,7 @@ export interface MinHeightType {
 
 export type PopularPropsTypes = CommonsSelectorTypes & {
   // 렌더될 리스트
-  children: ChildrenType;
+  list: ChildrenType;
   // Popular 높이값 설정
   minHeight: {
     web: number; // 웹 버전 (768px 이상)
@@ -41,6 +41,8 @@ export type PopularPropsTypes = CommonsSelectorTypes & {
     web?: StylesTypes; // 웹 (768px 이상) 스타일 적용
     mobile?: StylesTypes; // 모바일 (767px 이하) 스타일 적용
   };
+  // 리스트가 변경될 때 실행될 이벤트
+  changeListEvent?: (idx: number) => void;
 };
 
 // Render 컴포넌트를 거쳐 렌더되는 최종 페이지
