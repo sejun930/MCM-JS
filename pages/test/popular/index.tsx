@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 import React, { useState } from "react";
-import Popular from "../../../src/components/modules/popular/components";
+import Popular from "../../../src/components/modules/popular";
 import { v4 } from "uuid";
 
 let num = 4;
@@ -29,8 +29,8 @@ export default function PopularTestPage() {
     <Spen>3</Spen>,
   ]);
   const [list2] = useState([<div>A</div>, <div>B</div>, <div>C</div>]);
-  const list3 = [<div>ㄱ</div>, <div>ㄴ</div>, <div>ㄷ</div>];
-  //   const [list3] = useState([<div>ㄱ</div>, <div>ㄴ</div>, <div>ㄷ</div>]);
+  //   const list3 = [<div>ㄱ</div>, <div>ㄴ</div>, <div>ㄷ</div>];
+  const [list3] = useState([<div>ㄱ</div>, <div>ㄴ</div>, <div>ㄷ</div>]);
   const [test, setTest] = useState(false);
 
   const [select, setSelect] = useState(0);
@@ -68,19 +68,19 @@ export default function PopularTestPage() {
         setList={{
           showRating: true,
         }}
-        // changeListEvent={(num) => setSelect(num)}
+        changeListEvent={(num) => setSelect(num)}
       />
       <div>{select2}</div>
       <Popular
         list={list2}
         minHeight={{ web: 30 }}
-        // changeListEvent={(num) => setSelect2(num)}
+        changeListEvent={(num) => setSelect2(num)}
       />
       <div>{select3}</div>
       <Popular
         list={list3}
         minHeight={{ web: 30 }}
-        // changeListEvent={(num) => setSelect3(num)}
+        changeListEvent={(num) => setSelect3(num)}
       />
       <div style={{ marginTop: "200px" }}>
         <button onClick={addList}>추가</button>
