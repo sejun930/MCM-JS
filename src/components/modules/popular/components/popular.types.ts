@@ -1,5 +1,6 @@
 import { CSSProperties } from "react";
 import { CommonsSelectorTypes } from "../../../../commons/types/commons.types";
+import _Popular from ".";
 
 export type ChildrenType = Array<React.ReactNode>;
 export type StylesTypes = CSSProperties & { [key: string]: string };
@@ -49,3 +50,5 @@ export type PopularPropsTypes = CommonsSelectorTypes & {
 export type PopularRenderPropsTypes = PopularPropsTypes & {
   _uuid: string;
 };
+
+export type PopularType = typeof _Popular;
