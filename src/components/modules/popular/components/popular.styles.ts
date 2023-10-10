@@ -34,6 +34,7 @@ interface StyleTypes {
     web?: StylesTypes; // 웹 스타일
     mobile?: StylesTypes; // 모바일 스타일
   };
+  btnColor?: { web: string; mobile: string }; // 버튼 색상
 }
 
 export const Wrapper = styled.div`
@@ -72,6 +73,7 @@ export const MainWrapper = styled.div`
   justify-content: space-between;
   padding-left: 10px;
   border: solid 2px black;
+  background-color: white;
   overflow: hidden;
   height: 100%;
 
@@ -183,6 +185,11 @@ export const Opener = styled(_Button)`
     border-radius: 999px;
     background-color: black;
     transition: all 0.25s ease;
+
+    ${(props) =>
+      props.btnColor && {
+        backgroundColor: props.btnColor.web,
+      }}
   }
 
   ::before {
@@ -206,6 +213,26 @@ export const Opener = styled(_Button)`
       props.isShowAll && {
         transform: "rotate(30deg)",
       }}
+  }
+
+  @media ${breakPoints.web} {
+    ::after,
+    ::before {
+      ${(props) =>
+        props.btnColor && {
+          backgroundColor: props.btnColor.web,
+        }}
+    }
+  }
+
+  @media ${breakPoints.mobileLarge} {
+    ::after,
+    ::before {
+      ${(props) =>
+        props.btnColor && {
+          backgroundColor: props.btnColor.mobile,
+        }}
+    }
   }
 `;
 
