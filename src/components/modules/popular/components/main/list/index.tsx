@@ -55,6 +55,8 @@ export default function PopularMainListPage(props: PopularMainListPropsTypes) {
         _isMobile ? "touchmove" : "mousemove",
         handler.move
       );
+      // 스크롤 방지
+      if (_isMobile) document.body.style.overflow = "hidden";
 
       // 외부 이벤트 차단
       e.preventDefault();
@@ -130,6 +132,8 @@ export default function PopularMainListPage(props: PopularMainListPropsTypes) {
       setGrabbing(false);
       // 정보 초기화
       popularMainListInfo = { ...initPopularMainListInfo };
+      // 스크롤 해제
+      if (_isMobile) document.body.style.overflow = "auto";
 
       if (mainRef.current && mainRef.current.style) {
         mainRef.current.style.transition = "all 0.25s ease 0s";
@@ -169,7 +173,6 @@ export default function PopularMainListPage(props: PopularMainListPropsTypes) {
       onTouchStart={(e) =>
         ableUseSwipe ? start(e)(e.changedTouches[0].clientY, true) : undefined
       }
-      minHeight={minHeight}
     >
       {(mainList.length &&
         mainList.map((el, idx) => (

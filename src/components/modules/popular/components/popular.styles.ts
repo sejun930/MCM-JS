@@ -188,7 +188,7 @@ export const Opener = styled(_Button)`
 
     ${(props) =>
       props.btnColor && {
-        backgroundColor: props.btnColor.web,
+        backgroundColor: props.btnColor.web || "black",
       }}
   }
 
@@ -220,7 +220,7 @@ export const Opener = styled(_Button)`
     ::before {
       ${(props) =>
         props.btnColor && {
-          backgroundColor: props.btnColor.web,
+          backgroundColor: props.btnColor?.web || "black",
         }}
     }
   }
@@ -230,7 +230,7 @@ export const Opener = styled(_Button)`
     ::before {
       ${(props) =>
         props.btnColor && {
-          backgroundColor: props.btnColor.mobile,
+          backgroundColor: props.btnColor?.mobile || "black",
         }}
     }
   }
