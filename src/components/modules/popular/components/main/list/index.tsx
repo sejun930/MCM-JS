@@ -24,6 +24,8 @@ export default function PopularMainListPage(props: PopularMainListPropsTypes) {
     changeCurrent,
     changeTempCurrent,
   } = props;
+  // 스크롤 방지 여부 체크
+  let isDisableFixedWindow = false;
 
   // 스와이프 사용중 여부
   const [grabbing, setGrabbing] = useState(false);
@@ -56,7 +58,11 @@ export default function PopularMainListPage(props: PopularMainListPropsTypes) {
         handler.move
       );
       // 스크롤 방지
-      if (_isMobile) document.body.style.overflow = "hidden";
+      if (_isMobile) {
+        // 다른 모듈의 영향에 의해 스크롤이 제어되고 있는지 체크
+        isDisableFixedWindow = document.body.style?.overflow === "hidden";
+        document.body.style.overflow = "hidden";
+      }
 
       // 외부 이벤트 차단
       e.preventDefault();
@@ -133,7 +139,10 @@ export default function PopularMainListPage(props: PopularMainListPropsTypes) {
       // 정보 초기화
       popularMainListInfo = { ...initPopularMainListInfo };
       // 스크롤 해제
-      if (_isMobile) document.body.style.overflow = "auto";
+      if (_isMobile && !isDisableFixedWindow) {
+        document.body.style.overflow = "auto";
+        isDisableFixedWindow = false;
+      }
 
       if (mainRef.current && mainRef.current.style) {
         mainRef.current.style.transition = "all 0.25s ease 0s";

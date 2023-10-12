@@ -37,6 +37,7 @@ const ModalUIPage = (props: {
     closeMent,
     closeButtonInfo,
     handleClickEvent,
+    onFixWindow,
   } = _props;
 
   const _closeButtonSize = getPXForm(
@@ -49,13 +50,17 @@ const ModalUIPage = (props: {
   const buttonWrapperStyles = modalStyles?.closeButton || {};
   buttonWrapperStyles.top = closeBtnTop;
 
+  let _className = className || "";
+  if (onFixWindow) _className += " modal-use-fixed-window";
+  if (_className.length) _className = _className.trim();
+
   return (
     (show && (
       <ModalWrapper ref={_modalWrapperRef}>
         <Wrapper
           className={getAllComponentsClassName(
             modalClassList.wrapper,
-            className
+            _className
           )}
           id={id}
           data-name={name}
