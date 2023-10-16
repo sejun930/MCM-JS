@@ -27,8 +27,16 @@ const _RenderSlider = (props: SliderPropsTypes) => {
 };
 
 const _Slider = (props: SliderPropsTypes & SliderAddProps) => {
-  const { children, useAutoPlay, useAnimation, _uid, firstPage } = props;
+  const {
+    children,
+    useAutoPlay,
+    useAnimation,
+    _uid,
+    firstPage,
+    changePageEvent,
+  } = props;
 
+  const wrapperRef = useRef() as MutableRefObject<HTMLDivElement>;
   const listRef = useRef() as MutableRefObject<HTMLUListElement>;
   const timerRef = useRef() as MutableRefObject<HTMLDivElement>;
 
@@ -72,6 +80,9 @@ const _Slider = (props: SliderPropsTypes & SliderAddProps) => {
         selector,
         offAnimtaion: true,
       })();
+
+    if (wrapperRef && wrapperRef.current)
+      wrapperRef.current.style.visibility = "visible";
   }, []);
 
   // 슬라이더 이동하기
@@ -173,6 +184,9 @@ const _Slider = (props: SliderPropsTypes & SliderAddProps) => {
         }%))`;
       }
 
+      // 변경 이벤트가 있을 경우, 함수 실행
+      if (changePageEvent) changePageEvent(finalSelector - 2);
+
       // 페이지 이동 후 자동 넘김 실행하기
       if (useAutoPlay) {
         setAutoPlay(finalSelector);
@@ -214,6 +228,7 @@ const _Slider = (props: SliderPropsTypes & SliderAddProps) => {
       selector={selector}
       uid={uid}
       timerList={timerList}
+      wrapperRef={wrapperRef}
     />
   );
 };

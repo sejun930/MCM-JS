@@ -26,7 +26,7 @@ export default function SliderListUIPage({
       onMouseMove={(e) => useSwipeMode && moveDrag(e.pageX || 0)}
       onClick={(useSwipeMode && endDrag) || undefined}
       onTouchStart={(e) =>
-        useSwipeMode && startDrag(e.targetTouches[0].pageX || 0)
+        useSwipeMode && startDrag(e.targetTouches[0].pageX || 0, true)
       }
       onTouchMove={(e) =>
         useSwipeMode && moveDrag(e.targetTouches[0].pageX || 0)

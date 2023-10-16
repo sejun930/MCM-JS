@@ -28,6 +28,11 @@ export default function SliderListPage(props: SliderListTypes) {
     children,
   } = props;
 
+  // 모바일 기능 사용 여부
+  let useMobile = false;
+  // 모바일 스크롤 체크 여부 확인
+  let isDisableFixedWindow = false;
+
   const list = [
     ...children.slice(children.length - 2),
     ...children,
@@ -35,10 +40,17 @@ export default function SliderListPage(props: SliderListTypes) {
   ];
 
   // 드래그 시작 함수
-  const startDrag = (pageX: number) => {
+  const startDrag = (pageX: number, isMobile?: boolean) => {
     if (useSwipeMode === undefined || dragDisable) return;
     isStartDrag = true;
     dragDisable = true;
+
+    if (isMobile) {
+      useMobile = true;
+      // 스와이프 사용시 스크롤 방지를 위해 현재 다른 모듈에 의해 스크롤이 막혀있는지 체크
+      isDisableFixedWindow = document.body.style?.overflow === "hidden";
+      document.body.style.overflow = "hidden";
+    }
 
     startLocation = Math.floor(pageX);
     if (useAutoPlay && useAutoPlay.delay) {
@@ -104,6 +116,12 @@ export default function SliderListPage(props: SliderListTypes) {
 
     if (useAnimation) {
       listRef.current.style.transition = "all 0.5s ease";
+    }
+
+    // 스크롤 해제
+    if (useMobile && !isDisableFixedWindow) {
+      document.body.style.overflow = "auto";
+      isDisableFixedWindow = false;
     }
 
     // 자동재생 실행중이라면 재실행

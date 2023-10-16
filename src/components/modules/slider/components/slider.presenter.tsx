@@ -9,7 +9,11 @@ import {
 
 import { v4 } from "uuid";
 import { getAllComponentsClassName } from "mcm-js-commons/dist/hooks";
-import { SliderPropsTypes, SliderUIPropsTypes } from "./slider.types";
+import {
+  SliderPropsTypes,
+  SliderUIPropsTypes,
+  WrapperRef,
+} from "./slider.types";
 import { sliderClassList } from "./slider.class";
 
 import SliderListPage from "./list/slider.list.container";
@@ -28,9 +32,14 @@ export default function SliderUIPage({
   useSwipeMode,
   uid,
   timerList,
-  hideArrow,
   listMinHeight,
-}: SliderPropsTypes & SliderUIPropsTypes) {
+  wrapperRef,
+  setArrow,
+}: SliderPropsTypes & SliderUIPropsTypes & WrapperRef) {
+  // 좌, 우 이동 버튼 모양
+  let arrowContents: string | JSX.Element = "◀";
+  if (setArrow && setArrow?.contents) arrowContents = setArrow?.contents;
+
   return (
     (children && children.length && Array.isArray(children) && (
       <Wrapper
@@ -39,14 +48,19 @@ export default function SliderUIPage({
           className
         )}
         id={id}
+        ref={wrapperRef}
+        isSetHoverArrow={setArrow?.showHover || false}
       >
-        <Items className={sliderClassList.items}>
-          {!hideArrow && (
+        <Items
+          className={sliderClassList.items}
+          hideMobile={setArrow?.hideMobile || false}
+        >
+          {!setArrow?.hide && (
             <ArrowButton
               onClickEvent={moveSlider({ type: "prev", selector })}
-              className={sliderClassList.prevArrow}
+              className={`${sliderClassList.arrow} ${sliderClassList.prevArrow}`}
             >
-              ◀
+              {arrowContents}
             </ArrowButton>
           )}
           <SliderListPage
@@ -69,6 +83,7 @@ export default function SliderUIPage({
             <Pagination
               className={sliderClassList.pagination}
               style={{ bottom: useAutoPlay?.showTimer && "20px" }}
+              hideMobile={pagination?.hideMobile || false}
             >
               {Array.from(new Array(children.length), (_, idx) => idx).map(
                 (page) => {
@@ -96,12 +111,12 @@ export default function SliderUIPage({
               )}
             </Pagination>
           )}
-          {!hideArrow && (
+          {!setArrow?.hide && (
             <ArrowButton
               onClickEvent={moveSlider({ type: "next", selector })}
-              className={sliderClassList.nextArrow}
+              className={`${sliderClassList.arrow} ${sliderClassList.nextArrow}`}
             >
-              ▶
+              {arrowContents}
             </ArrowButton>
           )}
           {useAutoPlay && useAutoPlay.showTimer && useAutoPlay.delay && (

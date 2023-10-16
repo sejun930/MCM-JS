@@ -14,7 +14,7 @@ export type SliderListTypes = SliderUIPropsTypes & {
 };
 
 export interface SliderListUITypes {
-  startDrag: (pageX: number) => void;
+  startDrag: (pageX: number, isMobile?: boolean) => void;
   moveDrag: (pageX: number) => void;
   endDrag: () => void;
   list: Array<React.ReactNode>;

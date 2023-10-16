@@ -2,6 +2,7 @@
 export const sliderClassList = {
   wrapper: "mcm-slider-wrapper",
   items: "mcm-slider-items",
+  arrow: "mcm-slider-arrow",
   prevArrow: "mcm-slider-prev-button",
   nextArrow: "mcm-slider-next-button",
   list: "mcm-slider-list",
