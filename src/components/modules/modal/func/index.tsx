@@ -174,6 +174,16 @@ export const closeModalFn = async ({
 
   const wait = (time: number) => new Promise((res) => setTimeout(res, time));
   await wait(((showBGAnimation || showModalOpenAnimation) && 100) || 0);
+
+  window.setTimeout(() => {
+    // 스크롤 방지용 모달이 더 남아있는지 체크
+    const checkFixedModal = document.getElementsByClassName(
+      "modal-use-fixed-window"
+    );
+    console.log(checkFixedModal);
+    if (!checkFixedModal.length) document.body.style.overflow = "auto";
+  }, 200);
+
   if (target) {
     target.remove();
   } else if (_wmo && openIdx) {
@@ -185,10 +195,6 @@ export const closeModalFn = async ({
     if (wrapperRef && wrapperRef?.parentElement)
       return wrapperRef.parentElement;
   }
-
-  const extraModal = document.getElementsByClassName("mcm-modal-wrapper");
-  if (!extraModal.length) document.body.style.overflow = "auto";
-
   return true;
 };
 
