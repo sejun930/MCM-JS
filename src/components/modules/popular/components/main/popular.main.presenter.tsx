@@ -22,13 +22,21 @@ export default function PopuplarMainUIPage(props: PopularMainUIPropsTypes) {
   // 버튼 색상 지정 (default : 검정)
   let btnColor = { web: "black", mobile: "black" };
   // 폰트 색상에 따라 버튼 색상 변경
-  if (popularStyles.color)
-    btnColor = { web: popularStyles.color, mobile: popularStyles.color };
+  if (popularStyles && popularStyles?.color)
+    btnColor = {
+      web: popularStyles.color,
+      mobile: popularStyles.color,
+    };
   // 웹 환경의 스타일이 지정되어 있는 경우 + 폰트 색상 지정
-  if (popularResponsiveStyles?.web && popularResponsiveStyles.web?.color)
-    btnColor.web = popularResponsiveStyles.web?.color;
-  if (popularResponsiveStyles?.mobile && popularResponsiveStyles?.mobile?.color)
-    btnColor.mobile = popularResponsiveStyles.mobile?.color;
+  if (popularResponsiveStyles) {
+    if (popularResponsiveStyles?.web && popularResponsiveStyles.web?.color)
+      btnColor.web = popularResponsiveStyles.web?.color;
+    if (
+      popularResponsiveStyles?.mobile &&
+      popularResponsiveStyles?.mobile?.color
+    )
+      btnColor.mobile = popularResponsiveStyles.mobile?.color;
+  }
 
   return (
     <MainWrapper

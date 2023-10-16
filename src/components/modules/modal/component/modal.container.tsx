@@ -65,12 +65,10 @@ function _Modal(props: ModalPropsType) {
   const _itemRef = useRef() as MutableRefObject<HTMLDivElement>;
   const _contentsRef = useRef() as MutableRefObject<HTMLDivElement>;
 
-  // const [uuid] = useState(_uuid || "");
   const hasAnimation = showBGAnimation || showModalOpenAnimation;
 
   useEffect(() => {
     if (show) {
-      // clearTimeout(autoCloseTimer);
       // 스크롤 이동 방지
       if (document.body && onFixWindow) document.body.style.overflow = "hidden";
 

@@ -14,6 +14,8 @@ interface StyleTypes {
     web: string;
     mobile?: string;
   };
+  isSetHoverArrow?: boolean;
+  hideMobile?: boolean;
 }
 
 export const Wrapper = styled.div`
@@ -24,6 +26,24 @@ export const Wrapper = styled.div`
   align-items: center;
   position: relative;
   z-index: 99;
+  visibility: hidden;
+
+  // 버튼 호버 기능 사용중일 경우
+  .mcm-slider-arrow {
+    ${(props: StyleTypes) =>
+      props.isSetHoverArrow && {
+        opacity: 0,
+      }}
+  }
+
+  :hover {
+    .mcm-slider-arrow {
+      ${(props) =>
+        props.isSetHoverArrow && {
+          opacity: 1,
+        }}
+    }
+  }
 `;
 
 export const Items = styled.div`
@@ -37,6 +57,15 @@ export const Items = styled.div`
   .mcm-slider-next-button {
     right: 0;
   }
+
+  @media ${breakPoints.mobileLarge} {
+    .mcm-slider-arrow {
+      ${(props: StyleTypes) =>
+        props.hideMobile && {
+          display: "none",
+        }}
+    }
+  }
 `;
 
 export const List = styled.ul`
@@ -46,7 +75,8 @@ export const List = styled.ul`
   margin: 0px;
   padding: 0px;
   z-index: 97;
-  transform: translateX(-200%);
+  transform: translateX(100%);
+  /* transform: translateX(-200%); */
   min-height: 40px;
 
   ${(props: StyleTypes) => {
@@ -147,6 +177,15 @@ export const ArrowButton = styled(_Button)`
   opacity: 1;
   font-size: 18px;
 
+  &.mcm-slider-prev-button {
+    transform: scaleX(1);
+  }
+
+  // 오른쪽 버튼은 180도 회전
+  &.mcm-slider-next-button {
+    transform: scaleX(-1);
+  }
+
   :hover {
     background-color: rgba(125, 125, 125, 0.25);
   }
@@ -155,7 +194,7 @@ export const ArrowButton = styled(_Button)`
     transition: unset;
     transform: translate(0px, -50%);
     bottom: 50%;
-    top: 50%;
+    top: 40%;
     height: 24px;
     min-width: 24px;
 
@@ -175,6 +214,13 @@ export const Pagination = styled.div`
   gap: 0px 8px;
   white-space: pre;
   z-index: 100;
+
+  @media ${breakPoints.mobileLarge} {
+    ${(props: StyleTypes) =>
+      props.hideMobile && {
+        display: "none",
+      }}
+  }
 `;
 
 export const PageList = styled.div`

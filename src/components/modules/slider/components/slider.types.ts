@@ -11,6 +11,8 @@ export type SliderPropsTypes = CommonsSelectorTypes & {
   pagination?: {
     // 사용 가능한 페이지들을 나타낼 것인지에 대한 여부
     showPageList?: boolean;
+    // 모바일 숨기기 여부
+    hideMobile?: boolean;
   };
   // 자동 넘김 기능 사용 여부
   useAutoPlay?: {
@@ -21,8 +23,13 @@ export type SliderPropsTypes = CommonsSelectorTypes & {
   useSwipeMode?: {
     sideMovePercent: number; // 좌우 이동 비율 (최소 10% ~ 90%)
   };
-  // 다음, 이전 버튼 숨기기
-  hideArrow?: boolean;
+  // 전환 버튼 관련
+  setArrow?: {
+    hide?: boolean; // 버튼 숨기기
+    showHover?: boolean; // 호버 상태에서만 보이기
+    hideMobile?: boolean; // 모바일에서는 숨기기
+    contents?: string | JSX.Element; // 변경할 문자열 또는 태그
+  };
   // 제일 먼저 시작되는 페이지
   firstPage?: number;
   // 리스트의 최소 높이값 지정
@@ -30,6 +37,8 @@ export type SliderPropsTypes = CommonsSelectorTypes & {
     web: string; // 웹 사이즈 높이값
     mobile?: string; // 모바일 사이즈 높이값
   };
+  // 페이지 변환마다 실행되는 이벤트 (idx로 해당 컴포넌트의 페이지 번호 전달)
+  changePageEvent?: (idx: number) => void;
 };
 
 export interface SliderAddProps {
@@ -54,4 +63,7 @@ export interface SliderUIPropsTypes {
   timerList: { [key: string]: ReturnType<typeof setInterval> };
 }
 
+export interface WrapperRef {
+  wrapperRef: MutableRefObject<HTMLDivElement>;
+}
 export type SliderType = typeof _Slider;
