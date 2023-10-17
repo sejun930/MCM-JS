@@ -1,20 +1,25 @@
 import { Slider, Modal } from "../../../src";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function Test() {
   const [test, setTest] = useState(false);
-  const [page, setPage] = useState(2);
+  const [page, setPage] = useState(1);
 
   const [open, setOpen] = useState(true);
+
+  useEffect(() => {
+    setPage(4);
+  }, []);
+  console.log(page);
 
   return (
     <>
       <Modal show={open} onCloseModal={() => setOpen(false)} onFixWindow>
         <div>
-          {page}
+          {/* {page} */}
           <Slider
             useAnimation
-            firstPage={2}
+            firstPage={page}
             // hideArrow
             useSwipeMode={{ sideMovePercent: 50 }}
             useAutoPlay={{ delay: 5000, showTimer: true }}
@@ -26,9 +31,9 @@ export default function Test() {
             }}
             listMinHeight={{ web: "400px", mobile: "200px" }}
             pagination={{ showPageList: true, hideMobile: true }}
-            changePageEvent={(idx) => {
-              setPage(idx);
-            }}
+            // changePageEvent={(idx) => {
+            //   setPage(idx);
+            // }}
           >
             <div>1</div>
             <div>2</div>
