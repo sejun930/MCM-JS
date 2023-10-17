@@ -4,7 +4,7 @@ import Calendar from "../../../src/components/modules/calendar/component";
 
 export default function CalendarTestPage() {
   const start = new Date();
-  start.setFullYear(2018);
+  start.setFullYear(2020);
   start.setMonth(5);
   start.setDate(1);
 
@@ -14,6 +14,10 @@ export default function CalendarTestPage() {
     <Wrapper>
       <Calendar
         startDate={start}
+        limitYear={10}
+        useInput={{
+          month: true,
+        }}
         // startDate={{
         //   year: 2022,
         //   month: 5,
@@ -25,5 +29,11 @@ export default function CalendarTestPage() {
 }
 
 const Wrapper = styled.div`
-  padding: 100px;
+  /* padding: 100px; */
+  position: relative;
+  width: 100%;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

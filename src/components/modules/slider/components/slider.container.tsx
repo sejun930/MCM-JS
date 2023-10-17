@@ -74,16 +74,18 @@ const _Slider = (props: SliderPropsTypes & SliderAddProps) => {
     }
 
     if (selector !== 1)
-      moveSlider({
-        type: "page",
-        page: _firstPage,
-        selector,
-        offAnimtaion: true,
-      })();
+      window.setTimeout(() => {
+        moveSlider({
+          type: "page",
+          page: _firstPage,
+          selector,
+          offAnimtaion: true,
+        })();
+      }, 0);
 
     if (wrapperRef && wrapperRef.current)
       wrapperRef.current.style.visibility = "visible";
-  }, []);
+  }, [firstPage]);
 
   // 슬라이더 이동하기
   const moveSlider =

@@ -1,17 +1,9 @@
-import { DateTypes, DateInitTypes } from "./calendar.types";
-
-// 연, 월, 일을 데이트 타입 형태로 변환
-const transformDate = (date) => {
-  //   const year = date.year || now.getFullYear(); // 연
-  //   const month = date.month || now.getMonth() + 1; // 월
-  //   const day = date.day || now.getDate(); // 일
-  //   return new Date(year, month - 1, day);
-};
+import { DateTypes, dateInitTypes, UseInputTypes } from "./calendar.types";
 
 // 전달된 날짜를 객체 형태로 변환
 const transformObj = (date): DateTypes => {
   // 연, 월, 일 객체 형태로 저장
-  let result = { ...DateInitTypes };
+  let result = { ...dateInitTypes };
 
   if (getIsDateObj(date)) {
     // 객체 형태로 전달받은 경우
@@ -44,4 +36,21 @@ const getIsDateObj = (date) => {
   );
 };
 
-export { transformDate, transformObj };
+// useInput 사용 여부 반환
+const getUseInputInfo = (useInput: UseInputTypes) => {
+  let info: UseInputTypes = { year: false, month: false, day: false };
+  if (!useInput) return info;
+
+  // useInput props를 사용중일 경우
+  if (useInput) {
+    // 전체를 사용할 경우
+    if (typeof useInput === "boolean")
+      info = { year: true, month: true, day: true };
+    // 부분별로 사용할 경우
+    else if (typeof useInput === "object") info = { ...info, ...useInput };
+  }
+
+  return info;
+};
+
+export { transformObj, getUseInputInfo };
