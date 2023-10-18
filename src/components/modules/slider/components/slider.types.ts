@@ -28,7 +28,11 @@ export type SliderPropsTypes = CommonsSelectorTypes & {
     hide?: boolean; // 버튼 숨기기
     showHover?: boolean; // 호버 상태에서만 보이기
     hideMobile?: boolean; // 모바일에서는 숨기기
-    contents?: string | JSX.Element; // 변경할 문자열 또는 태그
+    contents?: {
+      // 변경할 문자열 또는 태그
+      left: string | JSX.Element; // 이전 버튼 대체
+      right: string | JSX.Element; // 다음 버튼 대체
+    };
   };
   // 제일 먼저 시작되는 페이지
   firstPage?: number;
@@ -39,6 +43,8 @@ export type SliderPropsTypes = CommonsSelectorTypes & {
   };
   // 페이지 변환마다 실행되는 이벤트 (idx로 해당 컴포넌트의 페이지 번호 전달)
   changePageEvent?: (idx: number) => void;
+  // 무한 재생 방지 (페이지가 처음이나 끝에 도달했을 때, 이전 및 다음 버튼 실행 방지)
+  // stopInfinite?: boolean;
 };
 
 export interface SliderAddProps {

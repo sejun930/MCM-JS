@@ -84,9 +84,16 @@ export const CurrentWrapper = styled.div`
 `;
 
 export const CurrentItems = styled.div`
+  position: relative;
   width: 100%;
   padding: 6px;
   height: 54px;
+
+  :hover {
+    .mcm-calendar-mark {
+      opacity: 0.3;
+    }
+  }
 
   ${(props: StyleTypes) =>
     props.isMonth && {

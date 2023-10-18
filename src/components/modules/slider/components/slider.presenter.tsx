@@ -37,8 +37,16 @@ export default function SliderUIPage({
   setArrow,
 }: SliderPropsTypes & SliderUIPropsTypes & WrapperRef) {
   // 좌, 우 이동 버튼 모양
-  let arrowContents: string | JSX.Element = "◀";
-  if (setArrow && setArrow?.contents) arrowContents = setArrow?.contents;
+  const arrowContents: {
+    left: string | JSX.Element;
+    right: string | JSX.Element;
+  } = { left: "◀", right: "▶" };
+
+  // 대체용 버튼이 존재할 경우
+  if (setArrow && setArrow?.contents) {
+    arrowContents.left = setArrow?.contents.left || "◀"; // 이전 버튼 대체
+    arrowContents.right = setArrow?.contents.right || "▶"; // 다음 버튼 대체
+  }
 
   return (
     (children && children.length && Array.isArray(children) && (
@@ -60,7 +68,7 @@ export default function SliderUIPage({
               onClickEvent={moveSlider({ type: "prev", selector })}
               className={`${sliderClassList.arrow} ${sliderClassList.prevArrow}`}
             >
-              {arrowContents}
+              {arrowContents.left}
             </ArrowButton>
           )}
           <SliderListPage
@@ -116,7 +124,7 @@ export default function SliderUIPage({
               onClickEvent={moveSlider({ type: "next", selector })}
               className={`${sliderClassList.arrow} ${sliderClassList.nextArrow}`}
             >
-              {arrowContents}
+              {arrowContents.right}
             </ArrowButton>
           )}
           {useAutoPlay && useAutoPlay.showTimer && useAutoPlay.delay && (

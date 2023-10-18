@@ -177,15 +177,6 @@ export const ArrowButton = styled(_Button)`
   opacity: 1;
   font-size: 18px;
 
-  &.mcm-slider-prev-button {
-    transform: scaleX(1);
-  }
-
-  // 오른쪽 버튼은 180도 회전
-  &.mcm-slider-next-button {
-    transform: scaleX(-1);
-  }
-
   :hover {
     background-color: rgba(125, 125, 125, 0.25);
   }
@@ -194,7 +185,7 @@ export const ArrowButton = styled(_Button)`
     transition: unset;
     transform: translate(0px, -50%);
     bottom: 50%;
-    top: 40%;
+    top: 50%;
     height: 24px;
     min-width: 24px;
 

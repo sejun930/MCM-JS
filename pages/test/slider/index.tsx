@@ -25,15 +25,16 @@ export default function Test() {
             useAutoPlay={{ delay: 5000, showTimer: true }}
             setArrow={{
               hide: false,
-              showHover: false,
-              contents: <b>222</b>,
+              showHover: true,
+              contents: {
+                left: "➖",
+                right: "➕",
+              },
               // hideMobile: true,
             }}
             listMinHeight={{ web: "400px", mobile: "200px" }}
             pagination={{ showPageList: true, hideMobile: true }}
-            // changePageEvent={(idx) => {
-            //   setPage(idx);
-            // }}
+            // stopInfinite={true}
           >
             <div>1</div>
             <div>2</div>
