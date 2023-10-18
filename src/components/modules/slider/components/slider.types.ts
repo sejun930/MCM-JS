@@ -44,7 +44,7 @@ export type SliderPropsTypes = CommonsSelectorTypes & {
   // 페이지 변환마다 실행되는 이벤트 (idx로 해당 컴포넌트의 페이지 번호 전달)
   changePageEvent?: (idx: number) => void;
   // 무한 재생 방지 (페이지가 처음이나 끝에 도달했을 때, 이전 및 다음 버튼 실행 방지)
-  // stopInfinite?: boolean;
+  stopInfinite?: boolean;
 };
 
 export interface SliderAddProps {
@@ -63,11 +63,25 @@ export interface SliderUIPropsTypes {
     selector: number;
   }) => () => void;
   listRef: MutableRefObject<HTMLUListElement>;
-  selector: number;
   timerRef: MutableRefObject<HTMLDivElement>;
-  uid: string;
+  info: InitSliderInfoTypes;
   timerList: { [key: string]: ReturnType<typeof setInterval> };
 }
+
+export interface InitSliderInfoTypes {
+  selector: number;
+  uid: string;
+  isLast: boolean;
+  isFirst: boolean;
+}
+
+// Slider 모듈에 필요한 정보 객체
+export const initSliderInfo: InitSliderInfoTypes = {
+  selector: 2, // 현재 페이지
+  uid: "", // uuid 저장
+  isLast: false, // 현재 페이지가 끝에 있는지 체크
+  isFirst: false, // 현재 페이지가 처음에 있는지 체크
+};
 
 export interface WrapperRef {
   wrapperRef: MutableRefObject<HTMLDivElement>;

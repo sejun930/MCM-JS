@@ -1,5 +1,9 @@
 import { useRef, MutableRefObject, useState, useEffect, memo } from "react";
-import { SliderPropsTypes, SliderAddProps } from "./slider.types";
+import {
+  SliderPropsTypes,
+  SliderAddProps,
+  initSliderInfo,
+} from "./slider.types";
 
 import SliderUIPage from "./slider.presenter";
 import { _Error, _Button } from "mcm-js-commons";
@@ -51,16 +55,21 @@ const _Slider = (props: SliderPropsTypes & SliderAddProps) => {
       lastPage = children.length + 2;
     }
   }
-  // 현재 선택된 슬라이더 위치값
-  const [selector, setSelector] = useState(startPage);
+
+  // 모듈에 필요한 기능 모음
+  const [info, setInfo] = useState({ ...initSliderInfo, ["uid"]: _uid });
   // 일시 중지 변수 (연속 실행 방지)
   const [pause, setPause] = useState(false);
-  // 최초로 받은 uid 고정시키기
-  const [uid] = useState(_uid);
+
+  const { selector, uid } = info;
 
   useEffect(() => {
-    setPause(false);
-    setSelector(startPage);
+    // 정보 초기화
+    const _info = { ...initSliderInfo };
+    // uid는 고정
+    _info.uid = info.uid;
+
+    setInfo(_info);
     startPage = 2;
 
     // 제일 먼저 시작되는 페이지
@@ -73,6 +82,7 @@ const _Slider = (props: SliderPropsTypes & SliderAddProps) => {
       }
     }
 
+    const { selector } = info;
     if (selector !== 1)
       window.setTimeout(() => {
         moveSlider({
@@ -101,6 +111,8 @@ const _Slider = (props: SliderPropsTypes & SliderAddProps) => {
       offAnimtaion?: boolean; // 애니메이션 일시 비활성화
     }) =>
     () => {
+      const _info = { ...info };
+
       if (pause) return;
       setPause(true);
 
@@ -166,6 +178,13 @@ const _Slider = (props: SliderPropsTypes & SliderAddProps) => {
         }
       }
 
+      // 현재 페이지가 끝에 도달했는지 체크
+      _info.isLast = movePage === lastPage - 1;
+      if (_info.isLast) stop();
+
+      // 현재 페이지가 처음에 도착했는지 체크
+      _info.isFirst = movePage === startPage;
+
       // 최종 저장될 페이지
       let finalSelector = movePage;
       if (arrived) {
@@ -177,7 +196,7 @@ const _Slider = (props: SliderPropsTypes & SliderAddProps) => {
           // 맨 앞에 도달했을 경우
           finalSelector = lastPage - 1;
       }
-      setSelector(finalSelector);
+      _info.selector = finalSelector;
 
       // 슬라이더 최종 이동하기
       if (listRef.current && listRef.current.style) {
@@ -189,8 +208,8 @@ const _Slider = (props: SliderPropsTypes & SliderAddProps) => {
       // 변경 이벤트가 있을 경우, 함수 실행
       if (changePageEvent) changePageEvent(finalSelector - 2);
 
-      // 페이지 이동 후 자동 넘김 실행하기
-      if (useAutoPlay) {
+      if (useAutoPlay && !_info.isLast) {
+        // 페이지 이동 후 자동 넘김 실행하기
         setAutoPlay(finalSelector);
 
         // 타이머 재개하기
@@ -208,17 +227,25 @@ const _Slider = (props: SliderPropsTypes & SliderAddProps) => {
         if (listRef.current)
           listRef.current.classList.remove("pause-animation");
       }, timer + ((arrived && 100) || 0));
+      setInfo(_info);
     };
 
   // 슬라이더 자동 넘김 실행하기
   const setAutoPlay = (selector: number) => {
     if (useAutoPlay) {
-      if (timerList[uid]) clearInterval(timerList[uid]);
+      // 페이지 전환 정지
+      stop();
+
       // 설정해둔 시간(1초 이상)마다 다음 페이지로 이동 이벤트 시작
       timerList[uid] = setInterval(() => {
         moveSlider({ type: "next", selector })();
       }, (useAutoPlay.delay && useAutoPlay.delay >= 3000 && useAutoPlay.delay) || 3000);
     }
+  };
+
+  // 페이지 자동 전환 중지
+  const stop = () => {
+    if (timerList[uid]) clearInterval(timerList[uid]);
   };
 
   return (
@@ -227,8 +254,7 @@ const _Slider = (props: SliderPropsTypes & SliderAddProps) => {
       moveSlider={moveSlider}
       listRef={listRef}
       timerRef={timerRef}
-      selector={selector}
-      uid={uid}
+      info={info}
       timerList={timerList}
       wrapperRef={wrapperRef}
     />

@@ -27,15 +27,17 @@ export default function SliderUIPage({
   listRef,
   pagination,
   useAutoPlay,
-  selector,
   timerRef,
+  info,
   useSwipeMode,
-  uid,
   timerList,
   listMinHeight,
   wrapperRef,
   setArrow,
+  stopInfinite,
 }: SliderPropsTypes & SliderUIPropsTypes & WrapperRef) {
+  const { selector, isFirst, isLast } = info;
+
   // 좌, 우 이동 버튼 모양
   const arrowContents: {
     left: string | JSX.Element;
@@ -47,6 +49,9 @@ export default function SliderUIPage({
     arrowContents.left = setArrow?.contents.left || "◀"; // 이전 버튼 대체
     arrowContents.right = setArrow?.contents.right || "▶"; // 다음 버튼 대체
   }
+
+  const disablePrev = (stopInfinite && isFirst) || false; // 이전 버튼 비활성화
+  const disableNext = (stopInfinite && isLast) || false; // 다음 버튼 비활성화
 
   return (
     (children && children.length && Array.isArray(children) && (
@@ -65,8 +70,11 @@ export default function SliderUIPage({
         >
           {!setArrow?.hide && (
             <ArrowButton
-              onClickEvent={moveSlider({ type: "prev", selector })}
+              onClickEvent={
+                !disablePrev && moveSlider({ type: "prev", selector })
+              }
               className={`${sliderClassList.arrow} ${sliderClassList.prevArrow}`}
+              isDisable={disablePrev}
             >
               {arrowContents.left}
             </ArrowButton>
@@ -76,14 +84,14 @@ export default function SliderUIPage({
             listRef={listRef}
             timerRef={timerRef}
             useSwipeMode={useSwipeMode}
-            uid={uid}
             timerList={timerList}
             useAutoPlay={useAutoPlay}
-            selector={selector}
             moveSlider={moveSlider}
             children={children}
             hasPageList={pagination?.showPageList || false}
             listMinHeight={listMinHeight}
+            info={info}
+            stopInfinite={stopInfinite}
           />
 
           {/* 페이지네이션 기능을 사용할 경우 */}
@@ -97,22 +105,23 @@ export default function SliderUIPage({
                 (page) => {
                   page += 2;
 
-                  const selected = selector === page;
+                  // 현재 선택되어 있는 페이지 표시
+                  const isSelected = selector === page;
 
                   return (
                     <Page
                       className={sliderClassList.page}
+                      // @ts-ignore
+                      isSelected={isSelected}
                       onClickEvent={() =>
-                        !selected
-                          ? moveSlider({
-                              type: "page",
-                              page,
-                              selector,
-                            })()
-                          : undefined
+                        !isSelected &&
+                        moveSlider({
+                          type: "page",
+                          page,
+                          selector,
+                        })()
                       }
                       key={v4()}
-                      selected={selected}
                     />
                   );
                 }
@@ -121,8 +130,11 @@ export default function SliderUIPage({
           )}
           {!setArrow?.hide && (
             <ArrowButton
-              onClickEvent={moveSlider({ type: "next", selector })}
+              onClickEvent={
+                !disableNext && moveSlider({ type: "next", selector })
+              }
               className={`${sliderClassList.arrow} ${sliderClassList.nextArrow}`}
+              isDisable={disableNext}
             >
               {arrowContents.right}
             </ArrowButton>

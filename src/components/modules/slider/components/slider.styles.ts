@@ -5,7 +5,6 @@ import { _Button } from "mcm-js-commons";
 import { breakPoints } from "mcm-js-commons/dist/responsive";
 
 interface StyleTypes {
-  selected?: boolean;
   delay?: number;
   useAnimation?: boolean;
   hasDragMode?: boolean;
@@ -16,6 +15,8 @@ interface StyleTypes {
   };
   isSetHoverArrow?: boolean;
   hideMobile?: boolean;
+  isDisable?: boolean;
+  isSelected?: boolean;
 }
 
 export const Wrapper = styled.div`
@@ -177,8 +178,25 @@ export const ArrowButton = styled(_Button)`
   opacity: 1;
   font-size: 18px;
 
+  /* pointer-events: none; // PC 이미지 다운로드 금지 */
+  -webkit-touch-callout: none; // 아이폰 다운로드 금지
+  -webkit-user-select: none; // 드래그 방지
+  -moz-user-select: none;
+  -ms-use-select: none;
+  user-select: none;
+
+  ${(props: StyleTypes) =>
+    props.isDisable && {
+      cursor: "not-allowed",
+      backgroundColor: "inherit",
+      opacity: "0.5",
+    }}
+
   :hover {
-    background-color: rgba(125, 125, 125, 0.25);
+    ${(props: StyleTypes) =>
+      !props.isDisable && {
+        backgroundColor: "rgba(125, 125, 125, 0.25)",
+      }}
   }
 
   @media ${breakPoints.mobileLarge} {
@@ -228,7 +246,7 @@ export const Page = styled(_Button)`
   opacity: 0.4;
 
   ${(props: StyleTypes) =>
-    props.selected && {
+    props.isSelected && {
       cursor: "default",
       opacity: 1,
       backgroundColor: "rgba(0, 0, 0, 0.7)",
