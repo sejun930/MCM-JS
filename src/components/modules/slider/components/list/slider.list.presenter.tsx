@@ -12,9 +12,9 @@ export default function SliderListUIPage({
   startDrag,
   moveDrag,
   endDrag,
-  uid,
   hasPageList,
   listMinHeight,
+  info,
 }: SliderListTypes & SliderListUITypes) {
   return (
     <List
@@ -23,20 +23,23 @@ export default function SliderListUIPage({
       ref={listRef}
       hasDragMode={useSwipeMode !== undefined}
       onMouseDown={(e) => useSwipeMode && startDrag(e.pageX || 0)}
-      onMouseMove={(e) => useSwipeMode && moveDrag(e.pageX || 0)}
+      onMouseMove={(e) => useSwipeMode && moveDrag(e.pageX || 0, e)}
       onClick={(useSwipeMode && endDrag) || undefined}
       onTouchStart={(e) =>
         useSwipeMode && startDrag(e.targetTouches[0].pageX || 0, true)
       }
       onTouchMove={(e) =>
-        useSwipeMode && moveDrag(e.targetTouches[0].pageX || 0)
+        useSwipeMode && moveDrag(e.targetTouches[0].pageX || 0, e)
       }
       onTouchEnd={(useSwipeMode && endDrag) || undefined}
       hasPageList={hasPageList}
       listMinHeight={listMinHeight}
     >
       {list.map((el, key) => (
-        <Contents key={`${uid}-${key}`} className={sliderClassList.contents}>
+        <Contents
+          key={`${info.uid}-${key}`}
+          className={sliderClassList.contents}
+        >
           {el}
         </Contents>
       ))}

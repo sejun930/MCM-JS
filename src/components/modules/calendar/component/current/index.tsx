@@ -8,10 +8,10 @@ import Slider from "../../../slider";
 import { _SpanText, _Input } from "mcm-js-commons";
 
 import { getYearList } from "./calendar.current.func";
-import { ChangeEvent } from "react";
+import { breakPoints } from "mcm-js-commons/dist/responsive";
 
 export default function CalendarCurrentPage(props: CalendarCurrentTypes) {
-  const { startDate, limitYear, useInputInfo } = props;
+  const { startDate, limitYear } = props;
 
   // 연도 리스트 및 인덱스 정보
   const yearInfo = getYearList({ limitYear, startDate }) || {
@@ -22,13 +22,6 @@ export default function CalendarCurrentPage(props: CalendarCurrentTypes) {
 
   // 월 범위 구하기 (12개월 고정)
   const monthList = Array.from(new Array(12), (_, num) => 1 + num);
-
-  // input으로 입력된 월 변경하기
-  const changeMonth = (e: ChangeEvent<HTMLInputElement>) => {
-    if (!useInputInfo.month) return;
-
-    console.log(e.target.value);
-  };
 
   return (
     <CurrentWrapper className={calendarClassList.currentWrapper}>
@@ -47,6 +40,7 @@ export default function CalendarCurrentPage(props: CalendarCurrentTypes) {
             ))}
           </Slider>
         )}
+        <Mark className="mcm-calendar-mark">Year</Mark>
       </CurrentItems>
 
       <CurrentItems className={calendarClassList.currentItems} isMonth={true}>
@@ -61,11 +55,11 @@ export default function CalendarCurrentPage(props: CalendarCurrentTypes) {
           >
             {monthList.map((num) => {
               const month = String(num).padStart(2, "0");
-
               return <Current>{month}</Current>;
             })}
           </Slider>
         )}
+        <Mark className="mcm-calendar-mark">Month</Mark>
       </CurrentItems>
     </CurrentWrapper>
   );
@@ -76,11 +70,39 @@ export const Current = styled(_SpanText)`
   font-weight: 700;
 `;
 
-export const Input = styled.input`
-  font-size: 24px;
+export const Mark = styled(_SpanText)`
+  position: absolute;
+  right: 30px;
+  bottom: 4px;
+  font-size: 40px;
   font-weight: 700;
-  width: 160px;
-  text-align: center;
-  padding: 2px;
-  border: unset;
+  color: #777777;
+  text-shadow: 0px 0px 4px gray;
+  opacity: 0;
+
+  pointer-events: none; // PC 이미지 다운로드 금지
+  -webkit-touch-callout: none; // 아이폰 다운로드 금지
+  -webkit-user-select: none; // 드래그 방지
+  -moz-user-select: none;
+  -ms-use-select: none;
+  user-select: none;
+
+  @media ${breakPoints.mobileLarge} {
+    font-size: 32px;
+    right: 24px;
+  }
 `;
+
+// export const InputWrapper = styled.div`
+//   position: absolute;
+//   z-index: 100;
+// `;
+
+// export const Input = styled.input`
+//   font-size: 24px;
+//   font-weight: 700;
+//   width: 100%;
+//   text-align: center;
+//   padding: 2px;
+//   border: unset;
+// `;

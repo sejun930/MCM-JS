@@ -1,3 +1,4 @@
+import { MouseEvent, TouchEvent } from "react";
 import SliderListUIPage from "./slider.list.presenter";
 import { SliderListTypes } from "./slider.list.types";
 
@@ -19,14 +20,15 @@ export default function SliderListPage(props: SliderListTypes) {
     useSwipeMode,
     listRef,
     timerRef,
-    uid,
     timerList,
     useAutoPlay,
-    selector,
     useAnimation,
     moveSlider,
     children,
+    info,
+    stopInfinite,
   } = props;
+  const { uid, selector, isFirst, isLast } = info;
 
   // 모바일 기능 사용 여부
   let useMobile = false;
@@ -38,6 +40,9 @@ export default function SliderListPage(props: SliderListTypes) {
     ...children,
     ...children.slice(0, 2),
   ];
+
+  // 정지 유지 여부
+  let fixStop = false;
 
   // 드래그 시작 함수
   const startDrag = (pageX: number, isMobile?: boolean) => {
@@ -83,7 +88,7 @@ export default function SliderListPage(props: SliderListTypes) {
   };
 
   // 드래그 이동 함수
-  const moveDrag = (pageX: number) => {
+  const moveDrag = (pageX: number, e: MouseEvent | TouchEvent) => {
     if (!useSwipeMode) return;
 
     if (isStartDrag) {
@@ -92,19 +97,36 @@ export default function SliderListPage(props: SliderListTypes) {
         moveLocation = pageX;
 
         // 이동한 최종 위치값
-        const moveCompleteLocation = -(startLocation - moveLocation);
+        const moveCompleteLocation = startLocation - moveLocation;
         finalLocation = moveCompleteLocation;
 
         if (timerRef.current) {
           timerRef.current.classList.add("pause");
         }
 
-        // 드래그로 위치 이동하기
-        if (listRef && listRef.current) {
-          listRef.current.style.transition = "unset";
-          listRef.current.style.transform = `translateX(calc(${
-            selector * -100
-          }% + ${moveCompleteLocation}px))`;
+        // 이동 가능 여부
+        let disableMove = false;
+        // 다음 및 이전 스와이프 방지하기
+        if (stopInfinite) {
+          // 현재 마지막, 첫번째 페이지에서 다음 및 이전으로 이동하려고 하는 경우
+          disableMove =
+            (isLast && moveCompleteLocation < 0) ||
+            (isFirst && moveCompleteLocation > 0);
+        }
+
+        if (disableMove) {
+          // 이동하지 않음
+          finalLocation = 0;
+        } else {
+          e.preventDefault();
+
+          // 드래그로 위치 이동하기
+          if (listRef && listRef.current) {
+            listRef.current.style.transition = "unset";
+            listRef.current.style.transform = `translateX(calc(${
+              selector * -100
+            }% + ${moveCompleteLocation}px))`;
+          }
         }
       }
     }
@@ -114,7 +136,7 @@ export default function SliderListPage(props: SliderListTypes) {
   const endDrag = () => {
     if (!useSwipeMode) return;
 
-    if (useAnimation) {
+    if (useAnimation && listRef.current?.style) {
       listRef.current.style.transition = "all 0.5s ease";
     }
 
@@ -124,8 +146,11 @@ export default function SliderListPage(props: SliderListTypes) {
       isDisableFixedWindow = false;
     }
 
+    // 맨 마지막 페이지면서 이동을 막아놓은 경우
+    const isLastPage = stopInfinite && isLast;
+
     // 자동재생 실행중이라면 재실행
-    if (useAutoPlay && useAutoPlay.delay) {
+    if (!isLastPage && useAutoPlay && useAutoPlay.delay) {
       // 타이머 재생하기
       if (timerRef.current) timerRef.current.classList.remove("pause");
       if (!timerList[uid])
@@ -141,7 +166,7 @@ export default function SliderListPage(props: SliderListTypes) {
       // 왼쪽으로 50% 이상 움직인 경우 = 다음으로 이동
       moveSlider({ type: "next", selector: selector })();
     } else {
-      if (listRef) {
+      if (listRef && listRef.current && listRef.current.style) {
         listRef.current.style.transition = "all 0.5s ease";
         listRef.current.style.transform = `translateX(calc(${
           selector * -100
@@ -149,7 +174,7 @@ export default function SliderListPage(props: SliderListTypes) {
       }
     }
 
-    if (listRef) {
+    if (listRef && listRef.current && listRef.current.style) {
       listRef.current.style.cursor = "grab";
     }
     // 모든 드래그 정보 초기화

@@ -1,4 +1,5 @@
-import { SliderUIPropsTypes } from "../slider.types";
+import { MouseEvent, TouchEvent } from "react";
+import { SliderUIPropsTypes, InitSliderInfoTypes } from "../slider.types";
 
 export type SliderListTypes = SliderUIPropsTypes & {
   useAnimation: boolean;
@@ -11,11 +12,13 @@ export type SliderListTypes = SliderUIPropsTypes & {
   };
   hasPageList: boolean;
   listMinHeight?: { web: string; mobile?: string };
+  info: InitSliderInfoTypes;
+  stopInfinite: boolean;
 };
 
 export interface SliderListUITypes {
   startDrag: (pageX: number, isMobile?: boolean) => void;
-  moveDrag: (pageX: number) => void;
+  moveDrag: (pageX: number, e: MouseEvent | TouchEvent) => void;
   endDrag: () => void;
   list: Array<React.ReactNode>;
 }

@@ -22,24 +22,25 @@ export default function Test() {
             firstPage={page}
             // hideArrow
             useSwipeMode={{ sideMovePercent: 50 }}
-            useAutoPlay={{ delay: 5000, showTimer: true }}
+            // useAutoPlay={{ delay: 5000, showTimer: true }}
             setArrow={{
               hide: false,
-              showHover: false,
-              contents: <b>222</b>,
+              // showHover: true,
+              contents: {
+                left: "➖",
+                right: "➕",
+              },
               // hideMobile: true,
             }}
             listMinHeight={{ web: "400px", mobile: "200px" }}
             pagination={{ showPageList: true, hideMobile: true }}
-            // changePageEvent={(idx) => {
-            //   setPage(idx);
-            // }}
+            stopInfinite={true}
           >
             <div>1</div>
             <div>2</div>
-            <div>3</div>
+            {/* <div>3</div>
             <div>4</div>
-            <div>5</div>
+            <div>5</div> */}
           </Slider>
         </div>
       </Modal>
