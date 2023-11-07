@@ -72,8 +72,14 @@ export const TooltipChildren = styled.div`
   position: relative;
 `;
 
+// export const TooltipTextWrapper = styled.div`
+//   position: relative;
+//   display: flex;
+//   justify-content: center;
+// `;
+
 export const TooltipTextWrapper = styled.div`
-  position: absolute;
+  position: relative;
   border: solid 1px black;
   border-radius: 10px;
   background-color: white;
@@ -81,7 +87,6 @@ export const TooltipTextWrapper = styled.div`
   animation-fill-mode: forwards;
   animation-direction: alternate;
   z-index: 1;
-  opacity: 0;
   transition: all 0.3s;
 
   // styles 스타일 적용하기
@@ -179,7 +184,10 @@ export const TooltipTailContents = styled.div`
   min-height: 30px;
   white-space: pre;
   font-size: 12px;
-  transition: all 0.3s;
+  /* transition: all 0.3s; */
+  border: solid 1px black;
+  background-color: white;
+  border-radius: 10px;
 
   // 전달된 props 값에 적용된 스타일 설정하기
   ${(props: StyleTypes) => getPropsContentsStyles(props.tooltipStyles)}

@@ -18,13 +18,16 @@ export default function Test() {
             }
             useShowAnimation
             position="left"
+            open
+            onOpenAfterEvent={() => console.log("실행")}
+            onCloseAfterEvent={() => console.log("종료")}
           >
             <button style={{ fontSize: "24px" }}>사진 보기</button>
           </_Tooltip>
         </div>
 
         <div>
-          <_Tooltip
+          {/* <_Tooltip
             tooltipText={"12312312"}
             useShowAnimation
             // position="bottom"
@@ -56,7 +59,7 @@ export default function Test() {
             // }}
           >
             <button style={{ fontSize: "24px" }}>내용 보기</button>
-          </_Tooltip>
+          </_Tooltip> */}
         </div>
       </div>
     </>

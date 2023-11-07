@@ -21,7 +21,6 @@ export default function _TooltipUIPage(
     tooltipText,
     useShowAnimation,
     tooltipOpen,
-    toggleTail,
     textRef,
     wrapperRef,
     render,
@@ -30,24 +29,26 @@ export default function _TooltipUIPage(
     position,
     hideMobile,
     offHoverEvent,
+    openTooltip,
+    closeTooltip,
   } = props;
 
   return (
     <TooltipWrapper
       className={getAllComponentsClassName(tooltipClassList.wrapper, className)}
       id={id}
-      onMouseLeave={(!offHoverEvent && toggleTail(false)) || undefined}
+      // onMouseOut={(!offHoverEvent && closeTooltip) || undefined}
       hideMobile={hideMobile}
       ref={wrapperRef}
     >
       <TooltipItems className={tooltipClassList.items} position={position}>
         <TooltipChildren
           className={tooltipClassList.children}
-          onMouseOver={(!offHoverEvent && toggleTail(true)) || undefined}
+          onMouseOver={(!offHoverEvent && openTooltip) || undefined}
         >
           {children}
         </TooltipChildren>
-        {(tooltipOpen && (
+        {/* {(tooltipOpen && (
           <TooltipTextWrapper
             className={tooltipClassList.textWrapper}
             ref={textRef}
@@ -73,7 +74,7 @@ export default function _TooltipUIPage(
                 tooltipText}
             </TooltipTailContents>
           </TooltipTextWrapper>
-        )) || <></>}
+        )) || <></>} */}
       </TooltipItems>
     </TooltipWrapper>
   );
