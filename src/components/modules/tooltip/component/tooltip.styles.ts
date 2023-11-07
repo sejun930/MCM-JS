@@ -22,6 +22,7 @@ interface StyleTypes {
 }
 
 export const TooltipWrapper = styled.div`
+  height: auto;
   display: inline-block;
   cursor: default;
   vertical-align: unset;
@@ -35,6 +36,8 @@ export const TooltipWrapper = styled.div`
 `;
 
 export const TooltipItems = styled.div`
+  height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -61,11 +64,12 @@ export const TooltipItems = styled.div`
 `;
 
 export const TooltipChildren = styled.div`
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: flex-end;
   justify-content: center;
   position: relative;
-  width: 100%;
 `;
 
 export const TooltipTextWrapper = styled.div`
@@ -169,7 +173,7 @@ export const TooltipTailContents = styled.div`
   position: relative;
   display: flex;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
   padding: 10px;
   width: 100%;
   min-height: 30px;

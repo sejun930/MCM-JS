@@ -146,6 +146,11 @@ export const List = styled.li`
   align-items: center;
   height: 100%;
 
+  &.mcm-popular-main-list {
+    max-width: 90%;
+    overflow: hidden;
+  }
+
   // 하위 모든 태그의 마진, 패딩값 제거
   * {
     margin: 0;
@@ -170,11 +175,14 @@ export const List = styled.li`
 `;
 
 export const Opener = styled(_Button)`
-  min-width: 36px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  position: relative;
+  justify-content: flex-start;
+  position: absolute;
+  height: 100%;
+  width: 24px;
+  right: 6px;
+  bottom: 0;
 
   ::before,
   ::after {

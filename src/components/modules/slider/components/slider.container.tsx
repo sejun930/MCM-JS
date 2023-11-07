@@ -216,7 +216,7 @@ const _Slider = (props: SliderPropsTypes & SliderAddProps) => {
         // 타이머 재개하기
         if (timerRef && timerRef.current)
           window.setTimeout(() => {
-            timerRef.current.classList.remove("pause");
+            timerRef.current?.classList.remove("pause");
           }, 0);
       }
       let timer = useAnimation && !offAnimtaion ? 400 : 100;
@@ -225,8 +225,8 @@ const _Slider = (props: SliderPropsTypes & SliderAddProps) => {
       window.setTimeout(() => {
         setPause(false);
 
-        if (listRef.current)
-          listRef.current.classList.remove("pause-animation");
+        if (listRef && listRef.current)
+          listRef.current?.classList.remove("pause-animation");
       }, timer + ((arrived && 100) || 0));
       setInfo(_info);
     };

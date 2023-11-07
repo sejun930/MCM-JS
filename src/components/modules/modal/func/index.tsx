@@ -180,7 +180,6 @@ export const closeModalFn = async ({
     const checkFixedModal = document.getElementsByClassName(
       "modal-use-fixed-window"
     );
-    console.log(checkFixedModal);
     if (!checkFixedModal.length) document.body.style.overflow = "auto";
   }, 200);
 

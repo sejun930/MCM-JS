@@ -10,7 +10,6 @@ export default function Test() {
   useEffect(() => {
     setPage(4);
   }, []);
-  console.log(page);
 
   return (
     <>
@@ -33,7 +32,8 @@ export default function Test() {
               // hideMobile: true,
             }}
             listMinHeight={{ web: "400px", mobile: "200px" }}
-            pagination={{ showPageList: true, hideMobile: true }}
+            showPage={{ hideMobile: false }}
+            usePagination={{ hideMobile: true }}
             stopInfinite={true}
           >
             <div>1</div>

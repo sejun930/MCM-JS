@@ -27,7 +27,11 @@ export default function PopularTestPage() {
     // <Spen>2</Spen>,
     // <Spen>3</Spen>,
   ]);
-  const [list2] = useState([<div>A</div>, <div>B</div>, <div>C</div>]);
+  const [list2] = useState([
+    <p>Aasdasdasdasdasdasdasd</p>,
+    <p>Basdasdasdasdasdasdasd</p>,
+    <p>Casdasdasdasdasdasdasdasdas</p>,
+  ]);
   //   const list3 = [<div>ㄱ</div>, <div>ㄴ</div>, <div>ㄷ</div>];
   const [list3] = useState([<div>ㄱ</div>, <div>ㄴ</div>, <div>ㄷ</div>]);
   const [test, setTest] = useState(false);
@@ -58,43 +62,13 @@ export default function PopularTestPage() {
 
   return (
     <Wrapper>
-      {/* <div>{select}</div> */}
-      <Popular
-        list={list}
-        minHeight={{ web: 60, mobile: 50 }}
-        useSwipeMode
-        // delay={200000000}
-        // setList={{
-        //   showRating: true,
-        //   hoverStyles: {
-        //     color: "#5CD2E6",
-        //     fontWeight: 700,
-        //     backgroundColor: "#222222",
-        //     paddingLeft: "10px",
-        //     borderRadius: "10px",
-        //   },
-        // }}
-        changeListEvent={(num) => setSelect(num)}
-        popularStyles={{
-          borderRadius: "10px 10px 0px 0px",
-          backgroundColor: "black",
-          color: "white",
-        }}
-        popularResponsiveStyles={{
-          web: {
-            color: "green",
-          },
-          mobile: {
-            color: "yellow",
-          },
-        }}
-      />
-      {/* <div>{select2}</div>
       <Popular
         list={list2}
         minHeight={{ web: 30 }}
         changeListEvent={(num) => setSelect2(num)}
       />
+      {/* <div>{select2}</div>
+      
       <div>{select3}</div>
       <Popular
         list={list3}
