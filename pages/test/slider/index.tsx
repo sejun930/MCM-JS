@@ -32,7 +32,7 @@ export default function Test() {
               // hideMobile: true,
             }}
             listMinHeight={{ web: "400px", mobile: "200px" }}
-            showPage={{ hideMobile: false }}
+            useCurrentPage={{ hideMobile: false }}
             usePagination={{ hideMobile: true }}
             stopInfinite={true}
           >

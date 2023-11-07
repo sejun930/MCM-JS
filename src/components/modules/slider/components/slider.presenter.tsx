@@ -36,7 +36,7 @@ export default function SliderUIPage({
   wrapperRef,
   setArrow,
   stopInfinite,
-  showPage,
+  useCurrentPage,
 }: SliderPropsTypes & SliderUIPropsTypes & WrapperRef) {
   const { selector, isFirst, isLast } = info;
 
@@ -59,7 +59,8 @@ export default function SliderUIPage({
   const hidePagination =
     typeof usePagination === "object" && usePagination.hideMobile;
   // 모바일에서 현재 페이지 감추기 여부
-  const hideShowPage = typeof showPage === "object" && showPage.hideMobile;
+  const hideShowPage =
+    typeof useCurrentPage === "object" && useCurrentPage.hideMobile;
 
   return (
     (children && children.length && Array.isArray(children) && (
@@ -158,7 +159,7 @@ export default function SliderUIPage({
           )}
         </Items>
 
-        {showPage && (
+        {useCurrentPage && (
           <CurrentPageWrapper hideShowPage={hideShowPage}>
             {info.selector - 1} / {children.length}
           </CurrentPageWrapper>

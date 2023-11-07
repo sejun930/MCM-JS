@@ -15,7 +15,7 @@ export type SliderPropsTypes = CommonsSelectorTypes & {
         hideMobile?: boolean;
       };
   // 페이지 표시 여부
-  showPage?:
+  useCurrentPage?:
     | boolean
     | {
         hideMobile?: boolean;
