@@ -57,8 +57,8 @@ export type TooltipPropsType = CommonsChildrenTypes &
   };
 
 export interface TooltipUIPropsType {
-  tooltipOpen: boolean; // 말풍선 실행 여부
-  render: boolean; // 말풍선 최종 렌더
+  // tooltipOpen: boolean; // 말풍선 실행 여부
+  // render: boolean; // 말풍선 최종 렌더
   openTooltip: () => void;
   closeTooltip: () => void;
   textRef: MutableRefObject<HTMLDivElement>;

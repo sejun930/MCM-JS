@@ -14,24 +14,40 @@ export default function Test() {
         <div style={{ height: "100px" }}>
           <_Tooltip
             tooltipText={
-              <img style={{ width: "140px" }} src="/images/watermelon.webp" />
+              // "ㅁㄴㅇㅁㄴㅇㄴㅁㅇ"
+              // <div style={{ height: "200px" }}>
+              //   <p>ㄱㄱㄱㄱ</p>
+              //   <p>ㄴㄴㄴㄴ</p>
+              //   <p>ㄷㄷㄷㄷ</p>
+              //   <p>ㄹㄹㄹㄹ</p>
+              //   <p>ㅁㅁㅁㅁ</p>
+              //   <p>ㅂㅂㅂㅂ</p>
+              // </div>
+              <img
+                style={{ width: "140px", height: "140px" }}
+                src="https://s3.ap-northeast-2.amazonaws.com/img.kormedi.com/news/article/__icsFiles/artimage/2018/01/31/c_km601/650445_540.jpg"
+              />
             }
             useShowAnimation
-            position="left"
-            open
+            // position="bottom"
+            // open={open}
+            // isFix
             onOpenAfterEvent={() => console.log("실행")}
             onCloseAfterEvent={() => console.log("종료")}
           >
-            <button style={{ fontSize: "24px" }}>사진 보기</button>
+            <button style={{ fontSize: "24px", width: "120px" }}>
+              사진 보기
+            </button>
           </_Tooltip>
         </div>
 
         <div>
-          {/* <_Tooltip
+          <_Tooltip
             tooltipText={"12312312"}
             useShowAnimation
+            // open
             // position="bottom"
-            isFix
+            // isFix
             // tooltipStyles={{
             //   // backgroundColor: "black",
             //   padding: "200px",
@@ -59,7 +75,7 @@ export default function Test() {
             // }}
           >
             <button style={{ fontSize: "24px" }}>내용 보기</button>
-          </_Tooltip> */}
+          </_Tooltip>
         </div>
       </div>
     </>

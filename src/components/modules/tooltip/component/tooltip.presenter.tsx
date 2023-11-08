@@ -20,10 +20,9 @@ export default function _TooltipUIPage(
     id,
     tooltipText,
     useShowAnimation,
-    tooltipOpen,
+    // tooltipOpen,
     textRef,
     wrapperRef,
-    render,
     tooltipStyles,
     tooltipMobileStyles,
     position,
@@ -48,33 +47,6 @@ export default function _TooltipUIPage(
         >
           {children}
         </TooltipChildren>
-        {/* {(tooltipOpen && (
-          <TooltipTextWrapper
-            className={tooltipClassList.textWrapper}
-            ref={textRef}
-            useShowAnimation={useShowAnimation}
-            show={render}
-            tooltipStyles={tooltipStyles}
-            tooltipMobileStyles={tooltipMobileStyles}
-            hideMobile={hideMobile}
-            position={position || "top"}
-          >
-            <TooltipTailContents
-              className={tooltipClassList.textContents}
-              tooltipStyles={tooltipStyles}
-              tooltipMobileStyles={tooltipMobileStyles}
-              position={position || "top"}
-            >
-              {(typeof tooltipText === "string" && (
-                // 문자열일 경우 span 태그에 감싸서 렌더
-                <_SpanText className={tooltipClassList.text}>
-                  {tooltipText}
-                </_SpanText>
-              )) ||
-                tooltipText}
-            </TooltipTailContents>
-          </TooltipTextWrapper>
-        )) || <></>} */}
       </TooltipItems>
     </TooltipWrapper>
   );

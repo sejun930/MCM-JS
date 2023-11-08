@@ -79,7 +79,12 @@ export const TooltipChildren = styled.div`
 // `;
 
 export const TooltipTextWrapper = styled.div`
-  position: relative;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* position: relative;
   border: solid 1px black;
   border-radius: 10px;
   background-color: white;
@@ -161,17 +166,17 @@ export const TooltipTextWrapper = styled.div`
 
   @media ${breakPoints.mobileLarge} {
     ${(props: StyleTypes) => {
-      const styles: CSSProperties & { [key: string]: string } = {};
+    const styles: CSSProperties & { [key: string]: string } = {};
 
-      // 모바일에서 사용하지 않을 경우, none 처리
-      if (props.hideMobile) styles.display = "none";
-      // 모바일 환경의 스타일 적용하기
-      else if (props.tooltipMobileStyles)
-        return getPropsWrapperStyles(props.tooltipMobileStyles, props);
+    // 모바일에서 사용하지 않을 경우, none 처리
+    if (props.hideMobile) styles.display = "none";
+    // 모바일 환경의 스타일 적용하기
+    else if (props.tooltipMobileStyles)
+      return getPropsWrapperStyles(props.tooltipMobileStyles, props);
 
-      return styles;
-    }}
-  }
+    return styles;
+  }}
+  } */
 `;
 
 export const TooltipTailContents = styled.div`
@@ -180,7 +185,7 @@ export const TooltipTailContents = styled.div`
   justify-content: center;
   align-items: center;
   padding: 10px;
-  width: 100%;
+  width: fit-content;
   min-height: 30px;
   white-space: pre;
   font-size: 12px;
@@ -267,4 +272,12 @@ export const TooltipTailContents = styled.div`
         )}
     }
   }
+`;
+
+export const TooltipHoverRange = styled.div`
+  position: absolute;
+  width: -webkit-fill-available;
+  height: -webkit-fill-available;
+  left: 0;
+  z-index: 1000;
 `;
