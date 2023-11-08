@@ -68,8 +68,6 @@ function _Tooltip(props: TooltipPropsType & { _uuid: string }) {
 
   // uuid 최초 기입
   useEffect(() => {
-    console.log(_uuid, uuid);
-
     if (!uuid && _uuid) {
       // uuid 최초 설정
       setUuid(_uuid);
@@ -148,6 +146,7 @@ function _Tooltip(props: TooltipPropsType & { _uuid: string }) {
             ref={textRangeRef}
             onMouseOver={overMouse}
             onMouseOut={outMouse}
+            onMouseLeave={!isFix && closeTooltip}
           />
         </>
       );
@@ -172,13 +171,6 @@ function _Tooltip(props: TooltipPropsType & { _uuid: string }) {
                 closeTooltip();
                 return;
               }
-
-              // 종료 이벤트 설정
-              if (!isFix)
-                textRangeRef.current.addEventListener(
-                  "mouseleave",
-                  closeTooltip
-                );
             }
 
             let allHeight = height;
@@ -225,7 +217,6 @@ function _Tooltip(props: TooltipPropsType & { _uuid: string }) {
     if (isFix || isDisable || !timerEvent[uuid]) return;
 
     const doc = document.getElementById(`tooltip-${uuid}`);
-    console.log(doc);
     if (doc) {
       let timer = 0;
 

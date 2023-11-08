@@ -278,6 +278,5 @@ export const TooltipHoverRange = styled.div`
   position: absolute;
   width: -webkit-fill-available;
   height: -webkit-fill-available;
-  left: 0;
   z-index: 1000;
 `;

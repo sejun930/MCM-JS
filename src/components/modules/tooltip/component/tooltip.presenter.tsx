@@ -18,25 +18,17 @@ export default function _TooltipUIPage(
     children,
     className,
     id,
-    tooltipText,
-    useShowAnimation,
-    // tooltipOpen,
-    textRef,
     wrapperRef,
-    tooltipStyles,
-    tooltipMobileStyles,
     position,
     hideMobile,
     offHoverEvent,
     openTooltip,
-    closeTooltip,
   } = props;
 
   return (
     <TooltipWrapper
       className={getAllComponentsClassName(tooltipClassList.wrapper, className)}
       id={id}
-      // onMouseOut={(!offHoverEvent && closeTooltip) || undefined}
       hideMobile={hideMobile}
       ref={wrapperRef}
     >
