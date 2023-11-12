@@ -38,6 +38,7 @@ const _Slider = (props: SliderPropsTypes & SliderAddProps) => {
     _uid,
     firstPage,
     changePageEvent,
+    stopInfinite,
   } = props;
 
   const wrapperRef = useRef() as MutableRefObject<HTMLDivElement>;
@@ -61,7 +62,7 @@ const _Slider = (props: SliderPropsTypes & SliderAddProps) => {
   // 일시 중지 변수 (연속 실행 방지)
   const [pause, setPause] = useState(false);
 
-  const { selector, uid } = info;
+  const { uid } = info;
 
   useEffect(() => {
     // 정보 초기화
@@ -178,12 +179,12 @@ const _Slider = (props: SliderPropsTypes & SliderAddProps) => {
         }
       }
 
-      // 현재 페이지가 끝에 도달했는지 체크
-      _info.isLast = movePage === lastPage - 1;
+      // stopInfinite 사용중이며 현재 페이지가 끝에 도달했는지 체크
+      _info.isLast = movePage === lastPage - 1 && stopInfinite;
       if (_info.isLast) stop();
 
       // 현재 페이지가 처음에 도착했는지 체크
-      _info.isFirst = movePage === startPage;
+      _info.isFirst = movePage === startPage && stopInfinite;
 
       // 최종 저장될 페이지
       let finalSelector = movePage;
@@ -215,7 +216,7 @@ const _Slider = (props: SliderPropsTypes & SliderAddProps) => {
         // 타이머 재개하기
         if (timerRef && timerRef.current)
           window.setTimeout(() => {
-            timerRef.current.classList.remove("pause");
+            timerRef.current?.classList.remove("pause");
           }, 0);
       }
       let timer = useAnimation && !offAnimtaion ? 400 : 100;
@@ -224,8 +225,8 @@ const _Slider = (props: SliderPropsTypes & SliderAddProps) => {
       window.setTimeout(() => {
         setPause(false);
 
-        if (listRef.current)
-          listRef.current.classList.remove("pause-animation");
+        if (listRef && listRef.current)
+          listRef.current?.classList.remove("pause-animation");
       }, timer + ((arrived && 100) || 0));
       setInfo(_info);
     };

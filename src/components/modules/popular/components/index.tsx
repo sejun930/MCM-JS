@@ -39,6 +39,8 @@ function _Popular(props: PopularRenderPropsTypes) {
 
   // 전체 리스트 보기 여부
   const [showAll, setShowAll] = useState(false);
+  let _showAll = showAll || false;
+
   // 현재 선택된 리스트 번호
   const [current, setCurrent] = useState(0);
   const [uuid] = useState(_uuid); // uuid 고정
@@ -54,11 +56,40 @@ function _Popular(props: PopularRenderPropsTypes) {
       wrapperRef.current.style.zIndex = String(len);
       len--; // 1개씩 제거
     }
+
+    return () => {
+      document.removeEventListener("click", checkClickWindow);
+    };
   }, []);
 
   // 전체 리스트 보기 토글 함수
-  const toggleAllShow = () => {
-    setShowAll((prev) => !prev);
+  const toggleAllShow = (bool: boolean) => {
+    setShowAll(() => {
+      if (bool) {
+        // 외부 클릭 이벤트 설정
+        document.addEventListener("click", checkClickWindow);
+      } else {
+        // 외부 클릭 이벤트 종료
+        document.removeEventListener("click", checkClickWindow);
+      }
+
+      _showAll = bool;
+      return bool;
+    });
+  };
+
+  // 외부를 선택했는지 검증, 외부 선택시 전체 리스트 종료하기
+  const checkClickWindow = (e: MouseEvent) => {
+    if (_showAll) {
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(e.target as Node)
+      ) {
+        toggleAllShow(false);
+      }
+    } else {
+      document.removeEventListener("click", checkClickWindow);
+    }
   };
 
   // 현재 리스트 저장하기

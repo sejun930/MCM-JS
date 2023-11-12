@@ -22,14 +22,12 @@ export default function SliderListUIPage({
       useAnimation={useAnimation}
       ref={listRef}
       hasDragMode={useSwipeMode !== undefined}
-      onMouseDown={(e) => useSwipeMode && startDrag(e.pageX || 0)}
-      onMouseMove={(e) => useSwipeMode && moveDrag(e.pageX || 0, e)}
+      onMouseDown={(e) => useSwipeMode && startDrag(e)}
+      onMouseMove={(e) => useSwipeMode && moveDrag(e.pageX || 0)}
       onClick={(useSwipeMode && endDrag) || undefined}
-      onTouchStart={(e) =>
-        useSwipeMode && startDrag(e.targetTouches[0].pageX || 0, true)
-      }
+      onTouchStart={(e) => useSwipeMode && startDrag(e, true)}
       onTouchMove={(e) =>
-        useSwipeMode && moveDrag(e.targetTouches[0].pageX || 0, e)
+        useSwipeMode && moveDrag(e.targetTouches[0].pageX || 0)
       }
       onTouchEnd={(useSwipeMode && endDrag) || undefined}
       hasPageList={hasPageList}

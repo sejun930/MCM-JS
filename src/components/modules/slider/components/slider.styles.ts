@@ -17,6 +17,7 @@ interface StyleTypes {
   hideMobile?: boolean;
   isDisable?: boolean;
   isSelected?: boolean;
+  hideShowPage?: boolean;
 }
 
 export const Wrapper = styled.div`
@@ -251,4 +252,26 @@ export const Page = styled(_Button)`
       opacity: 1,
       backgroundColor: "rgba(0, 0, 0, 0.7)",
     }}
+`;
+
+export const CurrentPageWrapper = styled.div`
+  position: absolute;
+  display: flex;
+  background-color: #efefef;
+  border: solid 1px #dedede;
+  border-radius: 999px;
+  padding: 2px 6px;
+  color: #555555;
+  top: 0;
+  right: 0;
+  z-index: 1001;
+  font-size: 12px;
+  white-space: pre;
+
+  @media ${breakPoints.mobileLarge} {
+    ${(props: StyleTypes) =>
+      props.hideShowPage && {
+        display: "none",
+      }}
+  }
 `;

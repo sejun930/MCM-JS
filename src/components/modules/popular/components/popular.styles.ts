@@ -2,7 +2,7 @@ import { CSSProperties } from "react";
 import { breakPoints } from "mcm-js-commons/dist/responsive";
 
 import styled from "@emotion/styled";
-import { _Button, _SpanText } from "mcm-js-commons";
+import { _Button, _SpanText, _PText } from "mcm-js-commons";
 import { StylesTypes } from "./popular.types";
 
 // px 문자열 완성하기
@@ -145,6 +145,7 @@ export const List = styled.li`
   display: flex;
   align-items: center;
   height: 100%;
+  word-break: break-all;
 
   // 하위 모든 태그의 마진, 패딩값 제거
   * {
@@ -170,11 +171,14 @@ export const List = styled.li`
 `;
 
 export const Opener = styled(_Button)`
-  min-width: 36px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  position: relative;
+  justify-content: flex-start;
+  position: absolute;
+  height: 100%;
+  width: 24px;
+  right: 6px;
+  bottom: 0;
 
   ::before,
   ::after {
@@ -286,4 +290,11 @@ export const Empty = styled(_SpanText)`
   height: 100%;
   color: #aa5656;
   font-weight: 700;
+`;
+
+export const MainContents = styled(_PText)`
+  max-width: 80%;
+  overflow: hidden;
+  white-space: pre;
+  text-overflow: ellipsis;
 `;

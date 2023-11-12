@@ -5,6 +5,7 @@ import {
   Pagination,
   Timer,
   Wrapper,
+  CurrentPageWrapper,
 } from "./slider.styles";
 
 import { v4 } from "uuid";
@@ -25,7 +26,7 @@ export default function SliderUIPage({
   moveSlider,
   useAnimation,
   listRef,
-  pagination,
+  usePagination,
   useAutoPlay,
   timerRef,
   info,
@@ -35,6 +36,7 @@ export default function SliderUIPage({
   wrapperRef,
   setArrow,
   stopInfinite,
+  useCurrentPage,
 }: SliderPropsTypes & SliderUIPropsTypes & WrapperRef) {
   const { selector, isFirst, isLast } = info;
 
@@ -52,6 +54,13 @@ export default function SliderUIPage({
 
   const disablePrev = (stopInfinite && isFirst) || false; // 이전 버튼 비활성화
   const disableNext = (stopInfinite && isLast) || false; // 다음 버튼 비활성화
+
+  // 모바일에서 페이지네이션 감추기 여부
+  const hidePagination =
+    typeof usePagination === "object" && usePagination.hideMobile;
+  // 모바일에서 현재 페이지 감추기 여부
+  const hideShowPage =
+    typeof useCurrentPage === "object" && useCurrentPage.hideMobile;
 
   return (
     (children && children.length && Array.isArray(children) && (
@@ -88,18 +97,18 @@ export default function SliderUIPage({
             useAutoPlay={useAutoPlay}
             moveSlider={moveSlider}
             children={children}
-            hasPageList={pagination?.showPageList || false}
+            hasPageList={usePagination !== undefined ? true : false}
             listMinHeight={listMinHeight}
             info={info}
             stopInfinite={stopInfinite}
           />
 
           {/* 페이지네이션 기능을 사용할 경우 */}
-          {pagination && pagination.showPageList && (
+          {usePagination !== undefined && (
             <Pagination
               className={sliderClassList.pagination}
               style={{ bottom: useAutoPlay?.showTimer && "20px" }}
-              hideMobile={pagination?.hideMobile || false}
+              hideMobile={hidePagination}
             >
               {Array.from(new Array(children.length), (_, idx) => idx).map(
                 (page) => {
@@ -149,6 +158,12 @@ export default function SliderUIPage({
             />
           )}
         </Items>
+
+        {useCurrentPage && (
+          <CurrentPageWrapper hideShowPage={hideShowPage}>
+            {info.selector - 1} / {children.length}
+          </CurrentPageWrapper>
+        )}
       </Wrapper>
     )) || <></>
   );
