@@ -28,9 +28,9 @@ export default function PopularTestPage() {
     // <Spen>3</Spen>,
   ]);
   const [list2] = useState([
-    <p>Aasdasdasdasdasdasdasd</p>,
-    <p>Basdasdasdasdasdasdasd</p>,
-    <p>Casdasdasdasdasdasdasdasdas</p>,
+    "ㅁㅇㅁㄴㅇqweqweqwdasdasdasdasdasdasdasdasdasdㅁㅇㄴㅁㄴㅇㅁㄴㅇ",
+    "ㄱㄱㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅂㅈㄷㅂㅈㄷㅂㅈㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴ",
+    "ㄱㄱㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅂㅈㄷㅂㅈㄷㅂㅈㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴ",
   ]);
   //   const list3 = [<div>ㄱ</div>, <div>ㄴ</div>, <div>ㄷ</div>];
   const [list3] = useState([<div>ㄱ</div>, <div>ㄴ</div>, <div>ㄷ</div>]);
@@ -64,8 +64,28 @@ export default function PopularTestPage() {
     <Wrapper>
       <Popular
         list={list2}
-        minHeight={{ web: 30 }}
+        minHeight={{ web: 50 }}
         changeListEvent={(num) => setSelect2(num)}
+        setList={{
+          showRating: true,
+        }}
+        useSwipeMode
+      />
+      <Popular
+        list={list2}
+        minHeight={{ web: 50 }}
+        changeListEvent={(num) => setSelect2(num)}
+        setList={{
+          showRating: true,
+        }}
+      />
+      <Popular
+        list={list2}
+        minHeight={{ web: 50 }}
+        changeListEvent={(num) => setSelect2(num)}
+        setList={{
+          showRating: true,
+        }}
       />
       {/* <div>{select2}</div>
       
@@ -84,7 +104,10 @@ export default function PopularTestPage() {
 }
 
 const Wrapper = styled.div`
-  padding: 100px 500px;
+  padding: 100px 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 1000px 0px;
 `;
 
 const Spen = styled.span`

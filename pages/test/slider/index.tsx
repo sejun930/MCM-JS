@@ -34,10 +34,13 @@ export default function Test() {
             listMinHeight={{ web: "400px", mobile: "200px" }}
             useCurrentPage={{ hideMobile: false }}
             usePagination={{ hideMobile: true }}
-            stopInfinite={true}
+            // stopInfinite={true}
           >
             <div>1</div>
             <div>2</div>
+            <div>3</div>
+            <div>4</div>
+            <div>5</div>
           </Slider>
           <Slider useAnimation>
             <div>1</div>

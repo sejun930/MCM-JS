@@ -11,10 +11,10 @@ export default function Test() {
       <button onClick={(prev) => setOpen(!open)}>button</button>
 
       <div style={{ padding: "280px", display: "flex", gap: "0px 100px" }}>
-        <div style={{ height: "100px" }}>
+        <div>
           <_Tooltip
             tooltipText={
-              // "ㅁㄴㅇㅁㄴㅇㄴㅁㅇ"
+              "ㅁㄴㅇㅁㄴㅇㄴㅁㅇ"
               // <div style={{ height: "200px" }}>
               //   <p>ㄱㄱㄱㄱ</p>
               //   <p>ㄴㄴㄴㄴ</p>
@@ -23,13 +23,13 @@ export default function Test() {
               //   <p>ㅁㅁㅁㅁ</p>
               //   <p>ㅂㅂㅂㅂ</p>
               // </div>
-              <img
-                style={{ width: "140px", height: "140px" }}
-                src="https://s3.ap-northeast-2.amazonaws.com/img.kormedi.com/news/article/__icsFiles/artimage/2018/01/31/c_km601/650445_540.jpg"
-              />
+              // <img
+              //   style={{ width: "140px", height: "140px" }}
+              //   src="https://s3.ap-northeast-2.amazonaws.com/img.kormedi.com/news/article/__icsFiles/artimage/2018/01/31/c_km601/650445_540.jpg"
+              // />
             }
             useShowAnimation
-            // position="bottom"
+            position="left"
             // open={open}
             // isFix
             onOpenAfterEvent={() => console.log("실행")}
@@ -43,10 +43,17 @@ export default function Test() {
 
         <div>
           <_Tooltip
-            tooltipText={"12312312"}
+            tooltipText={
+              "a"
+              // <h1>asdasd</h1>
+              // <img
+              //   style={{ width: "140px", height: "200px" }}
+              //   src="https://s3.ap-northeast-2.amazonaws.com/img.kormedi.com/news/article/__icsFiles/artimage/2018/01/31/c_km601/650445_540.jpg"
+              // />
+            }
             useShowAnimation
             // open
-            // position="bottom"
+            position="left"
             // isFix
             // tooltipStyles={{
             //   // backgroundColor: "black",
@@ -74,7 +81,9 @@ export default function Test() {
             //   },
             // }}
           >
-            <button style={{ fontSize: "24px" }}>내용 보기</button>
+            <button style={{ fontSize: "24px", height: "80px" }}>
+              내용 보기
+            </button>
           </_Tooltip>
         </div>
       </div>

@@ -50,7 +50,7 @@ export default function PopuplarMainUIPage(props: PopularMainUIPropsTypes) {
       {!hide && hasChildren && (
         <Opener
           className={popularClassList.opener}
-          onClickEvent={(!hide && toggleAllShow) || undefined}
+          onClickEvent={() => !hide && toggleAllShow(!showAll)}
           isShowAll={showAll}
           btnColor={btnColor}
         />

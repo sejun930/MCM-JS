@@ -41,20 +41,20 @@ export default function SliderListPage(props: SliderListTypes) {
     ...children.slice(0, 2),
   ];
 
-  // 정지 유지 여부
-  let fixStop = false;
-
   // 드래그 시작 함수
-  const startDrag = (pageX: number, isMobile?: boolean) => {
+  const startDrag = (e: MouseEvent & TouchEvent, isMobile?: boolean) => {
     if (useSwipeMode === undefined || dragDisable) return;
+    // 시작 위치점
+    const pageX = !isMobile ? e.pageX : e.targetTouches[0].pageX;
+
     isStartDrag = true;
     dragDisable = true;
 
     if (isMobile) {
       useMobile = true;
       // 스와이프 사용시 스크롤 방지를 위해 현재 다른 모듈에 의해 스크롤이 막혀있는지 체크
-      isDisableFixedWindow = document.body.style?.overflow === "hidden";
-      document.body.style.overflow = "hidden";
+      // isDisableFixedWindow = document.body.style?.overflow === "hidden";
+      // document.body.style.overflow = "hidden";
     }
 
     startLocation = Math.floor(pageX);
@@ -85,10 +85,12 @@ export default function SliderListPage(props: SliderListTypes) {
         right: -moveSide,
       };
     }
+
+    if (!isMobile) e.preventDefault();
   };
 
   // 드래그 이동 함수
-  const moveDrag = (pageX: number, e: MouseEvent | TouchEvent) => {
+  const moveDrag = (pageX: number) => {
     if (!useSwipeMode) return;
 
     if (isStartDrag) {
@@ -118,7 +120,7 @@ export default function SliderListPage(props: SliderListTypes) {
           // 이동하지 않음
           finalLocation = 0;
         } else {
-          e.preventDefault();
+          // e.preventDefault();
 
           // 드래그로 위치 이동하기
           if (listRef && listRef.current) {
@@ -141,10 +143,10 @@ export default function SliderListPage(props: SliderListTypes) {
     }
 
     // 스크롤 해제
-    if (useMobile && !isDisableFixedWindow) {
-      document.body.style.overflow = "auto";
-      isDisableFixedWindow = false;
-    }
+    // if (useMobile && !isDisableFixedWindow) {
+    //   document.body.style.overflow = "auto";
+    //   isDisableFixedWindow = false;
+    // }
 
     // 맨 마지막 페이지면서 이동을 막아놓은 경우
     const isLastPage = stopInfinite && isLast;

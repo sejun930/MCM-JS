@@ -1,7 +1,7 @@
-import { useState, MouseEvent, TouchEvent } from "react";
+import { useState, MouseEvent, TouchEvent, ReactNode } from "react";
 
 import { popularClassList } from "../../popular.class";
-import { MainItems, List, Empty } from "../../popular.styles";
+import { MainItems, List, Empty, MainContents } from "../../popular.styles";
 import { PopularMainListPropsTypes } from "../popular.main.types";
 import { initPopularMainListInfo } from "./popular.main.list.data";
 
@@ -55,7 +55,8 @@ export default function PopularMainListPage(props: PopularMainListPropsTypes) {
       // 이동 함수 설정
       window.addEventListener(
         _isMobile ? "touchmove" : "mousemove",
-        handler.move
+        handler.move,
+        { passive: _isMobile }
       );
       // 스크롤 방지
       if (_isMobile) {
@@ -65,7 +66,7 @@ export default function PopularMainListPage(props: PopularMainListPropsTypes) {
       }
 
       // 외부 이벤트 차단
-      e.preventDefault();
+      if (!_isMobile) e.preventDefault();
     },
 
     // 스와이프 이동 함수
@@ -171,6 +172,18 @@ export default function PopularMainListPage(props: PopularMainListPropsTypes) {
   };
   const { start } = handler;
 
+  // 리스트 내용 출력하기
+  const renderListContents = (el: string | ReactNode) => {
+    // 문자열만 전달되었다면 p태그에 렌더, 컴포넌트라면 원래 형태로 렌더
+    return typeof el === "string" ? (
+      <MainContents className={popularClassList.mainContents}>
+        {el}
+      </MainContents>
+    ) : (
+      el
+    );
+  };
+
   return (
     <MainItems
       className={popularClassList.mainItems}
@@ -189,7 +202,7 @@ export default function PopularMainListPage(props: PopularMainListPropsTypes) {
             key={`mcm-popular-${uuid}-main-list-${idx}`}
             className={popularClassList.mainList}
           >
-            {el}
+            {renderListContents(el)}
           </List>
         ))) || <Empty>"children" props가 비어있습니다.</Empty>}
     </MainItems>

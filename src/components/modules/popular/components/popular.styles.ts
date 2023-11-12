@@ -2,7 +2,7 @@ import { CSSProperties } from "react";
 import { breakPoints } from "mcm-js-commons/dist/responsive";
 
 import styled from "@emotion/styled";
-import { _Button, _SpanText } from "mcm-js-commons";
+import { _Button, _SpanText, _PText } from "mcm-js-commons";
 import { StylesTypes } from "./popular.types";
 
 // px 문자열 완성하기
@@ -145,11 +145,7 @@ export const List = styled.li`
   display: flex;
   align-items: center;
   height: 100%;
-
-  &.mcm-popular-main-list {
-    max-width: 90%;
-    overflow: hidden;
-  }
+  word-break: break-all;
 
   // 하위 모든 태그의 마진, 패딩값 제거
   * {
@@ -294,4 +290,11 @@ export const Empty = styled(_SpanText)`
   height: 100%;
   color: #aa5656;
   font-weight: 700;
+`;
+
+export const MainContents = styled(_PText)`
+  max-width: 80%;
+  overflow: hidden;
+  white-space: pre;
+  text-overflow: ellipsis;
 `;

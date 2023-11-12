@@ -7,7 +7,7 @@ export type InputRefTypes = MutableRefObject<HTMLInputElement>;
 // Main 페이지 props 타입
 export type PopularMainPropsTypes = PopularPropsTypes & {
   showAll: boolean;
-  toggleAllShow: () => void;
+  toggleAllShow: (bool: boolean) => void;
   uuid: string;
   changeCurrent: (num: number) => void;
   hasChildren: boolean;
